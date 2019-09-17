@@ -40,6 +40,6 @@ import DatabaseLibrary as d
 #items = ["Sports","Gaming","Entertainment"]
 #d.updateFollow(2, 1, items)
 
-#print(d.validateUsername("kbuzza2"))
+print(d.validateUsername("kbuzza2"))
 
 #d.deletePost(3)
