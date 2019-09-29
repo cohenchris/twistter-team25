@@ -1,16 +1,14 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
+import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
 
 export default class ProfileSettings extends React.Component {
   render() {
     return (
       <div className="ProfileSettings">
         <NavigationBar />
-        <h1>Profile Settings!</h1>
-        <h4>
-          This page will display the profile/website settings of the current
-          user.
-        </h4>
+        <h1>PROFILE SETTINGS</h1>
+        <UserAccountDetails />
       </div>
     );
   }

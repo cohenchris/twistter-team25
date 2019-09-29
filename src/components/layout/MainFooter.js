@@ -10,9 +10,7 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
         <Nav>
           {menuItems.map((item, idx) => (
             <NavItem key={idx}>
-              <NavLink tag={Link} to={item.to}>
-                {item.title}
-              </NavLink>
+              <NavLink to={item.to}>{item.title}</NavLink>
             </NavItem>
           ))}
         </Nav>

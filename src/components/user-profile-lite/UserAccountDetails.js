@@ -32,7 +32,7 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feFirstName"
                     placeholder="First Name"
-                    value="Sierra"
+                    value="Chris"
                     onChange={() => {}}
                   />
                 </Col>
@@ -42,7 +42,7 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feLastName"
                     placeholder="Last Name"
-                    value="Brooks"
+                    value="Cohen"
                     onChange={() => {}}
                   />
                 </Col>
@@ -55,7 +55,7 @@ const UserAccountDetails = ({ title }) => (
                     type="email"
                     id="feEmail"
                     placeholder="Email Address"
-                    value="sierra@example.com"
+                    value="chris@example.com"
                     onChange={() => {}}
                     autoComplete="email"
                   />
@@ -78,7 +78,7 @@ const UserAccountDetails = ({ title }) => (
                 <FormInput
                   id="feAddress"
                   placeholder="Address"
-                  value="1234 Main St."
+                  value="20 Littleton St."
                   onChange={() => {}}
                 />
               </FormGroup>
@@ -89,15 +89,65 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feCity"
                     placeholder="City"
+                    value="West Lafayette"
                     onChange={() => {}}
                   />
                 </Col>
                 {/* State */}
                 <Col md="4" className="form-group">
                   <label htmlFor="feInputState">State</label>
-                  <FormSelect id="feInputState">
-                    <option>Choose...</option>
-                    <option>...</option>
+                  <FormSelect id="feInputState" value="Indiana">
+                    <option>Choose State...</option>
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>Arizona</option>
+                    <option>Arkansas</option>
+                    <option>California</option>
+                    <option>Colorado</option>
+                    <option>Connecticut</option>
+                    <option>Delaware</option>
+                    <option>Florida</option>
+                    <option>Georgia</option>
+                    <option>Hawaii</option>
+                    <option>Idaho</option>
+                    <option>Illinois</option>
+                    <option>Indiana</option>
+                    <option>Iowa</option>
+                    <option>Kansas</option>
+                    <option>Kentucky</option>
+                    <option>Louisiana</option>
+                    <option>Maine</option>
+                    <option>Maryland</option>
+                    <option>Massachusetts</option>
+                    <option>Michigan</option>
+                    <option>Minnesota</option>
+                    <option>Mississippi</option>
+                    <option>Missouri</option>
+                    <option>Montana</option>
+                    <option>Nebraska</option>
+                    <option>Nevada</option>
+                    <option>New Hampshire</option>
+                    <option>New Jersey</option>
+                    <option>New Mexico</option>
+                    <option>New York</option>
+                    <option>North Carolina</option>
+                    <option>North Dakota</option>
+                    <option>Ohio</option>
+                    <option>Oklahoma</option>
+                    <option>Oregon</option>
+                    <option>Pennsylvania</option>
+                    <option>Rhode Island</option>
+                    <option>South Carolina</option>
+                    <option>South Dakota</option>
+                    <option>Tennessee</option>
+                    <option>Texas</option>
+                    <option>Utah</option>
+                    <option>Vermont</option>
+                    <option>Virginia</option>
+                    <option>Washington</option>
+                    <option>West Virginia</option>
+                    <option>Wisconsin</option>
+                    <option>Wyoming</option>
                   </FormSelect>
                 </Col>
                 {/* Zip Code */}
@@ -106,18 +156,53 @@ const UserAccountDetails = ({ title }) => (
                   <FormInput
                     id="feZipCode"
                     placeholder="Zip"
+                    value="47906"
                     onChange={() => {}}
                   />
+                </Col>
+              </Row>
+              <h7>Birthday</h7>
+              <Row>
+                <Col>
+                  <FormGroup controlId="birthMonth">
+                    <FormSelect placeholder="Month" as="select" value="January">
+                      <option>Choose Month...</option>
+                      <option>January</option>
+                      <option>February</option>
+                      <option>March</option>
+                      <option>April</option>
+                      <option>May</option>
+                      <option>June</option>
+                      <option>July</option>
+                      <option>August</option>
+                      <option>September</option>
+                      <option>October</option>
+                      <option>November</option>
+                      <option>December</option>
+                    </FormSelect>
+                  </FormGroup>
+                </Col>
+                <FormGroup controlId="birthDay">
+                  <FormInput placeholder="Day" value="8"></FormInput>
+                </FormGroup>
+                <Col>
+                  <FormGroup controlId="birthYear">
+                    <FormInput placeholder="Year" value="1999"></FormInput>
+                  </FormGroup>
                 </Col>
               </Row>
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">Description</label>
-                  <FormTextarea id="feDescription" rows="5" />
+                  <FormTextarea
+                    id="feDescription"
+                    rows="5"
+                    value="Description goes here..."
+                  />
                 </Col>
               </Row>
-              <Button theme="accent">Update Account</Button>
+              <Button theme="dark">Update Account</Button>
             </Form>
           </Col>
         </Row>

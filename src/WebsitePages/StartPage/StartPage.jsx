@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "../Pictures/Logo.png";
-import "./StartPage.css"
+import logo from "../../images/Logo.png";
+import "./StartPage.css";
 import Button from "react-bootstrap/Button";
 
 /* HOME PAGE WITH LOGO AND LOGIN BUTTON */

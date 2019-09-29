@@ -4,9 +4,16 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import CreateMicroblog from "./WebsitePages/CreateMicroblog";
+import StartPage from "./WebsitePages/StartPage/StartPage";
+import AllTopics from "./WebsitePages/AllTopics";
+import HomePage from "./WebsitePages/HomePage";
 
-ReactDOM.render(<CreateMicroblog />, document.getElementById("root"));
+export const blogDivStyle = {
+  marginLeft: "200px",
+  marginRight: "200px"
+};
+
+ReactDOM.render(<HomePage />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
