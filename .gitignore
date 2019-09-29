@@ -1,2 +1,3 @@
 *.DS_Store
 create-react-app
+.vscode
