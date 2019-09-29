@@ -1,12 +1,13 @@
 import React from "react";
-import Nav from "react-bootstrap/Nav";
-import NavBar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Nav,
+  Navbar,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+  Container
+} from "react-bootstrap";
 
 export default class TwistterNav extends React.Component {
   handleClick(page) {
@@ -16,8 +17,9 @@ export default class TwistterNav extends React.Component {
     return (
       <div>
         <Container>
-          <NavBar bg="dark" variant="dark" fixed="top">
-            <NavBar.Brand>Twistter</NavBar.Brand>
+          <Navbar bg="dark" variant="dark" fixed="top">
+            <Navbar.Brand>Twistter</Navbar.Brand>
+            {/* Website Title, #all, and Profile */}
             <Nav className="mr-auto">
               <Nav.Link>#all</Nav.Link>
               <NavDropdown title="Profile">
@@ -27,6 +29,11 @@ export default class TwistterNav extends React.Component {
                 <NavDropdown.Item>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
+            {/* Create a New Microblog */}
+            <Nav className="center">
+              <Button variant="outline-light">+ Create A New Microblog</Button>
+            </Nav>
+            {/* Search Bar */}
             <Nav>
               <Form inline>
                 <FormControl
@@ -39,7 +46,7 @@ export default class TwistterNav extends React.Component {
                 </Button>
               </Form>
             </Nav>
-          </NavBar>
+          </Navbar>
         </Container>
         {/*THIS H1 IS TO MAKE SURE THAT TEXT ISN'T ACCIDENTALLY RENDERED UNDER THE NAVBAR */}
         <h1>navbar</h1>{" "}
