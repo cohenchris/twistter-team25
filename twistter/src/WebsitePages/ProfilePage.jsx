@@ -1,11 +1,15 @@
 import React from "react";
-import logo from "../Pictures/Logo.png";
+import TwistterNav from "../components/TwistterNav";
+
 export default class ProfilePage extends React.Component {
   render() {
     return (
-      <div>
-        <img src={logo} className="App-logo" alt="logo" />
+      <div className="ProfilePage">
+        <TwistterNav />
         <h1>Profile Page!</h1>
+        <h2>
+          This page will display the profile information of the current user.
+        </h2>
       </div>
     );
   }
