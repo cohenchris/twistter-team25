@@ -1,11 +1,12 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
 import { Form, Button, Col } from "react-bootstrap";
+import { otherDivStyle } from "..";
 
 export default class CreateNewAccount extends React.Component {
   render() {
     return (
-      <div className="CreateNewAccount">
+      <div className="CreateNewAccount" style={otherDivStyle}>
         <NavigationBar />
         <h1>CREATE A NEW ACCOUNT</h1>
         <NewUserForm />

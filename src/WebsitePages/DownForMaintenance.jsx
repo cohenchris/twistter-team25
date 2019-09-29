@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../Pictures/Logo.png";
+import logo from "../images/Logo.png";
 
 export default class DownForMaintenance extends React.Component {
   render() {

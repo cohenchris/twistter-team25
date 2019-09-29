@@ -1,11 +1,12 @@
 import React from "react";
 import { Form, Button, Nav } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
+import { otherDivStyle } from "..";
 
 export default class LoginPage extends React.Component {
   render() {
     return (
-      <div className="LoginPage">
+      <div className="LoginPage" style={otherDivStyle}>
         <NavigationBar />
         <h1>LOGIN PAGE</h1>
         <LoginBoxes />
