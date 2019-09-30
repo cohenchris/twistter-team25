@@ -286,9 +286,47 @@ def deletePost(postId):
                       "Trusted_Connection=yes;")
         
     cursor = cnxn.cursor()
-    cursor.execute("DELETE FROM PostTable WHERE PostId=" +str(postId))
+    cursor.execute("DELETE FROM PostTable WHERE PostId=" + str(postId))
     cnxn.commit()
+
+
+# GETS A SINGLE POST FROM THE DATABASE
+def getPost(postId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT * FROM PostTable WHERE PostId = " + str(postId))
     
+    print(cursor.fetchone())
+
+# ADDS A LIKE TO A POST
+def like(userId, postId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+
+    cursor = cnxn.cursor()
+    cursor.execute("INSERT INTO LikeTable (UserId,PostId)" +
+                    " VALUES (" + str(userId) + "," + str(postId) + ")")
+    cnxn.commit()
+
+
+# REMOVES A LIKE FROM A POST
+def unlike(userId, postId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+
+    cursor = cnxn.cursor()
+    cursor.execute("DELETE FROM LikeTable WHERE UserId=" + str(userId) +
+    " AND PostId=" + str(postId))
+    cnxn.commit()
+
 ###############################################################################  
     
 

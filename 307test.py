@@ -13,7 +13,7 @@ import DatabaseLibrary as d
 
 #d.print(getUserId("kbuzz32@gmail.com"))
 
-#d.newPost(6, "another test", "Entertainment,News")
+#d.newPost(2, "another test", "Entertainment,News")
 
 #d.updateCommonName(1, "new name test")
 
@@ -40,6 +40,12 @@ import DatabaseLibrary as d
 #items = ["Sports","Gaming","Entertainment"]
 #d.updateFollow(2, 1, items)
 
-print(d.validateUsername("kbuzza2"))
+#print(d.validateUsername("kbuzza2"))
 
 #d.deletePost(3)
+
+#d.like(1,1)
+
+#d.unlike(1,1)
+
+#d.getPost(1)
