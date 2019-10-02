@@ -4,9 +4,9 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import StartPage from "./WebsitePages/StartPage/StartPage";
+//import StartPage from "./WebsitePages/StartPage/StartPage";
 //import AllTopics from "./WebsitePages/AllTopics";
-//import CreateMicroblog from "./WebsitePages/CreateMicroblog";
+import CreateMicroblog from "./WebsitePages/CreateMicroblog";
 //import CreateNewAccount from "./WebsitePages/CreateNewAccount";
 //import DownForMaintenance from "./WebsitePages/DownForMaintenance";
 //import HomePage from "./WebsitePages/HomePage";
@@ -24,7 +24,7 @@ export const otherDivStyle = {
   marginRight: "50px"
 };
 
-ReactDOM.render(<StartPage />, document.getElementById("root"));
+ReactDOM.render(<CreateMicroblog />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

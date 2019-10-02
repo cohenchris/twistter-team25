@@ -16,13 +16,13 @@ import {
 } from "shards-react";
 
 const UserAccountDetails = ({ title }) => (
-  <Card small className="mb-4">
+  <Card small className="mb-4" bg="secondary">
     <CardHeader className="border-bottom">
       <h6 className="m-0">{title}</h6>
     </CardHeader>
     <ListGroup flush>
       <ListGroupItem className="p-3">
-        <Row>
+        <Button>
           <Col>
             <Form>
               <Row form>
@@ -191,6 +191,22 @@ const UserAccountDetails = ({ title }) => (
                   </FormGroup>
                 </Col>
               </Row>
+              <Row>
+                {/* PHONE NUMBER */}
+                <Col>
+                  <FormGroup controlId="phoneNum">
+                    <label>Phone Number</label>
+                    <FormInput placeholder="555-555-5555"></FormInput>
+                  </FormGroup>
+                </Col>
+                {/* BIRTHDAY/PHONE PUBLICIZE }
+                <Col>
+                  <FormCheck
+                    type="checkbox"
+                    label="Publicize Birthday and Phone Number?"
+                  ></FormCheck>
+                </Col>
+              </Row>
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
@@ -205,7 +221,7 @@ const UserAccountDetails = ({ title }) => (
               <Button theme="dark">Update Account</Button>
             </Form>
           </Col>
-        </Row>
+        </Button>
       </ListGroupItem>
     </ListGroup>
   </Card>
