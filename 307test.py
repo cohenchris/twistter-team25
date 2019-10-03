@@ -42,6 +42,16 @@ import DatabaseLibrary as d
 #d.updateDescription(1, "new description")
 
 
+#print(d.getUser(1))
+#d.setBdayPublic(1)
+#print(d.getUser(1))
+#d.setDescPublic(1)
+#print(d.getUser(1))
+#d.setBdayPrivate(1)
+#d.setDescPrivate(1)
+#print(d.getUser(1))
+
+
 #d.newUserTopic(1, "Sports")
 #d.newUserTopic(1, "Gaming")
 #d.newUserTopic(1, "News")

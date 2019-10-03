@@ -192,6 +192,73 @@ def deleteUser(userId):
     cursor.execute("DELETE FROM LikeTable WHERE UserId=" + str(userId))    
 
     cnxn.commit()
+
+
+# GETS USER PROFILE INFORMATION FROM THE DATABASE
+def getUser(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+    
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT UserName,CommonName," +
+	   "(SELECT COUNT(*) FROM FollowerTable WHERE UserId=x.UserId) as Following," +
+	   "(SELECT COUNT(*) FROM FollowerTable WHERE FollowingId=x.UserId) as Followers," +
+	   "(SELECT COUNT(*) FROM PostTable WHERE UserId=x.UserId) as Posts," +
+	   "CASE WHEN BdayIsPublic=1 THEN Birthday ELSE NULL END as Birthday," +
+	   "CASE WHEN DescIsPublic=1 THEN Description ELSE NULL END as Description " +
+       "FROM UserTable as x WHERE UserId=" + str(userId))
+
+    return cursor.fetchone()
+
+
+# SETS USER BIRTHDAY TO PRIVATE
+def setBdayPrivate(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+    
+    cursor = cnxn.cursor()
+    cursor.execute("UPDATE UserTable SET BdayIsPublic=0 WHERE UserId=" + str(userId))
+    cnxn.commit()
+
+
+# SETS USER BIRTHDAY TO PUBLIC
+def setBdayPublic(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+    
+    cursor = cnxn.cursor()
+    cursor.execute("UPDATE UserTable SET BdayIsPublic=1 WHERE UserId=" + str(userId))
+    cnxn.commit()
+
+
+# SETS USER DESCRIPTION TO PRIVATE
+def setDescPrivate(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+    
+    cursor = cnxn.cursor()
+    cursor.execute("UPDATE UserTable SET DescIsPublic=0 WHERE UserId=" + str(userId))
+    cnxn.commit()
+
+
+# SETS USER DESCRIPTION TO PUBLIC
+def setDescPublic(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+    
+    cursor = cnxn.cursor()
+    cursor.execute("UPDATE UserTable SET DescIsPublic=1 WHERE UserId=" + str(userId))
+    cnxn.commit()
     
 ###############################################################################
 
