@@ -3,9 +3,15 @@ import PropTypes from "prop-types";
 import {
   Card,
   CardHeader,
-  Button,
   ListGroup,
   ListGroupItem,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  FormInput,
+  FormTextarea,
+  Button,
   Progress
 } from "shards-react";
 
@@ -48,6 +54,71 @@ const UserDetails = ({ userDetails }) => (
         </strong>
         <span>{userDetails.metaValue}</span>
       </ListGroupItem>
+      <Col>
+        <Form>
+          <Row form>
+            {/* First Name */}
+            <Col md="6" className="form-group">
+              <label htmlFor="feFirstName">First Name</label>
+              <FormInput
+                id="feFirstName"
+                placeholder="First Name"
+                required
+                onChange={() => {}}
+              />
+            </Col>
+            {/* Last Name */}
+            <Col md="6" className="form-group">
+              <label htmlFor="feLastName">Last Name</label>
+              <FormInput
+                id="feLastName"
+                placeholder="Last Name"
+                required
+                onChange={() => {}}
+              />
+            </Col>
+          </Row>
+          <Row form>
+            {/* Email */}
+            <Col md="6" className="form-group">
+              <label htmlFor="feEmail">Email</label>
+              <FormInput
+                type="email"
+                id="feEmail"
+                placeholder="Email Address"
+                required
+                onChange={() => {}}
+                autoComplete="email"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <label>Birthday (MM/DD/YYYY)</label>
+              <FormInput placeholder="MM/DD/YYYY" required />
+            </Col>
+            <Col>
+              <FormGroup controlId="phoneNum">
+                <label>Phone Number</label>
+                <FormInput placeholder="555-555-5555" required></FormInput>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row form>
+            {/* Description */}
+            <Col md="12" className="form-group">
+              <label htmlFor="feDescription">Description</label>
+              <FormTextarea
+                id="feDescription"
+                placeholder="Description here..."
+                rows="5"
+                required
+              />
+            </Col>
+          </Row>
+          <Button theme="dark">Update Account</Button>
+        </Form>
+      </Col>
     </ListGroup>
   </Card>
 );

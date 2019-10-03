@@ -8,6 +8,7 @@ import {
   FormGroup,
   FormSelect
 } from "shards-react";
+import Button from "react-bootstrap/Button";
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
@@ -19,8 +20,7 @@ const Editor = () => (
         <FormInput size="lg" className="mb-3" placeholder="Your Post Title" />
         <ReactQuill className="add-new-post__editor mb-1" />
         <FormGroup controlId="birthMonth">
-          <FormSelect placeholder="Topic" as="select">
-            <option>Choose Topic...</option>
+          <FormSelect placeholder="Topic" as="select" value="All">
             <option>All</option>
             <option>Music</option>
             <option>Computer Science</option>
@@ -33,6 +33,9 @@ const Editor = () => (
           </FormSelect>
         </FormGroup>
       </Form>
+      <Button type="submit" variant="dark">
+        Post
+      </Button>
     </CardBody>
   </Card>
 );
