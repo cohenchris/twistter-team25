@@ -9,7 +9,7 @@ import pyodbc
 ############################ USER METHODS #####################################
 
 # INSERTS A NEW USER INTO THE SYSTEM
-def newUser(userName, commonName, email, phone, birthday, description):
+def newUser(userName, password, commonName, email, phone, birthday, description):
     cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
                       "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
                       "Database=master;"
@@ -18,15 +18,37 @@ def newUser(userName, commonName, email, phone, birthday, description):
     cursor = cnxn.cursor()
     cursor.execute("SELECT MAX(UserId) FROM UserTable")
     
-    userId = cursor.fetchone()[0] + 1
+    userId = cursor.fetchone()[0]
+    if userId is None: 
+        userId = 1
+    else:
+        userId = userId + 1
         
     cursor = cnxn.cursor()
-    cursor.execute("INSERT INTO UserTable (UserID, UserName, CommonName, Email, Phone, Birthday, Description)" + 
-    " VALUES (" + str(userId) + ",'" + userName + "','" + commonName + 
+    cursor.execute("INSERT INTO UserTable (UserID, UserName, Password, CommonName, Email, Phone, Birthday, Description)" + 
+    " VALUES (" + str(userId) + ",'" + userName + "',ENCRYPTBYPASSPHRASE('team25','" + password + "'),'" + commonName + 
     "','" + email + "','" + phone + "','" + birthday + "'" + ",'" + description + "')")
     cnxn.commit()
     
     newUserTopic(userId, "All")
+
+
+#VALIDATES A USERNAME AND PASSWORD
+def validateLogin(username, password):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT UserId FROM UserTable WHERE UserName='" + username + "' AND " +
+    "CONVERT(varchar(50), DECRYPTBYPASSPHRASE('team25', Password))='" + password + "'")
+    
+    ret = cursor.fetchone()
+    if ret is None:
+        return -1
+    else:
+        return ret[0]
     
    
 # UPDATES A USER PROFILE COMMON NAME
@@ -66,6 +88,20 @@ def updateDescription(userId, newDescription):
     cursor.execute("UPDATE UserTable SET Description = '" + newDescription +
                    "' WHERE UserId = '" + str(userId) + "'")
     cnxn.commit()
+
+
+# UPDATES A USER PASSWORD
+def updatePassword(userId, newPassword):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("UPDATE UserTable SET Password=ENCRYPTBYPASSPHRASE('team25','" + newPassword + "') " +
+    "WHERE UserId=" + str(userId))
+    cnxn.commit()
+
     
 # ADDS A TOPIC TO THE USERS PROFILE
 def newUserTopic(userId, topic):
@@ -113,6 +149,24 @@ def getUserPosts(userId):
     return cursor.fetchall()
 
 
+# GETS ALL TOPICS FOR A PARTICULAR USER
+def getUserTopics(userId):
+    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
+                      "Database=master;"
+                      "Trusted_Connection=yes;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT Topic FROM TopicTable WHERE UserId=" + str(userId))
+    
+    topics = []
+    for topic in cursor.fetchall():
+        topics.append(topic[0])
+
+    return topics
+
+
+# REMOVES A USER AND ALL THEIR DATA FROM THE DATABASE
 def deleteUser(userId):
     cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
                       "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
@@ -126,10 +180,13 @@ def deleteUser(userId):
     cursor.execute("DELETE FROM PostTable WHERE UserId=" + str(userId))
     
     cursor = cnxn.cursor()
-    cursor.execute("DELETE FROM DMTable WHERE UserId=" + str(userId) + " OR FollowingId=" + str(userId))
+    cursor.execute("DELETE FROM DMTable WHERE SenderId=" + str(userId) + " OR RecieverId=" + str(userId))
     
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM FollowerTable WHERE UserId=" + str(userId) + " OR FollowingId=" + str(userId))
+
+    cursor = cnxn.cursor()
+    cursor.execute("DELETE FROM TopicTable WHERE UserId=" + str(userId))
     
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM LikeTable WHERE UserId=" + str(userId))    
@@ -167,7 +224,7 @@ def unfollowUser(userId, followingId):
     cnxn.commit()
     
 
-# ALLOWS A USER TO UNFOLLOW A USER-TOPIC COMBINATION
+# ALLOWS A USER TO UPDATE TOPICS THEY FOLLOW FOR A PARTICULAR USER
 def updateFollow(userId, followingId, topics = []):
     unfollowUser(userId, followingId)
     
@@ -179,7 +236,7 @@ def updateFollow(userId, followingId, topics = []):
 
 ############################ GENERAL METHODS ##################################
 
-# VALIDATES NEW EMAILS FOR NEW USERS    
+# VALIDATES NEW EMAILS FOR NEW USERS; RETURNS TRUE IF NOT IN THE DATABASE    
 def validateEmail(email):
     cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
                       "Server=DESKTOP-JLT30RP\SQLEXPRESS;"
@@ -220,7 +277,11 @@ def getUserId(email):
     cursor = cnxn.cursor()
     cursor.execute("SELECT TOP 1 UserId FROM UserTable WHERE Email = '" + email + "'")
     
-    return cursor.fetchone()[0]
+    ret = cursor.fetchone()
+    if ret is None:
+        return -1
+    else:
+        return ret[0]
 
 ###############################################################################
 
@@ -239,12 +300,16 @@ def newPost(userId, postText, topics):
     cursor = cnxn.cursor()
     cursor.execute("SELECT MAX(PostId) FROM PostTable")
     
-    PostId = cursor.fetchone()[0] + 1
+    postId = cursor.fetchone()[0]
+    if postId is None:
+        postId = 1
+    else:
+        postId = postId + 1
     
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO PostTable (PostId, UserId, PostText, Topics, Timestamp)" +
-                   " VALUES (" + str(PostId) + "," + str(userId) + ",'" + postText + "','" +
-                   topics + "','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
+                   " VALUES (" + str(postId) + "," + str(userId) + ",'" + postText + "','" +
+                   topics + ",All','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
     cnxn.commit()
 
 
@@ -300,7 +365,7 @@ def getPost(postId):
     cursor = cnxn.cursor()
     cursor.execute("SELECT * FROM PostTable WHERE PostId = " + str(postId))
     
-    print(cursor.fetchone())
+    return cursor.fetchone()
 
 # ADDS A LIKE TO A POST
 def like(userId, postId):
