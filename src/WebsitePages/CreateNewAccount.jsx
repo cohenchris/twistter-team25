@@ -1,6 +1,6 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
-import { Form, Button, Col, Alert } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import { FormInput } from "shards-react";
 import { otherDivStyle } from "..";
 
@@ -39,8 +39,7 @@ class NewUserForm extends React.Component {
       )
     ) {
       errors["password"] =
-        "Password must be between 8-20 characters and contain at least one\
-        uppercase letter, lowercase letter, number, and special character.";
+        "Password must be between 8-20 characters and contain at least one uppercase letter, lowercase letter, number, and special character.";
       isValid = false;
     } else if (fields["password"].localeCompare(fields["password_duplicate"])) {
       errors["password_duplicate"] = "Passwords must match";
@@ -188,7 +187,7 @@ class NewUserForm extends React.Component {
  */
 
 function validate_password(pass) {
-  if (typeof pass == "undefined" || pass == "") {
+  if (typeof pass === "undefined" || pass === "") {
     return true;
   }
   return /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/.test(
@@ -197,14 +196,14 @@ function validate_password(pass) {
 }
 
 function validate_birthday(bday) {
-  if (typeof bday == "undefined" || bday == "") {
+  if (typeof bday === "undefined" || bday === "") {
     return true;
   }
   return /^((0|1)\d{1})\/((0|1|2)\d{1})\/((19|20)\d{2})$/.test(bday);
 }
 
 function validate_phone(phone) {
-  if (typeof phone == "undefined" || phone == "") {
+  if (typeof phone === "undefined" || phone === "") {
     return true;
   }
   return /^\d{3}-\d{3}-\d{4}$/.test(phone);

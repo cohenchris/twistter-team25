@@ -16,29 +16,33 @@ import "../../assets/quill.css";
 export default class Editor extends React.Component {
   constructor() {
     super();
-    this.state = { characters_remaining: 150, valid_post: true, text: "" };
+    this.state = {
+      post_characters_remaining: 150,
+      valid_post: true,
+      text: ""
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(text_value) {
-    let characters_remaining = this.state.characters_remaining;
+    let post_characters_remaining = this.state.post_characters_remaining;
     let valid_post = this.state.valid_post;
     this.setState({ text: text_value });
 
-    /* strips html text so real length is obtained */
+    /* strips html text so real length of post body is obtained */
     var html = this.state.text;
     var div = document.createElement("div");
     div.innerHTML = html;
     var stripped_text = div.textContent || div.innerText || "";
 
-    characters_remaining = 150 - stripped_text.length;
-    if (characters_remaining < 0) {
+    post_characters_remaining = 150 - stripped_text.length;
+    if (post_characters_remaining < 0) {
       valid_post = false;
     } else {
       valid_post = true;
     }
     this.setState({
-      characters_remaining: characters_remaining,
+      post_characters_remaining: post_characters_remaining,
       valid_post: valid_post
     });
   }
@@ -52,6 +56,7 @@ export default class Editor extends React.Component {
               size="lg"
               className="mb-3"
               placeholder="Your Post Title"
+              maxLength={45}
               required
             />
             <ReactQuill
