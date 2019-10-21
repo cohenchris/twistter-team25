@@ -145,33 +145,57 @@ def validate_email():
 	return render_template('sample.html', **locals())
 
 
+@app.route("/validate-username")
+def validate_usernmae():
+	# Get info
+	username = "user"
+	db.validateUsername(username)
+
+	return render_template('sample.html', **locals());
+
+
 @app.route("/get-user-id-from-email")
 def get_id_from_email():
+	email = "email"
+	db.getUserId(email)	
 	return render_template('sample.html', **locals())
 
 
 @app.route("/create-post")
 def post():
+	userId = 0;
+	postText = "This is a post"
+	topics = "topics"
+	db.newPost(userId, postText, topics)
 	return render_template('sample.html', **locals())
 
 
 @app.route("/get-all-posts")
 def get_all_posts():
+	db.getAllPosts()
 	return render_template('sample.html', **locals())
 
 
 @app.route("/get-topic-posts")
 def get_all_topic_posts():
+	topic = "topic"
+	db.getAllTopicPosts(topic)
 	return render_template('sample.html', **locals())
 
 
 @app.route("/delete-post")
 def delete_post():
+	posttId = 0;
+	db.deletePost(postId)
 	return render_template('sample.html', **locals())
 
 
 @app.route("/dm-user")
 def dm_user():
+	senderId = 0;
+	receiverId = 1;
+	message = "This is a message"
+	db.newDm(senderId, receiverId, message)
 	return render_template('sample.html', **locals())
 
 
