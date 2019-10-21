@@ -32,6 +32,7 @@ class NewUserForm extends React.Component {
   validate_form() {
     let fields = this.state.fields;
     let errors = {};
+    let isValid = true;
     if (
       !fields["password"].match(
         /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/
@@ -40,12 +41,23 @@ class NewUserForm extends React.Component {
       errors["password"] =
         "Password must be between 8-20 characters and contain at least one\
         uppercase letter, lowercase letter, number, and special character.";
-      this.setState({ errors: errors });
-      return false;
+      isValid = false;
+    } else if (fields["password"].localeCompare(fields["password_duplicate"])) {
+      errors["password_duplicate"] = "Passwords must match";
+      isValid = false;
     }
-    fields["password"] = "";
-    this.setState({ fields: fields });
-    return true;
+    if (
+      !fields["bday"].match(/^((0|1)\d{1})\/((0|1|2)\d{1})\/((19|20)\d{2})$/)
+    ) {
+      errors["bday"] = "Birthday must be in the format 'MM/DD/YYYY'";
+      isValid = false;
+    }
+    if (!fields["phone"].match(/^\d{3}-\d{3}-\d{4}$/)) {
+      errors["phone"] = "Phone number must be in the format '###-###-####'";
+      isValid = false;
+    }
+    this.setState({ errors: errors });
+    return isValid;
   }
 
   handleChange(evt) {
@@ -59,8 +71,12 @@ class NewUserForm extends React.Component {
     if (this.validate_form()) {
       let fields = {};
       let errors = {};
-      fields["password"] = "";
+      //fields["password"] = "";
       errors["password"] = "";
+      //fields["password_duplicate"] = "";
+      errors["password_duplicate"] = "";
+      //fields["phone"] = "";
+      errors["phone"] = "";
       this.setState({ fields: fields, errors: errors });
       alert("submitted");
     }
@@ -104,11 +120,25 @@ class NewUserForm extends React.Component {
         <Form.Row>
           <Col>
             <label>Birthday (MM/DD/YYYY)</label>
-            <FormInput placeholder="MM/DD/YYYY" required></FormInput>
+            <FormInput
+              placeholder="MM/DD/YYYY"
+              name="bday"
+              onChange={this.handleChange}
+              isInvalid={!validate_birthday(this.state.fields.bday)}
+              required
+            ></FormInput>
+            <p className="errMsg">{this.state.errors.bday}</p>
           </Col>
           <Col>
             <label>Phone Number</label>
-            <FormInput placeholder="555-555-5555" required></FormInput>
+            <FormInput
+              placeholder="###-###-####"
+              name="phone"
+              onChange={this.handleChange}
+              isInvalid={!validate_phone(this.state.fields.phone)}
+              required
+            ></FormInput>
+            <p className="errMsg">{this.state.errors.phone}</p>
           </Col>
         </Form.Row>
         <Form.Row>
@@ -127,9 +157,13 @@ class NewUserForm extends React.Component {
             <br></br>
             <Form.Control
               type="password"
+              name="password_duplicate"
               placeholder="Enter Password Again"
+              value={this.state.fields.password_duplicate}
+              onChange={this.handleChange}
               required
             />
+            <p className="errMsg">{this.state.errors.password_duplicate}</p>
           </Form.Group>
         </Form.Row>
         <br></br>
@@ -154,10 +188,24 @@ class NewUserForm extends React.Component {
  */
 
 function validate_password(pass) {
-  if (typeof pass == "undefined") {
+  if (typeof pass == "undefined" || pass == "") {
     return true;
   }
   return /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/.test(
     pass
   );
+}
+
+function validate_birthday(bday) {
+  if (typeof bday == "undefined" || bday == "") {
+    return true;
+  }
+  return /^((0|1)\d{1})\/((0|1|2)\d{1})\/((19|20)\d{2})$/.test(bday);
+}
+
+function validate_phone(phone) {
+  if (typeof phone == "undefined" || phone == "") {
+    return true;
+  }
+  return /^\d{3}-\d{3}-\d{4}$/.test(phone);
 }
