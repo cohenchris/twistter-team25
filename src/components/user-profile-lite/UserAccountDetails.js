@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -13,6 +13,7 @@ import {
   FormTextarea,
   Button
 } from "shards-react";
+import Alert from "react-bootstrap/Alert";
 import FormCheck from "react-bootstrap/FormCheck";
 
 const UserAccountDetails = ({ title }) => (
@@ -109,7 +110,14 @@ const UserAccountDetails = ({ title }) => (
                 />
               </Col>
             </Row>
-            <Button theme="dark">Update Account</Button>
+            <Row>
+              <Col>
+                <Button theme="dark">Update Account</Button>
+              </Col>
+              <Col>
+                <DeleteAccountButton />
+              </Col>
+            </Row>
           </Form>
         </Col>
       </ListGroupItem>
@@ -127,5 +135,28 @@ UserAccountDetails.propTypes = {
 UserAccountDetails.defaultProps = {
   title: "Account Details"
 };
+
+function DeleteAccountButton() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <>
+      <Alert variant="danger" show={show}>
+        <Alert.Heading>WARNING</Alert.Heading>
+        <p>CONTINUING WILL PERMANENTLY DELETE YOUR ACCOUNT!</p>
+        <hr />
+        <Button onClick={() => setShow(false)}>
+          Yes, I would like to permanently delete my account.
+        </Button>
+      </Alert>
+
+      {!show && (
+        <Button className="float-right" onClick={() => setShow(true)}>
+          Delete Account
+        </Button>
+      )}
+    </>
+  );
+}
 
 export default UserAccountDetails;
