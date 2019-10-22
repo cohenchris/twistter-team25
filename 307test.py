@@ -6,6 +6,7 @@ Created on Thu Aug 29 23:02:30 2019
 """
 
 import DatabaseLibrary as d
+import time
 
 #d.newUser("kbuzza", "password", "Kyle", "kbuzza@purdue.edu", "4129134625", "6/13/1999", "This is my description.")
 #d.newUser("testuser1", "pass1", "User1", "test1@test.net", "1111111111", "1/1/2019", "desc1")
@@ -78,11 +79,7 @@ import DatabaseLibrary as d
 #d.newPost(3, "Post 7", "Gaming")
 #d.newPost(3, "Post 8", "Sports,News")
 #d.newPost(3, "Post 9", "Gaming,Entertainment")
-
-
-#print(d.getPost(1))
-#print(d.getPost(2))
-#print(d.getPost(3))
+#d.newPost(1, "Post 10", "")
 
 
 #print(d.getAllPosts())
@@ -111,20 +108,45 @@ import DatabaseLibrary as d
 
 
 #d.deletePost(4)
-
 #d.deleteUser(3)
 
 
-
-
-
-
-
-
 #d.like(1,1)
-
 #d.unlike(1,1)
 
-#d.newDM(2,1,'message3')
 
-#d.deleteUser(1)
+#d.retweet(1,11)
+#d.unretweet(1,11)
+#d.retweet(2,1)
+
+
+#print(d.getUserPosts(1))
+#print(d.getAllPosts())
+#print(d.getAllTopicPosts("News"))
+#print(d.getUserTimeline(1))
+
+
+#d.newDM(1,2,'message1')
+#time.sleep(1.5)
+#d.newDM(2,1,'message2')
+#time.sleep(1.5)
+#d.newDM(1,2,'message3')
+#time.sleep(1.5)
+#d.newDM(2,1,'message4')
+#time.sleep(1.5)
+#d.newDM(1,2,'message5')
+#time.sleep(1.5)
+#d.newDM(2,1,'message6')
+
+#d.newDM(1,3,'message7')
+#d.newDM(1,3,'message8')
+
+
+#d.deleteDMs(1,2)
+#d.deleteDMs(2,1)
+
+
+#print(d.getDMConvo(1,2))
+
+
+#print(d.getDMList(1))
