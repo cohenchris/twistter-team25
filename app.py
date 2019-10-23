@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template
+from flask import Flask, url_for, redirect, render_template, request
 import DatabaseLibrary as db
 
 
@@ -11,18 +11,27 @@ def display_home_page():
     return render_template('sample.html', **locals())
 
 
-@app.route("/user-create-new-user")
+@app.route("/user-create-new-user", methods=['POST'])
 def create_user():
     # Get the info form the frontend
-    username = "username"
-    commonName = "commonname"
-    email = "email"
-    phone = "111-111-1111"
-    birthday = "December 25, 0000"
-    description = "this is a description"
-    db.newUser(username, commonName, email, phone, birthday, description)
+    data = request.get_json()
+    username = data['username']
+    commonName = data['commonName']
+    email = data['email']
+    phone = data['phone']
+    birthday = data['birthday']
+    description = data['description']
+    # db.newUser(username, commonName, email, phone, birthday, description)
 
-    return render_template('sample.html', **locals())
+    return '''
+    Created User!
+    username: {}
+    commonName: {}
+    email: {}
+    phone: {}
+    birthday: {}
+    description: {}
+    '''.format(username, commonName, email, phone, birthday, description)
 
 
 @app.route("/user-update-common-name")
