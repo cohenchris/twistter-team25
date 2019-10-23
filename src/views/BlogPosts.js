@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
 
+//TODO: fetch posts based on prop from a certain topic
+
 export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
