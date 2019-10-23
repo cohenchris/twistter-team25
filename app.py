@@ -10,142 +10,260 @@ app = Flask(__name__)
 def display_home_page():
     return render_template('sample.html', **locals())
 
+# TODO: Un-comment all the calls to the database
 
 @app.route("/user-create-new-user", methods=['POST'])
 def create_user():
-    # Get the info form the frontend
+    """
+    This function is used to create a new user and push it to the database. In
+      order to use this function, make a POST request to function url above and
+      send a json file with the appropriate information.
+    :return: Display information about the newly created user.
+    """
+
+    #  Get the from the json file sent with the request
     data = request.get_json()
+
     username = data['username']
     commonName = data['commonName']
     email = data['email']
     phone = data['phone']
     birthday = data['birthday']
     description = data['description']
+
+    #  Push the info to the database
     # db.newUser(username, commonName, email, phone, birthday, description)
 
     return '''
-    Created User!
-    username: {}
-    commonName: {}
-    email: {}
-    phone: {}
-    birthday: {}
-    description: {}
-    '''.format(username, commonName, email, phone, birthday, description)
+Created User!
+  username: {}
+  commonName: {}
+  email: {}
+  phone: {}
+  birthday: {}
+  description: {}
+'''.format(username, commonName, email, phone, birthday, description)
 
 
-@app.route("/user-update-common-name")
+@app.route("/user-update-common-name", methods=['POST'])
 def update_common_name():
-    # Get the info from the frontend
-    userId = 0  # Stored in the background of the front end
-    newCommonName = "new Common Name"
+    """
+    This function is used to update a user's common name in the database.
+    :return: Display information about about the call.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.updateCommonName(userId, newCommonName)
+    userId = data['userId']
+    newCommonName = data['newCommonName']
 
-    return render_template('sample.html', **locals())
+    #  Push the info to the database
+    # db.updateCommonName(userId, newCommonName)
+
+    return """
+Updated Users Common Name!
+  userID: {}
+  newCommonName: {}
+""".format(userId, newCommonName)
 
 
-@app.route("/user-update-phone")
+@app.route("/user-update-phone", methods=['POST'])
 def update_phone_number():
-    # Get the info from the database
-    userId = 0  # Stored in the background of the front end
-    newPhoneNumber = "222-222-2222"
+    """
+    This function is used to update a user's phone number.
+    :return: Display information about the updated information.
+    """
+    #  Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.updatePhone(userId, newPhoneNumber)
+    userId = data['userId']
+    newPhoneNumber = data['newPhoneNumber']
 
-    return render_template('sample.html', **locals())
+    #  Push the info to the database
+    # db.updatePhone(userId, newPhoneNumber)
+
+    return """
+Updated User Phone Number!
+  userId: {}
+  newPhoneNumber: {}
+""".format(userId, newPhoneNumber)
 
 
-@app.route("/user-update-description")
+@app.route("/user-update-description", methods=['POST'])
 def update_description():
-    # Get the info from the database
-    userId = 0  # Stored in the background of the front end
-    newDescription = "new description"
+    """
+    This function is called to update a user's description.
+    :return: Display information about the updated information.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.updateDescription(userId, newDescription)
+    userId = data["userId"]
+    newDescription = ["newDescription"]
 
-    return render_template('sample.html', **locals())
+    # Send the info to the database
+    # db.updateDescription(userId, newDescription)
+
+    return """
+Updated Description!
+  userId: {}
+  newDescription: {}
+""".format(userId, newDescription)
 
 
-@app.route("/user-add-new-user-topic")
+@app.route("/user-add-new-user-topic", methods=['POST'])
 def add_user_topic():
-    # Get the info from the database
-    userId = 0  # Stored in the background of the front end
-    newTopic = "Topic"
+    """
+    This function is used to add a new topic to the user's profile.
+    :return: Display information about the function call.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.newUserTopic(userId, newTopic)
+    userId = data['userId']
+    newTopic = data['newTopic']
 
-    return render_template('sample.html', **locals())
+    # db.newUserTopic(userId, newTopic)
+
+    return """
+Added a new Topic!
+  userId: {}
+  newTopic: {}
+""".format(userId, newTopic)
 
 
-@app.route("/user-get-user-timeline")
+@app.route("/user-get-user-timeline", methods=['POST'])
 def get_user_timeline():
-    # Get the info from the database
-    userId = 0  # The user ID of the timeline to show
+    """
+    This function is used to get the timeline of a specific user
+    :return: Display information about the timeline
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.getUserTimeline(userId)
+    userId = data['userId']
 
-    return render_template('sample.html', **locals())
+    # TODO: Figure out what how to send all of the rows back to the front end
+    #  for display
+
+    # rows = db.getUserTimeline(userId)
+
+    return """
+Retireved Timeline!
+  userId: {}
+""".format(userId)
 
 
 @app.route("/user-get-user-posts")
 def get_user_posts():
-    # Get the info from the database
-    userId = 0  # The user ID of the posts to show
+    """
+    This function is used to get all of the posts of the specific user.
+    :return: Display information about the posts.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.getUserPosts(userId)
+    userId = data['userId']
 
-    return render_template('sample.html', **locals())
+    # rows = db.getUserPosts(userId)
+
+    return """
+Retrieved User Posts!
+  userId: {}
+""".format(userId)
 
 
 @app.route("/user-delete")
 def delete_user():
-    # Get the info from the database
-    userId = 0  # The user ID to delete
+    """
+    This function is called in order to delete a user.
+    :return: Display information about deleted user
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.deleteUser(userId)
+    userId = data['userId']
 
-    return render_template('sample.html', **locals())
+    # db.deleteUser(userId)
+
+    return """
+Deleted User!
+  userId: {}
+""".format(userId)
 
 
 @app.route("/follow-user")
 def follow_new_user():
-    # Get the info from the database
-    userId = 0  # The user ID requesting a new follow
-    followingId = 1  # The id of the user who userId wants to follow
+    """
+    This function is used to follow a new user.
+    :return: Display information about the update.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.newFollow(userId, followingId)
+    userId = data['userId']
+    followingId = data['followingId']
 
-    return render_template('sample.html', **locals())
+    # db.newFollow(userId, followingId)
+
+    return """
+Followed a new user!
+  userId: {}
+  followingId: {}
+""".format(userId, followingId)
 
 
 
 @app.route("/unfollow")
 def unfollow_user():
-    # Get the info from the database
-    userId = 0  # The user ID requesting a new follow
-    followingId = 1  # The id of the user who userId wants to unfollow
+    """
+    This function is used to unfollow a user.
+    :return: Display information about the action.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.unfollowUser(userId, followingId)
+    userId = data['userId']
+    followingId = data['followingId']
 
-    return render_template('sample.html', **locals())
+    # db.unfollowUser(userId, followingId)
+
+    return """
+Unfollowed User!
+  userId: {}
+  followingId: {}
+""".format(userId, followingId)
 
 
 @app.route("/follow-users-topics")
 def follow_user_topics():
-    # Get the info from the database
-    userId = 0  # The user ID requesting a new follow
-    followingId = 1  # The id of the user who userId wants to follow
-    topicsSelected = []
+    """
+    This function is used to update the database to include following a user's
+      topics.
+    :return: Display information about the action.
+    """
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-    db.updateFollow(userId, followingId, topics=topicsSelected)
+    userId = data['userId']
+    followingId = data['followingId']
+    topicsSelected = data['topicsSelected']
 
-    return render_template('sample.html', **locals())
+    # db.updateFollow(userId, followingId, topics=topicsSelected)
+
+    return """
+Followed a user's topics!
+  userId: {}
+  followingId: {}
+  topicsSelected: {}
+""".format(userId, followingId, topicsSelected)
 
 
 @app.route("/validate-email")
 def validate_email():
-    # Get the info from the database
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     email = "email"  # The user ID requesting a new follow
 
     db.validateEmail(email)
@@ -155,7 +273,9 @@ def validate_email():
 
 @app.route("/validate-username")
 def validate_usernmae():
-    # Get info
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     username = "user"
     db.validateUsername(username)
 
@@ -164,6 +284,9 @@ def validate_usernmae():
 
 @app.route("/get-user-id-from-email")
 def get_id_from_email():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     email = "email"
     db.getUserId(email)
     return render_template('sample.html', **locals())
@@ -171,6 +294,9 @@ def get_id_from_email():
 
 @app.route("/create-post")
 def post():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     userId = 0;
     postText = "This is a post"
     topics = "topics"
@@ -186,6 +312,9 @@ def get_all_posts():
 
 @app.route("/get-topic-posts")
 def get_all_topic_posts():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     topic = "topic"
     db.getAllTopicPosts(topic)
     return render_template('sample.html', **locals())
@@ -193,6 +322,9 @@ def get_all_topic_posts():
 
 @app.route("/delete-post")
 def delete_post():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     postId = 0;
     db.deletePost(postId)
     return render_template('sample.html', **locals())
@@ -200,6 +332,9 @@ def delete_post():
 
 @app.route("/dm-user")
 def dm_user():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
     senderId = 0;
     receiverId = 1;
     message = "This is a message"
