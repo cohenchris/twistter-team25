@@ -297,49 +297,80 @@ def post():
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    userId = 0;
-    postText = "This is a post"
-    topics = "topics"
+    userId = data['userId']
+    postText = data['postText']
+    topics = data['topics']
     db.newPost(userId, postText, topics)
     return render_template('sample.html', **locals())
 
 
-@app.route("/get-all-posts")
+@app.route("/get-all-posts", methods=['POST'])
 def get_all_posts():
-    db.getAllPosts()
-    return render_template('sample.html', **locals())
+    """
+    This function is used to get all of the posts from all of the topics from
+      the database.
+    :return: Display Information about the action.
+    """
+    # rows = db.getAllPosts()
+    return "Success"
 
 
-@app.route("/get-topic-posts")
+@app.route("/get-topic-posts", methods=['POST'])
 def get_all_topic_posts():
+    """
+    This function is used to retrieve all of the posts of a certain topic
+      from the database.
+    :return: Display information about the action.
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    topic = "topic"
-    db.getAllTopicPosts(topic)
-    return render_template('sample.html', **locals())
+    topic = data['topic']
+    # rows = db.getAllTopicPosts(topic)
+    return"""
+Retrieved posts from topic!
+  topic: {}
+""".format(topic)
 
 
-@app.route("/delete-post")
+@app.route("/delete-post", methods=['POST'])
 def delete_post():
+    """
+    This function is used to delete a post from the database.
+    :return: Display information about the action.
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    postId = 0;
-    db.deletePost(postId)
-    return render_template('sample.html', **locals())
+    postId = data['postId']
+    # db.deletePost(postId)
+    return """
+Deleted Post!
+  postId: {}
+""".format(postId)
 
 
-@app.route("/dm-user")
+@app.route("/dm-user", methods=['POST'])
 def dm_user():
+    """
+    This function is used to send a DM to the database
+    :return: Display information message about the action.
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    senderId = 0;
-    receiverId = 1;
-    message = "This is a message"
-    db.newDm(senderId, receiverId, message)
-    return render_template('sample.html', **locals())
+    senderId = data['senderId']
+    receiverId = data['receiverId']
+    message = data['Message']
+
+    # db.newDM(senderId, receiverId, message)
+
+    return """
+DM Sent!
+  senderId: {}
+  receiverId: {}
+  message: {}
+""".format(senderId, receiverId, message)
 
 
 
