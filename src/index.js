@@ -15,6 +15,7 @@ import ProfilePage from "./WebsitePages/ProfilePage";
 import ProfileSettings from "./WebsitePages/ProfileSettings";
 import DmPage from "./WebsitePages/DmPage/DmPage";
 import App from './components/App';
+import MiscTopicPage from "./WebsitePages/MiscTopicPage";
 
 export const blogDivStyle = {
   marginLeft: "200px",
