@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import {
   Card,
   CardHeader,
@@ -7,139 +7,111 @@ import {
   ListGroupItem,
   Row,
   Col,
-  Form,
-  FormGroup,
-  FormInput,
-  FormTextarea,
   Button,
   Progress
 } from "shards-react";
 
-const UserDetails = ({ userDetails }) => (
-  <Card small className="mb-4 pt-3">
-    <CardHeader className="border-bottom text-center">
-      <div className="mb-3 mx-auto">
-        <img
-          className="rounded-circle"
-          src={userDetails.avatar}
-          alt={userDetails.name}
-          width="110"
-        />
-      </div>
-      <h4 className="mb-0">{userDetails.name}</h4>
-      <span className="text-muted d-block mb-2">{userDetails.jobTitle}</span>
-      <Button pill outline size="sm" className="mb-2">
-        <i className="material-icons mr-1">person_add</i> Follow
-      </Button>
-    </CardHeader>
-    <ListGroup flush>
-      <ListGroupItem className="px-4">
-        <div className="progress-wrapper">
-          <strong className="text-muted d-block mb-2">
-            {userDetails.performanceReportTitle}
-          </strong>
-          <Progress
-            className="progress-sm"
-            value={userDetails.performanceReportValue}
-          >
-            <span className="progress-value">
-              {userDetails.performanceReportValue}%
-            </span>
-          </Progress>
-        </div>
-      </ListGroupItem>
-      <ListGroupItem className="p-4">
-        <strong className="text-muted d-block mb-2">
-          {userDetails.metaTitle}
-        </strong>
-        <span>{userDetails.metaValue}</span>
-      </ListGroupItem>
-      <Col>
-        <Form>
-          <Row form>
-            {/* First Name */}
-            <Col md="6" className="form-group">
-              <label htmlFor="feFirstName">First Name</label>
-              <FormInput
-                id="feFirstName"
-                placeholder="First Name"
-                required
-                onChange={() => {}}
-              />
-            </Col>
-            {/* Last Name */}
-            <Col md="6" className="form-group">
-              <label htmlFor="feLastName">Last Name</label>
-              <FormInput
-                id="feLastName"
-                placeholder="Last Name"
-                required
-                onChange={() => {}}
-              />
-            </Col>
-          </Row>
-          <Row form>
-            {/* Email */}
-            <Col md="6" className="form-group">
-              <label htmlFor="feEmail">Email</label>
-              <FormInput
-                type="email"
-                id="feEmail"
-                placeholder="Email Address"
-                required
-                onChange={() => {}}
-                autoComplete="email"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <label>Birthday (MM/DD/YYYY)</label>
-              <FormInput placeholder="MM/DD/YYYY" required />
-            </Col>
-            <Col>
-              <FormGroup controlId="phoneNum">
-                <label>Phone Number</label>
-                <FormInput placeholder="555-555-5555" required></FormInput>
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            {/* Description */}
-            <Col md="12" className="form-group">
-              <label htmlFor="feDescription">Description</label>
-              <FormTextarea
-                id="feDescription"
-                placeholder="Description here..."
-                rows="5"
-                required
-              />
-            </Col>
-          </Row>
-          <Button theme="dark">Update Account</Button>
-        </Form>
-      </Col>
-    </ListGroup>
-  </Card>
-);
+export default class UserDetails extends React.Component {
+  constructor(props) {
+    super(props);
 
-UserDetails.propTypes = {
-  /**
-   * The user details object.
-   */
-  userDetails: PropTypes.object
-};
-
-UserDetails.defaultProps = {
-  userDetails: {
-    name: "Chris Cohen",
-    avatar: require("./../../images/Chris_Test_Profile_Pic.jpg"),
-    jobTitle: "Software Engineer",
-    performanceReportTitle: "Workload",
-    performanceReportValue: 74,
-    metaTitle: "Description",
-    metaValue: "please let me be done with React i wanna die"
+    this.state = {
+      avatar: "../images/Chris_Test_Profile_Pic.jpg",
+      name: "Chris Cohen",
+      birthday: "1/8/1999",
+      phone: "636-675-9358",
+      email: "cohen50@purdue.edu",
+      description: "please let me be done with React I wanna die"
+    };
   }
-};
 
-export default UserDetails;
+  render() {
+    return (
+      <Card small className="mb-4 pt-3">
+        <CardHeader className="border-bottom text-center">
+          <div className="mb-3 mx-auto">
+            {/*
+            <img
+              className="rounded-circle"
+              src={this.state.avatar}
+              alt={this.state.name}
+              width="110"
+            />
+            */}
+          </div>
+          <h4 className="mb-0">{this.state.name}</h4>
+          {/*<span className="text-muted d-block mb-2">{this.state.jobTitle}</span>*/}
+          <br />
+          <Button pill outline size="sm" className="mb-2">
+            <i className="material-icons mr-1">person_add</i> Follow
+          </Button>
+        </CardHeader>
+        <ListGroup flush>
+          <ListGroupItem className="px-4">
+            <div className="progress-wrapper">
+              <strong className="text-muted d-block mb-2">
+                {this.state.performanceReportTitle}
+              </strong>
+              <Progress
+                className="progress-sm"
+                value={this.state.performanceReportValue}
+              >
+                <span className="progress-value">
+                  {this.state.performanceReportValue}%
+                </span>
+              </Progress>
+            </div>
+          </ListGroupItem>
+          <ListGroupItem className="p-4">
+            <strong className="text-muted d-block mb-2">
+              {this.state.metaTitle}
+            </strong>
+            <span>{this.state.metaValue}</span>
+          </ListGroupItem>
+          <Col>
+            <Row>
+              {/* First Name */}
+              <Col md="6" className="form-group">
+                {/*<label htmlFor="feFirstName">First Name</label>*/}
+                <p>{this.state.name}</p>
+              </Col>
+              {/* Last Name */}
+              <Col md="6" className="form-group">
+                {/*<label htmlFor="feLastName">Last Name</label>*/}
+              </Col>
+            </Row>
+            <Row form>
+              {/* Email */}
+              <Col md="6" className="form-group">
+                <p>{this.state.email}</p>
+                {/*<label htmlFor="feEmail">Email</label>*/}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {/*<label>Birthday (MM/DD/YYYY)</label>*/}
+                <p>{this.state.birthday}</p>
+              </Col>
+              <Col>
+                <p>
+                  <strong>Phone Number</strong>
+                </p>
+                <p>{this.state.phone}</p>
+                {/*
+                <FormGroup controlId="phoneNum">
+                  <label>Phone Number</label>
+                </FormGroup>*/}
+              </Col>
+            </Row>
+            <Row form>
+              {/* Description */}
+              <Col md="12" className="form-group">
+                <label htmlFor="feDescription">Description</label>
+              </Col>
+            </Row>{" "}
+          </Col>
+        </ListGroup>
+      </Card>
+    );
+  }
+}

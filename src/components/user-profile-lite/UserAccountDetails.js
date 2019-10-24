@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Card,
   CardHeader,
@@ -16,10 +15,10 @@ import {
 import Alert from "react-bootstrap/Alert";
 import FormCheck from "react-bootstrap/FormCheck";
 
-const UserAccountDetails = ({ title }) => (
+const UserAccountDetails = () => (
   <Card small className="mb-4" bg="secondary">
     <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
+      <h6 className="m-0">Account Details</h6>
     </CardHeader>
     <ListGroup flush>
       <ListGroupItem className="p-3">
@@ -30,7 +29,8 @@ const UserAccountDetails = ({ title }) => (
               <Col md="6" className="form-group">
                 <label htmlFor="feFirstName">First Name</label>
                 <FormInput
-                  id="feFirstName"
+                  id="FirstName"
+                  name="FirstName"
                   placeholder="First Name"
                   required
                   onChange={() => {}}
@@ -38,9 +38,10 @@ const UserAccountDetails = ({ title }) => (
               </Col>
               {/* Last Name */}
               <Col md="6" className="form-group">
-                <label htmlFor="feLastName">Last Name</label>
+                <label htmlFor="LastName">Last Name</label>
                 <FormInput
-                  id="feLastName"
+                  id="LastName"
+                  name="LastName"
                   placeholder="Last Name"
                   required
                   onChange={() => {}}
@@ -53,7 +54,8 @@ const UserAccountDetails = ({ title }) => (
                 <label htmlFor="feEmail">Email</label>
                 <FormInput
                   type="email"
-                  id="feEmail"
+                  id="Email"
+                  name="Email"
                   placeholder="Email Address"
                   required
                   onChange={() => {}}
@@ -65,16 +67,18 @@ const UserAccountDetails = ({ title }) => (
                 <label htmlFor="fePassword">Change Password</label>
                 <FormInput
                   type="password"
-                  id="fePassword"
+                  id="Password"
+                  name="Password"
                   placeholder="Password"
                   required
                   onChange={() => {}}
                   autoComplete="current-password"
                 />
-                <label htmlFor="fePassword">Confirm Password Change</label>
+                <label htmlFor="PasswordConfirm">Confirm Password Change</label>
                 <FormInput
                   type="password"
-                  id="fePassword"
+                  id="PasswordConfirm"
+                  name="PasswordConfirm"
                   placeholder="Password"
                   required
                   onChange={() => {}}
@@ -85,12 +89,22 @@ const UserAccountDetails = ({ title }) => (
             <Row>
               <Col>
                 <label>Birthday (MM/DD/YYYY)</label>
-                <FormInput placeholder="MM/DD/YYYY" required />
+                <FormInput
+                  placeholder="MM/DD/YYYY"
+                  id="Birthday"
+                  name="Birthday"
+                  required
+                />
               </Col>
               <Col>
-                <FormGroup controlId="phoneNum">
+                <FormGroup id="phoneNum">
                   <label>Phone Number</label>
-                  <FormInput placeholder="555-555-5555" required></FormInput>
+                  <FormInput
+                    placeholder="555-555-5555"
+                    id="Phone"
+                    name="Phone"
+                    required
+                  ></FormInput>
                 </FormGroup>
               </Col>
               <Col>
@@ -101,9 +115,10 @@ const UserAccountDetails = ({ title }) => (
             <Row form>
               {/* Description */}
               <Col md="12" className="form-group">
-                <label htmlFor="feDescription">Description</label>
+                <label htmlFor="Description">Description</label>
                 <FormTextarea
-                  id="feDescription"
+                  id="Description"
+                  name="Description"
                   placeholder="Description here..."
                   rows="5"
                   required
@@ -112,7 +127,9 @@ const UserAccountDetails = ({ title }) => (
             </Row>
             <Row>
               <Col>
-                <Button theme="dark">Update Account</Button>
+                <Button theme="dark" type="submit">
+                  Update Account
+                </Button>
               </Col>
               <Col>
                 <DeleteAccountButton />
@@ -124,17 +141,6 @@ const UserAccountDetails = ({ title }) => (
     </ListGroup>
   </Card>
 );
-
-UserAccountDetails.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string
-};
-
-UserAccountDetails.defaultProps = {
-  title: "Account Details"
-};
 
 function DeleteAccountButton() {
   const [show, setShow] = useState(false);

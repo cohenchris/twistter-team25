@@ -41,16 +41,14 @@ export default class NavigationBar extends React.Component {
             {/* Search Bar */}
             <Form>
               <Nav>
-                <Form inline>
-                  <FormControl
-                    type="text"
-                    placeholder="Search"
-                    className="mr-sm-2"
-                  />
-                  <Button variant="outline-light" type="submit">
-                    Go!
-                  </Button>
-                </Form>
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                />
+                <Button variant="outline-light" type="submit">
+                  Go!
+                </Button>
               </Nav>
             </Form>
           </Navbar>

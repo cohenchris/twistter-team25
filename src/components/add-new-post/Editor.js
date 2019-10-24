@@ -17,20 +17,42 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
+      title: "",
+      topic: "All",
+      text: "",
       post_characters_remaining: 150,
-      valid_post: true,
-      text: ""
+      valid_post: true
     };
     this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.handleTopicSelect = this.handleTopicSelect.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
+  }
+
+  submitForm() {
+    //TODO: POST THIS SHIT LMAO
+    const post_submission = {
+      title: this.state.title,
+      topic: this.state.topic,
+      text: this.state.text
+    };
+    console.log(post_submission);
+  }
+
+  handleTopicSelect(e) {
+    this.setState({ topic: e.target.value });
+  }
+
+  handleTitle(e) {
+    this.setState({ title: e.target.value });
   }
 
   handleChange(text_value) {
     let post_characters_remaining = this.state.post_characters_remaining;
     let valid_post = this.state.valid_post;
-    this.setState({ text: text_value });
 
     /* strips html text so real length of post body is obtained */
-    var html = this.state.text;
+    var html = text_value;
     var div = document.createElement("div");
     div.innerHTML = html;
     var stripped_text = div.textContent || div.innerText || "";
@@ -43,7 +65,8 @@ export default class Editor extends React.Component {
     }
     this.setState({
       post_characters_remaining: post_characters_remaining,
-      valid_post: valid_post
+      valid_post: valid_post,
+      text: text_value
     });
   }
 
@@ -57,6 +80,7 @@ export default class Editor extends React.Component {
               className="mb-3"
               placeholder="Your Post Title"
               maxLength={45}
+              onChange={this.handleTitle}
               required
             />
             <ReactQuill
@@ -66,9 +90,13 @@ export default class Editor extends React.Component {
               onChange={this.handleChange}
               required
             />
-            <p>{this.state.characters_remaining} characters remaining</p>
-            <FormGroup controlId="topicSelect">
-              <FormSelect placeholder="Topic" as="select" value="All">
+            <p>{this.state.post_characters_remaining} characters remaining</p>
+            <FormGroup id="topicSelect">
+              <FormSelect
+                placeholder="Topic"
+                as="select"
+                onChange={this.handleTopicSelect}
+              >
                 <option>All</option>
                 <option>Music</option>
                 <option>Computer Science</option>
@@ -87,7 +115,7 @@ export default class Editor extends React.Component {
             </Button>
           )}
           {this.state.valid_post && (
-            <Button type="submit" variant="dark">
+            <Button type="submit" variant="dark" onClick={this.submitForm}>
               Post
             </Button>
           )}

@@ -15,7 +15,7 @@ export default class ProfilePage extends React.Component {
         <br></br>
         <br></br>
         <h1>POSTS BY THIS USER</h1>
-        <BlogPosts />
+        {/*<BlogPosts />*/}
       </div>
     );
   }
