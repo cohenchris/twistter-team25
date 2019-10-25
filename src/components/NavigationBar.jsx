@@ -53,8 +53,6 @@ export default class NavigationBar extends React.Component {
             </Form>
           </Navbar>
         </Container>
-        {/*THIS H1 IS TO MAKE SURE THAT TEXT ISN'T ACCIDENTALLY RENDERED UNDER THE NAVBAR */}
-        <h1>navbar</h1>{" "}
       </div>
     );
   }

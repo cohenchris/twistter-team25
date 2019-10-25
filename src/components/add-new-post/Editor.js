@@ -17,11 +17,22 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      title: "",
-      topic: "All",
-      text: "",
+      PostId: 0,
+      PostTitle: "",
+      PostText: "",
+      Topics: "All",
+      Timestamp: "",
       post_characters_remaining: 150,
-      valid_post: true
+      valid_post: true,
+      b: [
+        {
+          UserId: 1,
+          UserName: "kbuzza",
+          CommonName: "Kyle Buzza",
+          Likes: 0,
+          Retweets: 0
+        }
+      ]
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -30,21 +41,47 @@ export default class Editor extends React.Component {
   }
 
   submitForm() {
+    var tempDate = new Date();
+    var date =
+      tempDate.getFullYear() +
+      "-" +
+      (tempDate.getMonth() + 1) +
+      "-" +
+      tempDate.getDate() +
+      "T" +
+      tempDate.getHours() +
+      ":" +
+      tempDate.getMinutes() +
+      ":" +
+      tempDate.getSeconds();
+
     //TODO: POST THIS SHIT LMAO
     const post_submission = {
-      title: this.state.title,
-      topic: this.state.topic,
-      text: this.state.text
+      PostId: this.state.PostId,
+      PostTitle: this.state.PostTitle,
+      Topics: this.state.Topics,
+      PostText: this.state.PostText,
+      Timestamp: date,
+      b: [
+        {
+          UserId: this.state.b[0].UserId,
+          UserName: this.state.b[0].UserName,
+          CommonName: this.state.b[0].CommonName,
+          Likes: this.state.b[0].Lines,
+          Retweets: this.state.b[0].Retweets
+        }
+      ]
     };
     console.log(post_submission);
   }
 
   handleTopicSelect(e) {
-    this.setState({ topic: e.target.value });
+    //TODO: concatenate this with 'All' always
+    this.setState({ Topics: e.target.value });
   }
 
   handleTitle(e) {
-    this.setState({ title: e.target.value });
+    this.setState({ PostTitle: e.target.value });
   }
 
   handleChange(text_value) {
@@ -66,7 +103,7 @@ export default class Editor extends React.Component {
     this.setState({
       post_characters_remaining: post_characters_remaining,
       valid_post: valid_post,
-      text: text_value
+      PostText: text_value
     });
   }
 
@@ -86,7 +123,7 @@ export default class Editor extends React.Component {
             <ReactQuill
               className="add-new-post__editor mb-1"
               name="post_text_box"
-              value={this.state.text}
+              value={this.state.PostText}
               onChange={this.handleChange}
               required
             />
