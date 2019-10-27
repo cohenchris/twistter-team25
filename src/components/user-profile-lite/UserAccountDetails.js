@@ -7,13 +7,11 @@ import {
   Row,
   Col,
   Form,
-  FormGroup,
   FormInput,
   FormTextarea,
   Button
 } from "shards-react";
 import Alert from "react-bootstrap/Alert";
-import FormCheck from "react-bootstrap/FormCheck";
 
 class UserAccountDetails extends React.Component {
   constructor() {
@@ -91,11 +89,10 @@ class UserAccountDetails extends React.Component {
                       id="DisplayName"
                       name="DisplayName"
                       placeholder="Display Name"
+                      defaultValue={this.state.CommonName}
                       onChange={this.handleName}
                     />
                   </Col>
-                </Row>
-                <Row form>
                   {/* Email */}
                   <Col md="6" className="form-group">
                     <label htmlFor="feEmail">Email</label>
@@ -103,11 +100,14 @@ class UserAccountDetails extends React.Component {
                       type="email"
                       id="Email"
                       name="Email"
+                      defaultValue={this.state.Email}
                       placeholder="Email Address"
                       onChange={this.handleEmail}
                       autoComplete="email"
                     />
                   </Col>
+                </Row>
+                <Row form>
                   {/* Password */}
                   <Col md="6" className="form-group">
                     <label htmlFor="Password">Change Password</label>
@@ -142,7 +142,8 @@ class UserAccountDetails extends React.Component {
                     <FormTextarea
                       id="Description"
                       name="Description"
-                      placeholder={this.state.Description}
+                      defaultValue={this.state.Description}
+                      placeholder="Description"
                       rows="5"
                       onChange={this.handleDescription}
                     />

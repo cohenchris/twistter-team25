@@ -1,7 +1,7 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
 import { Form, Button, Col } from "react-bootstrap";
-import { FormInput } from "shards-react";
+import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
 
 export default class CreateNewAccount extends React.Component {
@@ -27,6 +27,7 @@ class NewUserForm extends React.Component {
     this.submitUserRegistrationForm = this.submitUserRegistrationForm.bind(
       this
     );
+    this.validate_form = this.validate_form.bind(this);
   }
 
   validate_form() {
@@ -34,25 +35,15 @@ class NewUserForm extends React.Component {
     let errors = {};
     let isValid = true;
     if (
-      !fields["password"].match(
+      !fields["Password"].match(
         /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/
       )
     ) {
-      errors["password"] =
+      errors["Password"] =
         "Password must be between 8-20 characters and contain at least one uppercase letter, lowercase letter, number, and special character.";
       isValid = false;
-    } else if (fields["password"].localeCompare(fields["password_duplicate"])) {
-      errors["password_duplicate"] = "Passwords must match";
-      isValid = false;
-    }
-    if (
-      !fields["bday"].match(/^((0|1)\d{1})\/((0|1|2)\d{1})\/((19|20)\d{2})$/)
-    ) {
-      errors["bday"] = "Birthday must be in the format 'MM/DD/YYYY'";
-      isValid = false;
-    }
-    if (!fields["phone"].match(/^\d{3}-\d{3}-\d{4}$/)) {
-      errors["phone"] = "Phone number must be in the format '###-###-####'";
+    } else if (fields["Password"].localeCompare(fields["Password_Duplicate"])) {
+      errors["Password_Duplicate"] = "Passwords must match";
       isValid = false;
     }
     this.setState({ errors: errors });
@@ -70,14 +61,20 @@ class NewUserForm extends React.Component {
     if (this.validate_form()) {
       let fields = {};
       let errors = {};
-      //fields["password"] = "";
-      errors["password"] = "";
-      //fields["password_duplicate"] = "";
-      errors["password_duplicate"] = "";
-      //fields["phone"] = "";
-      errors["phone"] = "";
+      fields["CommonName"] = "";
+      errors["CommonName"] = "";
+      fields["UserName"] = "";
+      errors["UserName"] = "";
+      fields["Email"] = "";
+      errors["Email"] = "";
+      fields["Description"] = "";
+      errors["Description"] = "";
+      fields["Password"] = "";
+      errors["Password"] = "";
+      fields["Password_Duplicate"] = "";
+      errors["Password_Duplicate"] = "";
+      console.log(this.state.fields);
       this.setState({ fields: fields, errors: errors });
-      alert("submitted");
     }
   }
 
@@ -85,16 +82,30 @@ class NewUserForm extends React.Component {
     return (
       <Form onSubmit={this.submitUserRegistrationForm}>
         <Form.Row>
+          {/* CommonName */}
           <Col>
-            <Form.Group controlId="FirstName" required>
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" placeholder="First Name" required />
+            <Form.Group controlId="CommonName" required>
+              <Form.Label>Display Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="CommonName"
+                onChange={this.handleChange}
+                placeholder="Display Name"
+                required
+              />
             </Form.Group>
           </Col>
+          {/* UserName */}
           <Col>
-            <Form.Group controlId="LastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" placeholder="Last Name" required />
+            <Form.Group controlId="UserName" required>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="UserName"
+                onChange={this.handleChange}
+                placeholder="Username"
+                required
+              />
             </Form.Group>
           </Col>
         </Form.Row>
@@ -104,68 +115,55 @@ class NewUserForm extends React.Component {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="example@website.com"
+                name="Email"
+                onChange={this.handleChange}
+                placeholder="Email"
                 required
               />
             </Form.Group>
           </Col>
-          <Col>
-            <Form.Group controlId="Username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="text" placeholder="Username" required />
-            </Form.Group>
+          <Col />
+        </Form.Row>
+        <Form.Row>
+          {/* Description */}
+          <Col md="12" className="Description">
+            <label htmlFor="Description">Description</label>
+            <FormTextarea
+              id="Description"
+              name="Description"
+              placeholder="Description"
+              rows="5"
+              onChange={this.handleChange}
+            />
           </Col>
         </Form.Row>
         <Form.Row>
-          <Col>
-            <label>Birthday (MM/DD/YYYY)</label>
-            <FormInput
-              placeholder="MM/DD/YYYY"
-              name="bday"
-              onChange={this.handleChange}
-              isInvalid={!validate_birthday(this.state.fields.bday)}
-              required
-            ></FormInput>
-            <p className="errMsg">{this.state.errors.bday}</p>
-          </Col>
-          <Col>
-            <label>Phone Number</label>
-            <FormInput
-              placeholder="###-###-####"
-              name="phone"
-              onChange={this.handleChange}
-              isInvalid={!validate_phone(this.state.fields.phone)}
-              required
-            ></FormInput>
-            <p className="errMsg">{this.state.errors.phone}</p>
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Group controlId="password">
+          {/* Password & Password Duplicate */}
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              name="password"
+              name="Password"
+              id="Password"
               placeholder="Password"
-              value={this.state.fields.password}
               onChange={this.handleChange}
-              isInvalid={!validate_password(this.state.fields.password)}
+              isInvalid={!validate_password(this.state.fields.Password)}
               required
             />
             <p className="errMsg">{this.state.errors.password}</p>
-            <br></br>
             <Form.Control
               type="password"
-              name="password_duplicate"
+              name="Password_Duplicate"
+              id="Password_Duplicate"
               placeholder="Enter Password Again"
-              value={this.state.fields.password_duplicate}
               onChange={this.handleChange}
               required
             />
-            <p className="errMsg">{this.state.errors.password_duplicate}</p>
+            <p className="errMsg">{this.state.errors.Password_Duplicate}</p>
           </Form.Group>
         </Form.Row>
         <br></br>
+        {/* Agree to Terms and Conditions */}
         <Form.Check
           id="agree"
           label={"I Agree To The Terms & Conditions"}
@@ -193,18 +191,4 @@ function validate_password(pass) {
   return /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/.test(
     pass
   );
-}
-
-function validate_birthday(bday) {
-  if (typeof bday === "undefined" || bday === "") {
-    return true;
-  }
-  return /^((0|1)\d{1})\/((0|1|2)\d{1})\/((19|20)\d{2})$/.test(bday);
-}
-
-function validate_phone(phone) {
-  if (typeof phone === "undefined" || phone === "") {
-    return true;
-  }
-  return /^\d{3}-\d{3}-\d{4}$/.test(phone);
 }
