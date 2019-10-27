@@ -20,16 +20,16 @@ class LoginBoxes extends React.Component {
     super();
 
     this.state = {
-      Email: "",
+      UserName: "",
       Password: ""
     };
-    this.handleEmail = this.handleEmail.bind(this);
+    this.handleUserName = this.handleUserName.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.submitLoginRequest = this.submitLoginRequest.bind(this);
   }
 
-  handleEmail(e) {
-    this.setState({ Email: e.target.value });
+  handleUserName(e) {
+    this.setState({ UserName: e.target.value });
   }
 
   handlePassword(e) {
@@ -45,12 +45,12 @@ class LoginBoxes extends React.Component {
     return (
       <Form>
         <Row>
-          <Form.Group controlId="Email">
-            <Form.Label>Email address</Form.Label>
+          <Form.Group controlId="UserName">
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              type="email"
-              placeholder="Enter email"
-              onChange={this.handleEmail}
+              type="text"
+              placeholder="Enter Username"
+              onChange={this.handleUserName}
               required
             />
           </Form.Group>
