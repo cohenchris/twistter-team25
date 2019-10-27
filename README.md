@@ -4,7 +4,7 @@ Twistter project for CS307, by Team 25
 
 Fall 2019
 
-==========
+----------
 
 # Task distribution:
 
@@ -12,9 +12,9 @@ Frontend (ReactJS): Chris, Cora, Sabrina
 
 Backend (Python Flask & MySQL): Kyle, Noah, Ryan
 
-==========
+----------
 
-# To start React App:
+# Start React App:
 
 git submodule init
 
