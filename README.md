@@ -8,9 +8,9 @@ Fall 2019
 
 # Task distribution:
 
-Frontend: Chris, Cora, Sabrina
+Frontend (ReactJS): Chris, Cora, Sabrina
 
-Backend: Kyle, Noah, Ryan
+Backend (Python Flask & MySQL): Kyle, Noah, Ryan
 
 ==========
 
