@@ -12,6 +12,7 @@ def display_home_page():
 
 # TODO: Un-comment all the calls to the database
 
+
 @app.route("/user-create-new-user", methods=['POST'])
 def create_user():
     """
@@ -27,8 +28,6 @@ def create_user():
     username = data['username']
     commonName = data['commonName']
     email = data['email']
-    phone = data['phone']
-    birthday = data['birthday']
     description = data['description']
 
     #  Push the info to the database
@@ -39,10 +38,25 @@ Created User!
   username: {}
   commonName: {}
   email: {}
-  phone: {}
-  birthday: {}
   description: {}
-'''.format(username, commonName, email, phone, birthday, description)
+'''.format(username, commonName, email, description)
+
+
+@app.route("/validate-login", methods=['POST'])
+def validate_login():
+    """
+    This function is used to validate login information from the
+      database.
+    :return: -1 if no user exists, if the user exists it returns the userId
+    """
+
+    # Get the info from the json file sent with POST request
+    data = request.get_json()
+
+    username = data['username']
+    password = data['password']
+
+    return db.validateLogin(username, password)
 
 
 @app.route("/user-update-common-name", methods=['POST'])
@@ -67,28 +81,6 @@ Updated Users Common Name!
 """.format(userId, newCommonName)
 
 
-@app.route("/user-update-phone", methods=['POST'])
-def update_phone_number():
-    """
-    This function is used to update a user's phone number.
-    :return: Display information about the updated information.
-    """
-    #  Get the info from the json file sent with the request
-    data = request.get_json()
-
-    userId = data['userId']
-    newPhoneNumber = data['newPhoneNumber']
-
-    #  Push the info to the database
-    # db.updatePhone(userId, newPhoneNumber)
-
-    return """
-Updated User Phone Number!
-  userId: {}
-  newPhoneNumber: {}
-""".format(userId, newPhoneNumber)
-
-
 @app.route("/user-update-description", methods=['POST'])
 def update_description():
     """
@@ -109,6 +101,45 @@ Updated Description!
   userId: {}
   newDescription: {}
 """.format(userId, newDescription)
+
+
+@app.route("/update-password", methods=['POST'])
+def update_password():
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
+    userId = data['userId']
+    newPassword = data['newPassword']
+
+    db.updatePassword(userId, newPassword)
+
+    return """
+Updated Password!
+  userId: {}
+  newPassword: {}
+""".format(userId, newPassword)
+
+
+@app.route("/user-update-phone", methods=['POST'])
+def update_phone_number():
+    """
+    This function is used to update a user's phone number.
+    :return: Display information about the updated information.
+    """
+    #  Get the info from the json file sent with the request
+    data = request.get_json()
+
+    userId = data['userId']
+    newPhoneNumber = data['newPhoneNumber']
+
+    #  Push the info to the database
+    # db.updatePhone(userId, newPhoneNumber)
+
+    return """
+Updated User Phone Number!
+  userId: {}
+  newPhoneNumber: {}
+""".format(userId, newPhoneNumber)
 
 
 @app.route("/user-add-new-user-topic", methods=['POST'])
@@ -154,7 +185,7 @@ Retireved Timeline!
 """.format(userId)
 
 
-@app.route("/user-get-user-posts")
+@app.route("/user-get-user-posts", methods=['POST'])
 def get_user_posts():
     """
     This function is used to get all of the posts of the specific user.
@@ -173,7 +204,7 @@ Retrieved User Posts!
 """.format(userId)
 
 
-@app.route("/user-delete")
+@app.route("/user-delete", methods=['POST'])
 def delete_user():
     """
     This function is called in order to delete a user.
@@ -192,7 +223,7 @@ Deleted User!
 """.format(userId)
 
 
-@app.route("/follow-user")
+@app.route("/follow-user", methods=['POST'])
 def follow_new_user():
     """
     This function is used to follow a new user.
@@ -213,8 +244,7 @@ Followed a new user!
 """.format(userId, followingId)
 
 
-
-@app.route("/unfollow")
+@app.route("/unfollow", methods=['POST'])
 def unfollow_user():
     """
     This function is used to unfollow a user.
@@ -235,7 +265,7 @@ Unfollowed User!
 """.format(userId, followingId)
 
 
-@app.route("/follow-users-topics")
+@app.route("/follow-users-topics", methods=['POST'])
 def follow_user_topics():
     """
     This function is used to update the database to include following a user's
@@ -259,7 +289,7 @@ Followed a user's topics!
 """.format(userId, followingId, topicsSelected)
 
 
-@app.route("/validate-email")
+@app.route("/validate-email", methods=['POST'])
 def validate_email():
     # Get the info from the json file sent with the request
     data = request.get_json()
@@ -271,7 +301,7 @@ def validate_email():
     return render_template('sample.html', **locals())
 
 
-@app.route("/validate-username")
+@app.route("/validate-username", methods=['POST'])
 def validate_usernmae():
     # Get the info from the json file sent with the request
     data = request.get_json()
@@ -282,7 +312,7 @@ def validate_usernmae():
     return render_template('sample.html', **locals());
 
 
-@app.route("/get-user-id-from-email")
+@app.route("/get-user-id-from-email", methods=['POST'])
 def get_id_from_email():
     # Get the info from the json file sent with the request
     data = request.get_json()
@@ -292,7 +322,7 @@ def get_id_from_email():
     return render_template('sample.html', **locals())
 
 
-@app.route("/create-post")
+@app.route("/create-post", methods=['POST'])
 def post():
     # Get the info from the json file sent with the request
     data = request.get_json()
@@ -371,8 +401,6 @@ DM Sent!
   receiverId: {}
   message: {}
 """.format(senderId, receiverId, message)
-
-
 
 
 if __name__ == '__main__':
