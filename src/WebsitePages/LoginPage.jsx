@@ -16,30 +16,67 @@ export default class LoginPage extends React.Component {
 }
 
 class LoginBoxes extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      UserName: "",
+      Password: ""
+    };
+    this.handleUserName = this.handleUserName.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+    this.submitLoginRequest = this.submitLoginRequest.bind(this);
+  }
+
+  handleUserName(e) {
+    this.setState({ UserName: e.target.value });
+  }
+
+  handlePassword(e) {
+    this.setState({ Password: e.target.value });
+  }
+
+  submitLoginRequest() {
+    console.log(this.state);
+    this.setState({ Password: "" });
+  }
+
   render() {
     return (
       <Form>
         <Row>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" required />
+          <Form.Group controlId="UserName">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Username"
+              onChange={this.handleUserName}
+              required
+            />
           </Form.Group>
         </Row>
         <Row>
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group controlId="Password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" required />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={this.handlePassword}
+              required
+            />
           </Form.Group>
         </Row>
         <Row>
-          <Button variant="dark" type="submit">
+          <Button variant="dark" onClick={this.submitLoginRequest}>
             Submit
           </Button>
         </Row>
-        <Nav className="mr-auto">
-          {/* RE-ROUTE TO CREATE NEW ACCOUNT PAGE */}
-          <Nav.Link>New User? Click Here!</Nav.Link>
-        </Nav>
+        <Row>
+          <Nav className="mr-auto">
+            {/* RE-ROUTE TO CREATE NEW ACCOUNT PAGE */}
+            <Nav.Link>New User? Click Here!</Nav.Link>
+          </Nav>
+        </Row>
       </Form>
     );
   }

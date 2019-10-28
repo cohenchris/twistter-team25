@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Card,
   CardHeader,
@@ -8,133 +7,166 @@ import {
   Row,
   Col,
   Form,
-  FormGroup,
   FormInput,
   FormTextarea,
   Button
 } from "shards-react";
 import Alert from "react-bootstrap/Alert";
-import FormCheck from "react-bootstrap/FormCheck";
 
-const UserAccountDetails = ({ title }) => (
-  <Card small className="mb-4" bg="secondary">
-    <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
-    </CardHeader>
-    <ListGroup flush>
-      <ListGroupItem className="p-3">
-        <Col>
-          <Form>
-            <Row form>
-              {/* First Name */}
-              <Col md="6" className="form-group">
-                <label htmlFor="feFirstName">First Name</label>
-                <FormInput
-                  id="feFirstName"
-                  placeholder="First Name"
-                  required
-                  onChange={() => {}}
-                />
-              </Col>
-              {/* Last Name */}
-              <Col md="6" className="form-group">
-                <label htmlFor="feLastName">Last Name</label>
-                <FormInput
-                  id="feLastName"
-                  placeholder="Last Name"
-                  required
-                  onChange={() => {}}
-                />
-              </Col>
-            </Row>
-            <Row form>
-              {/* Email */}
-              <Col md="6" className="form-group">
-                <label htmlFor="feEmail">Email</label>
-                <FormInput
-                  type="email"
-                  id="feEmail"
-                  placeholder="Email Address"
-                  required
-                  onChange={() => {}}
-                  autoComplete="email"
-                />
-              </Col>
-              {/* Password */}
-              <Col md="6" className="form-group">
-                <label htmlFor="fePassword">Change Password</label>
-                <FormInput
-                  type="password"
-                  id="fePassword"
-                  placeholder="Password"
-                  required
-                  onChange={() => {}}
-                  autoComplete="current-password"
-                />
-                <label htmlFor="fePassword">Confirm Password Change</label>
-                <FormInput
-                  type="password"
-                  id="fePassword"
-                  placeholder="Password"
-                  required
-                  onChange={() => {}}
-                  autoComplete="current-password"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <label>Birthday (MM/DD/YYYY)</label>
-                <FormInput placeholder="MM/DD/YYYY" required />
-              </Col>
-              <Col>
-                <FormGroup controlId="phoneNum">
-                  <label>Phone Number</label>
-                  <FormInput placeholder="555-555-5555" required></FormInput>
-                </FormGroup>
-              </Col>
-              <Col>
-                <label>Publicize Birthday and Phone Number?</label>
-                <FormCheck type="checkbox"></FormCheck>
-              </Col>
-            </Row>
-            <Row form>
-              {/* Description */}
-              <Col md="12" className="form-group">
-                <label htmlFor="feDescription">Description</label>
-                <FormTextarea
-                  id="feDescription"
-                  placeholder="Description here..."
-                  rows="5"
-                  required
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Button theme="dark">Update Account</Button>
-              </Col>
-              <Col>
-                <DeleteAccountButton />
-              </Col>
-            </Row>
-          </Form>
-        </Col>
-      </ListGroupItem>
-    </ListGroup>
-  </Card>
-);
+class UserAccountDetails extends React.Component {
+  constructor() {
+    super();
 
-UserAccountDetails.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string
-};
+    this.state = {
+      UserName: "kbuzza",
+      Password:
+        "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
+      CommonName: "Kyle",
+      Email: "kbuzza@purdue.edu",
+      Description: "This is my description.",
+      passwordInvalid: false
+    };
+    this.handleName = this.handleName.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handleFirstPassword = this.handleFirstPassword.bind(this);
+    this.handleSecondPassword = this.handleSecondPassword.bind(this);
+    this.handleDescription = this.handleDescription.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+  }
 
-UserAccountDetails.defaultProps = {
-  title: "Account Details"
-};
+  submitForm() {
+    if (this.state.FirstPassword.localeCompare(this.state.SecondPassword)) {
+      this.setState({ passwordInvalid: true });
+    } else {
+      this.setState({ passwordInvalid: false });
+
+      const userSubmission = {
+        UserName: this.state.UserName,
+        Password: this.state.FirstPassword,
+        CommonName: this.state.CommonName,
+        Email: this.state.Email,
+        Description: this.state.Description
+      };
+      console.log(userSubmission);
+    }
+  }
+
+  handleName(e) {
+    this.setState({ CommonName: e.target.value });
+  }
+
+  handleEmail(e) {
+    this.setState({ Email: e.target.value });
+  }
+
+  handleFirstPassword(e) {
+    this.setState({ FirstPassword: e.target.value });
+  }
+
+  handleSecondPassword(e) {
+    this.setState({ SecondPassword: e.target.value });
+  }
+
+  handleDescription(e) {
+    this.setState({ Description: e.target.value });
+  }
+
+  render() {
+    return (
+      <Card small className="mb-4" bg="secondary">
+        <CardHeader className="border-bottom">
+          <h6 className="m-0">Account Details</h6>
+        </CardHeader>
+        <ListGroup flush>
+          <ListGroupItem className="p-3">
+            <Col>
+              <Form>
+                <Row form>
+                  {/* Name */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="DisplayName">Display Name</label>
+                    <FormInput
+                      id="DisplayName"
+                      name="DisplayName"
+                      placeholder="Display Name"
+                      defaultValue={this.state.CommonName}
+                      onChange={this.handleName}
+                    />
+                  </Col>
+                  {/* Email */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="feEmail">Email</label>
+                    <FormInput
+                      type="email"
+                      id="Email"
+                      name="Email"
+                      defaultValue={this.state.Email}
+                      placeholder="Email Address"
+                      onChange={this.handleEmail}
+                      autoComplete="email"
+                    />
+                  </Col>
+                </Row>
+                <Row form>
+                  {/* Password */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="Password">Change Password</label>
+                    <FormInput
+                      type="password"
+                      id="Password"
+                      name="Password"
+                      placeholder="Password"
+                      onChange={this.handleFirstPassword}
+                      autoComplete="current-password"
+                    />
+                    <label htmlFor="PasswordConfirm">
+                      Confirm Password Change
+                    </label>
+                    <FormInput
+                      type="password"
+                      id="PasswordConfirm"
+                      name="PasswordConfirm"
+                      placeholder="Password"
+                      onChange={this.handleSecondPassword}
+                      autoComplete="current-password"
+                    />
+                    {this.state.passwordInvalid && (
+                      <p>Passwords must match and be valid strings!</p>
+                    )}
+                  </Col>
+                </Row>
+                <Row form>
+                  {/* Description */}
+                  <Col md="12" className="form-group">
+                    <label htmlFor="Description">Description</label>
+                    <FormTextarea
+                      id="Description"
+                      name="Description"
+                      defaultValue={this.state.Description}
+                      placeholder="Description"
+                      rows="5"
+                      onChange={this.handleDescription}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Button theme="dark" onClick={this.submitForm}>
+                      Update Account
+                    </Button>
+                  </Col>
+                  <Col>
+                    <DeleteAccountButton />
+                  </Col>
+                </Row>
+              </Form>
+            </Col>
+          </ListGroupItem>
+        </ListGroup>
+      </Card>
+    );
+  }
+}
 
 function DeleteAccountButton() {
   const [show, setShow] = useState(false);

@@ -6,7 +6,8 @@ import {
   Form,
   FormControl,
   Button,
-  Container
+  Container,
+  Col
 } from "react-bootstrap";
 
 export default class NavigationBar extends React.Component {
@@ -30,12 +31,16 @@ export default class NavigationBar extends React.Component {
               </NavDropdown>
             </Nav>
             {/* Create a New Microblog */}
-            <Nav className="center">
-              <Button variant="outline-light">+ Create A New Microblog</Button>
-            </Nav>
+            <Col>
+              <Nav className="float-right">
+                <Button variant="outline-light">
+                  + Create A New Microblog
+                </Button>
+              </Nav>
+            </Col>
             {/* Search Bar */}
-            <Nav>
-              <Form inline>
+            <Form>
+              <Nav>
                 <FormControl
                   type="text"
                   placeholder="Search"
@@ -44,12 +49,10 @@ export default class NavigationBar extends React.Component {
                 <Button variant="outline-light" type="submit">
                   Go!
                 </Button>
-              </Form>
-            </Nav>
+              </Nav>
+            </Form>
           </Navbar>
         </Container>
-        {/*THIS H1 IS TO MAKE SURE THAT TEXT ISN'T ACCIDENTALLY RENDERED UNDER THE NAVBAR */}
-        <h1>navbar</h1>{" "}
       </div>
     );
   }
