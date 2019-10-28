@@ -1,17 +1,25 @@
-Front End ReactJS by Chris, Sabrina, and Cora.
+# Twistter-team25
 
-
-
-To start:
-
-git submodule init && git submodule update
-
-
-npm install
-=======
-# twistter-team25
 Twistter project for CS307, by Team 25
 
-Sprint 1 Task distribution:
-Frontend: Chris, Cora, Sabrina
-Backend: Kyle, Noah, Ryan
+Fall 2019
+
+----------
+
+# Task distribution:
+
+Frontend (ReactJS): Chris, Cora, Sabrina
+
+Backend (Python Flask & MySQL): Kyle, Noah, Ryan
+
+----------
+
+# Start React App:
+
+git submodule init
+
+git submodule update
+
+npm install
+
+npm start
