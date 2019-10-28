@@ -37,21 +37,10 @@ import time
 #d.updateCommonName(1, "New Kyle")
 
 
-#d.updatePhone(1, "1234567890")
-
-
 #d.updateDescription(1, "new description")
 
 
 #print(d.getUser(1))
-#d.setBdayPublic(1)
-#print(d.getUser(1))
-#d.setDescPublic(1)
-#print(d.getUser(1))
-#d.setBdayPrivate(1)
-#d.setDescPrivate(1)
-#print(d.getUser(1))
-
 
 #d.newUserTopic(1, "Sports")
 #d.newUserTopic(1, "Gaming")
@@ -74,9 +63,9 @@ import time
 #d.newPost(1, "Post 2", "Sports,News")
 #d.newPost(1, "Post 3", "Gaming,Entertainment")
 #d.newPost(2, "Post 4", "Gaming")
-#d.newPost(2, "Post 5", "Sports,News")
+#d.newPost(2, "Title", "Post 5", "Sports,News")
 #d.newPost(2, "Post 6", "Gaming,Entertainment")
-#d.newPost(3, "Post 7", "Gaming")
+#d.newPost(3, "Sample Title", "Post 7", "Gaming")
 #d.newPost(3, "Post 8", "Sports,News")
 #d.newPost(3, "Post 9", "Gaming,Entertainment")
 #d.newPost(1, "Post 10", "")

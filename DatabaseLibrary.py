@@ -6,6 +6,7 @@ Created on Thu Aug 29 22:45:59 2019
 """
 import pyodbc
 import datetime
+import json
 
 ############################ USER METHODS #####################################
 
@@ -248,7 +249,7 @@ def getUser(userId):
 	   "Description " +
        "FROM UserTable as x WHERE UserId=" + str(userId) + " FOR JSON AUTO")
 
-    return cursor.fetchone()[0]
+    return json.dumps(eval(cursor.fetchone()[0])[0])
 ###############################################################################
 
 
@@ -365,7 +366,7 @@ def getUserId(email):
 ############################ POST METHODS #####################################
 
 # CREATES A NEW POST
-def newPost(userId, postText, topics):    
+def newPost(userId, postTitle, postText, topics):    
     cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
                       "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
                       "Database=Twistter-Database;" +
@@ -385,8 +386,8 @@ def newPost(userId, postText, topics):
         postId = postId + 1
     
     cursor = cnxn.cursor()
-    cursor.execute("INSERT INTO PostTable (PostId, UserId, PostText, Topics, Timestamp)" +
-                   " VALUES (" + str(postId) + "," + str(userId) + ",'" + postText + "','" +
+    cursor.execute("INSERT INTO PostTable (PostId, UserId, PostTitle, PostText, Topics, Timestamp)" +
+                   " VALUES (" + str(postId) + "," + str(userId) + ",'" + postTitle + "','" + postText + "','" +
                    topics + ",All','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
     cnxn.commit()
 
@@ -403,14 +404,15 @@ def getAllPosts():
                       "Connection Timeout=60;")
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT a.PostId,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
+    cursor.execute("SELECT a.PostId,a.PostTitle, a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
 	"(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
 	"(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
     "FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
     "WHERE a.RetweetId IS NULL " +
     "ORDER BY a.Timestamp DESC FOR JSON AUTO")
     
-    return cursor.fetchall()[0][0]
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 
 # GETS ALL POST ON THE PLATFORM WITH A SPECIFIC TOPIC
@@ -425,14 +427,15 @@ def getAllTopicPosts(topic):
                       "Connection Timeout=60;")
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT a.PostId,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
+    cursor.execute("SELECT a.PostId,PostTitle,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
 	"(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
 	"(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
     "FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
     "WHERE a.RetweetId IS NULL AND (Topics LIKE '" + topic + ",%' OR ""Topics LIKE '%," + topic + "' OR ""Topics LIKE '%," + topic + ",%' OR ""Topics LIKE '" + topic + "') " +
-    "ORDER BY a.Timestamp DESC")
+    "ORDER BY a.Timestamp DESC FOR JSON AUTO")
     
-    return cursor.fetchall()
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 
 # DELETES A POST ON THE PLATFORM
@@ -608,7 +611,8 @@ def getDMConvo(userId, recieverId):
     "(SenderId=" + str(recieverId) + " AND RecieverId=" + str(userId) + " AND RecieverDeleted=0) " +
     "ORDER BY TimeStamp FOR JSON AUTO")
 
-    return cursor.fetchall()[0][0]
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 
 # GETS LIST OF DM CONVOS FOR A USER
@@ -623,15 +627,19 @@ def getDMList(userId):
                       "Connection Timeout=60;")
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT a.UserId,a.UserName,a.CommonName FROM " +
-    "(SELECT TOP 50 CASE WHEN y.Id1=" + str(userId) + " THEN y.Id2 ELSE y.Id1 END AS UserId FROM " +
-    "(SELECT TOP 50 MAX(x.SenderId) AS Id1,MIN(x.RecieverId) AS Id2,x.Val FROM " +
-    "(SELECT TOP 50 SenderId,RecieverId,MAX(TimeStamp) AS TimeStamp," +
-	"CASE WHEN SenderId > RecieverId THEN CONCAT(SenderId,RecieverId) ELSE CONCAT(RecieverId,SenderId) END AS Val " +
-	"FROM DMTable WHERE (SenderId=" + str(userId) + " AND SenderDeleted=0) OR (RecieverId=" + str(userId) + " AND RecieverDeleted=0) " +
-	"GROUP BY SenderId,RecieverId ORDER BY MAX(TimeStamp) DESC, SenderId,RecieverId" +
-    ") AS x GROUP BY Val) AS y) AS z LEFT JOIN UserTable AS a ON z.UserId = a.UserId")
+    cursor.execute("SELECT y.UserName,y.CommonName,x.Message,x.TimeStamp,x.OtherUser FROM (" +
+	               "SELECT SenderId,RecieverId," +
+		           "CASE WHEN SenderId=" + str(userId) + " THEN RecieverId ELSE SenderId END AS OtherUser," +
+		           "Message,TimeStamp," +
+                   "ROW_NUMBER() OVER (PARTITION BY CASE WHEN SenderId=" + str(userId) + " THEN RecieverId ELSE SenderId END " +
+				   "ORDER BY TimeStamp DESC) as part " +
+                   "FROM DMTable) as x LEFT JOIN UserTable as y on x.SenderId=y.UserId " +
+                   "WHERE x.part=1 AND (x.SenderId=" + str(userId) + " OR x.RecieverId=" + str(userId) + ") AND " +
+                   "(EXISTS (SELECT 1 FROM DMTable WHERE SenderId=" + str(userId) + " AND SenderDeleted=0) OR " +
+                   "EXISTS (SELECT 1 FROM DMTable WHERE RecieverId=" + str(userId) + " AND RecieverDeleted=0)) " +
+                   "ORDER BY TimeStamp DESC FOR JSON AUTO")
 
-    return cursor.fetchall()
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 ###############################################################################
