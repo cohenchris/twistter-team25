@@ -1,6 +1,6 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button, Col, FormCheck } from "react-bootstrap";
 import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
 
@@ -21,13 +21,15 @@ class NewUserForm extends React.Component {
     super();
     this.state = {
       fields: {},
-      errors: {}
+      errors: {},
+      topics: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitUserRegistrationForm = this.submitUserRegistrationForm.bind(
       this
     );
     this.validate_form = this.validate_form.bind(this);
+    this.handleCheckboxes = this.handleCheckboxes.bind(this);
   }
 
   validate_form() {
@@ -56,6 +58,18 @@ class NewUserForm extends React.Component {
     this.setState({ fields });
   }
 
+  handleCheckboxes(evt) {
+    let name = evt.target.name;
+    const temp_topics = this.state.topics;
+
+    if (this.state.topics.find(item => item.name === name)) {
+      temp_topics.splice(temp_topics.indexOf(name), 1);
+    } else {
+      temp_topics.push(name);
+    }
+    this.setState({ topics: temp_topics });
+  }
+
   submitUserRegistrationForm(e) {
     e.preventDefault();
     if (this.validate_form()) {
@@ -73,8 +87,18 @@ class NewUserForm extends React.Component {
       errors["Password"] = "";
       fields["Password_Duplicate"] = "";
       errors["Password_Duplicate"] = "";
-      console.log(this.state.fields);
+
+      let submitData = {
+        UserName: this.state.fields.UserName,
+        Password: this.state.fields.Password,
+        CommonName: this.state.fields.CommonName,
+        Email: this.state.fields.Email,
+        Description: this.state.fields.Description
+      };
+
       this.setState({ fields: fields, errors: errors });
+      console.log(submitData);
+      console.log(this.state.topics);
     }
   }
 
@@ -85,7 +109,9 @@ class NewUserForm extends React.Component {
           {/* CommonName */}
           <Col>
             <Form.Group controlId="CommonName" required>
-              <Form.Label>Display Name</Form.Label>
+              <Form.Label>
+                <strong>Display Name</strong>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="CommonName"
@@ -98,7 +124,9 @@ class NewUserForm extends React.Component {
           {/* UserName */}
           <Col>
             <Form.Group controlId="UserName" required>
-              <Form.Label>Username</Form.Label>
+              <Form.Label>
+                <strong>Username</strong>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="UserName"
@@ -112,7 +140,9 @@ class NewUserForm extends React.Component {
         <Form.Row>
           <Col>
             <Form.Group controlId="Email">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>
+                <strong>Email</strong>
+              </Form.Label>
               <Form.Control
                 type="email"
                 name="Email"
@@ -127,7 +157,9 @@ class NewUserForm extends React.Component {
         <Form.Row>
           {/* Description */}
           <Col md="12" className="Description">
-            <label htmlFor="Description">Description</label>
+            <label htmlFor="Description">
+              <strong>Description</strong>
+            </label>
             <FormTextarea
               id="Description"
               name="Description"
@@ -137,30 +169,104 @@ class NewUserForm extends React.Component {
             />
           </Col>
         </Form.Row>
+        <br />
         <Form.Row>
           {/* Password & Password Duplicate */}
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="Password"
-              id="Password"
-              placeholder="Password"
-              onChange={this.handleChange}
-              isInvalid={!validate_password(this.state.fields.Password)}
-              required
+          <Col>
+            <Form.Group>
+              <Form.Label>
+                <strong>Password</strong>
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="Password"
+                id="Password"
+                placeholder="Password"
+                onChange={this.handleChange}
+                isInvalid={!validate_password(this.state.fields.Password)}
+                required
+              />
+              <p className="errMsg">{this.state.errors.password}</p>
+              <Form.Control
+                type="password"
+                name="Password_Duplicate"
+                id="Password_Duplicate"
+                placeholder="Enter Password Again"
+                onChange={this.handleChange}
+                required
+              />
+              <p className="errMsg">{this.state.errors.Password_Duplicate}</p>
+            </Form.Group>
+          </Col>
+          <Col />
+          {/* Topics */}
+          <Col>
+            <Form.Label>
+              <strong>Topics</strong>
+            </Form.Label>
+            <FormCheck
+              type="checkbox"
+              name="All"
+              label="All"
+              onChange={this.handleCheckboxes}
             />
-            <p className="errMsg">{this.state.errors.password}</p>
-            <Form.Control
-              type="password"
-              name="Password_Duplicate"
-              id="Password_Duplicate"
-              placeholder="Enter Password Again"
-              onChange={this.handleChange}
-              required
+            <FormCheck
+              type="checkbox"
+              name="Music"
+              label="Music"
+              onChange={this.handleCheckboxes}
             />
-            <p className="errMsg">{this.state.errors.Password_Duplicate}</p>
-          </Form.Group>
+            <FormCheck
+              type="checkbox"
+              id="Computer Science"
+              label="Computer Science"
+            />
+            <FormCheck
+              type="checkbox"
+              name="Politics"
+              label="Politics"
+              onChange={this.handleCheckboxes}
+            />
+            <FormCheck
+              type="checkbox"
+              name="Books"
+              label="Books"
+              onChange={this.handleCheckboxes}
+            />
+          </Col>
+          <Col>
+            <Form.Label />
+            <FormCheck
+              type="checkbox"
+              name="Beauty"
+              label="Beauty"
+              onChange={this.handleCheckboxes}
+            />
+            <FormCheck
+              type="checkbox"
+              name="Animals"
+              label="Animals"
+              onChange={this.handleCheckboxes}
+            />
+            <FormCheck
+              type="checkbox"
+              name="Memes"
+              label="Memes"
+              onChange={this.handleCheckboxes}
+            />
+            <FormCheck
+              type="checkbox"
+              name="Art"
+              label="Art"
+              onChange={this.handleCheckboxes}
+            />
+            <FormCheck
+              type="checkbox"
+              name="Sports"
+              label="Sports"
+              onChange={this.handleCheckboxes}
+            />
+          </Col>
         </Form.Row>
         <br></br>
         {/* Agree to Terms and Conditions */}

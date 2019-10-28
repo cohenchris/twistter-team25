@@ -55,7 +55,6 @@ export default class Editor extends React.Component {
       ":" +
       tempDate.getSeconds();
 
-    //TODO: POST THIS SHIT LMAO
     const post_submission = {
       PostId: this.state.PostId,
       PostTitle: this.state.PostTitle,
