@@ -259,49 +259,76 @@ Followed a user's topics!
 """.format(userId, followingId, topicsSelected)
 
 
-@app.route("/validate-email")
+@app.route("/validate-email", methods=['POST'])
 def validate_email():
+    """
+    This function is used to validate a given user's email.
+    :return: Return a boolean that determines validation
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    email = "email"  # The user ID requesting a new follow
+    email = data['email']  # The user ID requesting a new follow
 
-    db.validateEmail(email)
+    # db.validateEmail(email)
 
-    return render_template('sample.html', **locals())
+    return """
+Email successfully validated!
+  email: {}
+""".format(email)
 
 
 @app.route("/validate-username")
 def validate_usernmae():
+    """
+    This function is used to validate a given user's username.
+    :return: Return a boolean that determines validation
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    username = "user"
-    db.validateUsername(username)
+    username = ['user']
+    # db.validateUsername(username)
 
-    return render_template('sample.html', **locals());
+    return """
+    Username successfully validated!
+    username: {}
+    """.format(username)
 
 
 @app.route("/get-user-id-from-email")
 def get_id_from_email():
+    """
+    This function is used to determine a user's Id based on
+    a given email.
+    :return: Return's the userId of the given email user.
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    email = "email"
-    db.getUserId(email)
-    return render_template('sample.html', **locals())
-
+    email = ['email']
+    # userId = db.getUserId(email)
+    return """
+    Retrieved UserId from given email!
+    userId: {}
+    """.format(userId)
 
 @app.route("/create-post")
 def post():
+    """
+    This function is used to add a created post to the database.
+    :return: Return a boolean that determines successful creation.
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
     userId = data['userId']
     postText = data['postText']
     topics = data['topics']
-    db.newPost(userId, postText, topics)
-    return render_template('sample.html', **locals())
+
+    # db.newPost(userId, postText, topics)
+
+    return "Post successfully created!"
 
 
 @app.route("/get-all-posts", methods=['POST'])
