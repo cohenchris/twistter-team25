@@ -8,6 +8,8 @@ export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
 
+    //TODO: COMMUNICATE WITH API
+
     this.state = {
       PostsList: [
         {
@@ -107,7 +109,10 @@ export default class BlogPosts extends React.Component {
                         href="#"
                         className="card-post__author-avatar card-post__author-avatar--small"
                       >
-                        {post.b[0].UserName}
+                        {post.b[0].CommonName +
+                          " (@" +
+                          post.b[0].UserName +
+                          ")"}
                       </a>
                     </div>
                   </Col>
@@ -115,7 +120,9 @@ export default class BlogPosts extends React.Component {
                 <Col>
                   <div>
                     <span className="text-muted">
-                      {post.Timestamp.substr(0, 10)}
+                      {post.Timestamp.substr(0, 10) +
+                        " at " +
+                        post.Timestamp.substr(11)}
                     </span>
                   </div>
                 </Col>

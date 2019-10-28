@@ -71,6 +71,7 @@ export default class Editor extends React.Component {
         }
       ]
     };
+    //TODO: COMMUNICATE WITH API
     console.log(post_submission);
   }
 

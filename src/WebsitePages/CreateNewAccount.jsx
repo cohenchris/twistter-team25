@@ -97,6 +97,7 @@ class NewUserForm extends React.Component {
       };
 
       this.setState({ fields: fields, errors: errors });
+      //TODO: COMMUNICATE WITH API
       console.log(submitData);
       console.log(this.state.topics);
     }

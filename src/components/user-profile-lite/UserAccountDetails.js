@@ -47,6 +47,7 @@ class UserAccountDetails extends React.Component {
         Email: this.state.Email,
         Description: this.state.Description
       };
+      //TODO: COMMUNICATE WITH API
       console.log(userSubmission);
     }
   }

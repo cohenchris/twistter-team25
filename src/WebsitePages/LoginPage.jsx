@@ -38,6 +38,7 @@ class LoginBoxes extends React.Component {
 
   submitLoginRequest() {
     console.log(this.state);
+    //TODO: COMMUNICATE WITH API
     this.setState({ Password: "" });
   }
 

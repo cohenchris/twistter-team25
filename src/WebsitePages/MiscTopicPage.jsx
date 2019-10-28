@@ -21,6 +21,7 @@ export default class MiscTopicPage extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
+          //TODO: COMMUNICATE WITH API
           subtitle={this.state.topic}
           className="text-sm-left"
         />
