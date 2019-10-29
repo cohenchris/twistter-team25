@@ -141,18 +141,23 @@ def getUserTimeline(userId):
                       "Connection Timeout=60;")
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT DISTINCT a.PostId,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
-	"(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
-	"(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets," +
-	"COALESCE(a.RetweetTimestamp, a.Timestamp) " +
-    "FROM PostTable AS a " +
-	"LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
-	"LEFT JOIN FollowerTable AS e ON a.UserId = e.FollowingId AND " +
-	"(a.Topics LIKE CONCAT(e.Topic, ',%') OR a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR a.Topics LIKE e.Topic) " +
-    "WHERE e.UserId=" + str(userId) +
-    "ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC")
+    cursor.execute("SELECT COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId," +
+                   "COALESCE(z.UserName, x.UserName) as UserName,COALESCE(z.CommonName, x.CommonName) as CommonName," +
+                   "x.PostTitle,x.PostText,x.Topics,x.Timestamp,x.Likes,x.Retweets,z.CommonName as RetweetUserName,x.TimelineTimestamp " +
+                   "FROM (SELECT DISTINCT TOP 10000 " +
+                   "a.PostId,b.UserId,b.UserName,b.CommonName,a.PostTitle,a.PostText,a.Topics,a.Timestamp," +
+                   "COALESCE(a.RetweetTimestamp, a.Timestamp) as TimelineTimestamp," +
+                   "(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
+                   "(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets," +
+                   "a.RetweetId, a.RetweetTimestamp FROM PostTable AS a " +
+                   "LEFT JOIN UserTable AS b ON a.UserId = b.UserId	LEFT JOIN FollowerTable AS e ON a.UserId = e.FollowingId AND " +
+                   "(a.Topics LIKE CONCAT(e.Topic, ',%') OR	a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR	a.Topics LIKE e.Topic) " +
+                   "WHERE e.UserId=" + str(userId) + "ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC " +
+                   ") AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId LEFT JOIN UserTable as z ON y.UserId = z.UserId " +
+                   "ORDER BY x.TimelineTimestamp DESC FOR JSON AUTO")
     
-    return cursor.fetchall()
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 
 # GETS ALL POSTS MADE BY A PARTICULAR USER
@@ -167,15 +172,25 @@ def getUserPosts(userId):
                       "Connection Timeout=60;")
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT a.PostId,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
-    "(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
-    "(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
-    "FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
-    "WHERE b.UserId=" + str(userId) + " AND NOT EXISTS (SELECT 1 FROM PostTable as e WHERE a.RetweetId = e.PostId)" +
-    "ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC")
+    cursor.execute("SELECT COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId," +
+                   "COALESCE(z.UserName, x.UserName) as UserName,COALESCE(z.CommonName, x.CommonName) as CommonName," +
+                   "x.PostTitle,x.PostText,x.Topics,x.Timestamp,x.Likes,x.Retweets,z.CommonName as RetweetUserName,x.TimelineTimestamp " +
+                   "FROM (SELECT DISTINCT TOP 10000 " +
+                   "a.PostId,b.UserId,b.UserName,b.CommonName,a.PostTitle,a.PostText,a.Topics,a.Timestamp," +
+                   "COALESCE(a.RetweetTimestamp, a.Timestamp) as TimelineTimestamp," +
+                   "(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
+                   "(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets," +
+                   "a.RetweetId,a.RetweetTimestamp " +
+                   "FROM PostTable AS a " +
+                   "LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
+                   "WHERE a.UserId=" + str(userId) + " OR a.RetweetId=" + str(userId) +
+                   " ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC" +
+                   ") AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId " +
+                   "LEFT JOIN UserTable as z ON y.UserId = z.UserId " +
+                   "ORDER BY x.TimelineTimestamp DESC FOR JSON AUTO")
     
-    return cursor.fetchall()
-
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
 
 # GETS ALL TOPICS FOR A PARTICULAR USER
 def getUserTopics(userId):
@@ -512,8 +527,8 @@ def retweet(userId, postId):
     oldPost = cursor.execute("SELECT * FROM PostTable WHERE PostId=" + str(postId)).fetchone()
     
     cursor = cnxn.cursor()
-    cursor.execute("INSERT INTO PostTable (PostId,UserId,PostText,Topics,Timestamp,RetweetId,RetweetTimestamp) " +
-    "VALUES (" + str(newPostId) + "," + str(userId) + ",'" + oldPost[2] + "','" + oldPost[3] + "','" + str(oldPost[4]) + "'," + str(oldPost[0]) + ",'" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
+    cursor.execute("INSERT INTO PostTable (PostId,UserId,PostTitle,PostText,Topics,Timestamp,RetweetId,RetweetTimestamp) " +
+    "VALUES (" + str(newPostId) + "," + str(userId) + ",'" + oldPost[2] + "','" + oldPost[3] + "','" + str(oldPost[4]) + "','" + str(oldPost[5]) + "'," + str(oldPost[0]) + ",'" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
     cnxn.commit()
 
 
@@ -643,3 +658,51 @@ def getDMList(userId):
     return ret[1 : len(ret) - 1]
 
 ###############################################################################
+
+############################## Sprint 2 Stuff #####################################
+# SHOWS THE TIMELINE FOR A USER
+def getUserTimeline2(userId):
+    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
+                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
+                      "Database=Twistter-Database;" +
+                      "Uid=kbuzza;" +
+                      "Pwd=TestTwistter1;" +
+                      "Encrypt=no;" +
+                      "TrustServerCertificate=no;" +
+                      "Connection Timeout=60;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT DISTINCT a.PostId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
+          "(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
+          "(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
+          "FROM PostTable AS a " +
+          "LEFT JOIN UserTable AS b ON a.UserId = b.UserId LEFT JOIN FollowerTable AS e ON a.UserId = e.FollowingId AND " +
+          "(a.Topics LIKE CONCAT(e.Topic, ',%') OR a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR a.Topics LIKE e.Topic) " +
+          "WHERE e.UserId=1 AND a.RetweetId IS NULL ORDER BY a.Timestamp DESC FOR JSON AUTO")
+    
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
+
+
+# GETS ALL POSTS MADE BY A PARTICULAR USER
+def getUserPosts2(userId):
+    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
+                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
+                      "Database=Twistter-Database;" +
+                      "Uid=kbuzza;" +
+                      "Pwd=TestTwistter1;" +
+                      "Encrypt=no;" +
+                      "TrustServerCertificate=no;" +
+                      "Connection Timeout=60;")
+        
+    cursor = cnxn.cursor()
+    cursor.execute("SELECT a.PostId,a.PostTitle, a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
+	"(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
+	"(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
+    "FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
+    "WHERE a.RetweetId IS NULL AND b.UserId=" + str(userId) +
+    " ORDER BY a.Timestamp DESC FOR JSON AUTO")
+    
+    ret = cursor.fetchall()[0][0]
+    return ret[1 : len(ret) - 1]
+##################################################################################

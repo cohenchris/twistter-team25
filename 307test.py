@@ -8,9 +8,9 @@ Created on Thu Aug 29 23:02:30 2019
 import DatabaseLibrary as d
 import time
 
-#d.newUser("kbuzza", "password", "Kyle", "kbuzza@purdue.edu", "4129134625", "6/13/1999", "This is my description.")
-#d.newUser("testuser1", "pass1", "User1", "test1@test.net", "1111111111", "1/1/2019", "desc1")
-#d.newUser("testuser2", "pass2", "User2", "test2@test.net", "2222222222", "2/2/2019", "desc2")
+#d.newUser("kbuzza", "password", "Kyle", "kbuzza@purdue.edu", "This is my description.")
+#d.newUser("testuser1", "pass1", "User1", "test1@test.net", "desc1")
+#d.newUser("testuser2", "pass2", "User2", "test2@test.net", "desc2")
 
 
 #print(d.validateLogin('kbuzza', 'password'))
@@ -42,6 +42,7 @@ import time
 
 #print(d.getUser(1))
 
+
 #d.newUserTopic(1, "Sports")
 #d.newUserTopic(1, "Gaming")
 #d.newUserTopic(1, "News")
@@ -59,16 +60,25 @@ import time
 #print(d.getUserTopics(1))
 
 
-#d.newPost(1, "Post 1", "Gaming")
-#d.newPost(1, "Post 2", "Sports,News")
-#d.newPost(1, "Post 3", "Gaming,Entertainment")
-#d.newPost(2, "Post 4", "Gaming")
-#d.newPost(2, "Title", "Post 5", "Sports,News")
-#d.newPost(2, "Post 6", "Gaming,Entertainment")
-#d.newPost(3, "Sample Title", "Post 7", "Gaming")
-#d.newPost(3, "Post 8", "Sports,News")
-#d.newPost(3, "Post 9", "Gaming,Entertainment")
-#d.newPost(1, "Post 10", "")
+#d.newPost(1, "Title 1", "Post 1", "Gaming")
+#time.sleep(1.5)
+#d.newPost(1, "Title 2", "Post 2", "Sports,News")
+#time.sleep(1.5)
+#d.newPost(1, "Title 3", "Post 3", "Gaming,Entertainment")
+#time.sleep(1.5)
+#d.newPost(2, "Title 4", "Post 4", "Gaming")
+#time.sleep(1.5)
+#d.newPost(2, "Title 5", "Post 5", "Sports,News")
+#time.sleep(1.5)
+#d.newPost(2, "Title 6", "Post 6", "Gaming,Entertainment")
+#time.sleep(1.5)
+#d.newPost(3, "Title 7", "Post 7", "Gaming")
+#time.sleep(1.5)
+#d.newPost(3, "Title 8", "Post 8", "Sports,News")
+#time.sleep(1.5)
+#d.newPost(3, "Title 9", "Post 9", "Gaming,Entertainment")
+#time.sleep(1.5)
+#d.newPost(1, "Title 10", "Post 10", "")
 
 
 #print(d.getAllPosts())
@@ -100,13 +110,13 @@ import time
 #d.deleteUser(3)
 
 
-#d.like(1,1)
+d.like(1,1)
 #d.unlike(1,1)
 
 
-#d.retweet(1,11)
+#d.retweet(3,5)
 #d.unretweet(1,11)
-#d.retweet(2,1)
+#d.retweet(2,4)
 
 
 #print(d.getUserPosts(1))
@@ -126,8 +136,9 @@ import time
 #d.newDM(1,2,'message5')
 #time.sleep(1.5)
 #d.newDM(2,1,'message6')
-
+#time.sleep(1.5)
 #d.newDM(1,3,'message7')
+#time.sleep(1.5)
 #d.newDM(1,3,'message8')
 
 
@@ -139,3 +150,9 @@ import time
 
 
 #print(d.getDMList(1))
+
+
+#print(d.getUserPosts2(1))
+
+
+#print(d.getUserPosts(2))
