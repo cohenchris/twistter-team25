@@ -12,6 +12,7 @@ import Button from "react-bootstrap/Button";
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
+import Axios from "axios";
 
 export default class Editor extends React.Component {
   constructor() {
@@ -55,24 +56,33 @@ export default class Editor extends React.Component {
       ":" +
       tempDate.getSeconds();
 
+    /* Random lowercase variables are to try to communicate better with the api */
     const post_submission = {
       PostId: this.state.PostId,
       PostTitle: this.state.PostTitle,
-      Topics: this.state.Topics,
-      PostText: this.state.PostText,
+      topics: this.state.Topics,
+      postText: this.state.PostText,
       Timestamp: date,
+      userId: this.state.b[0].UserId,
+      UserName: this.state.b[0].UserName,
+      CommonName: this.state.b[0].CommonName,
+      Likes: this.state.b[0].Lines,
+      Retweets: this.state.b[0].Retweets
+      /*
       b: [
         {
-          UserId: this.state.b[0].UserId,
+          userId: this.state.b[0].UserId,
           UserName: this.state.b[0].UserName,
           CommonName: this.state.b[0].CommonName,
           Likes: this.state.b[0].Lines,
           Retweets: this.state.b[0].Retweets
         }
       ]
+      */
     };
-    //TODO: COMMUNICATE WITH API
-    console.log(post_submission);
+    //TODO: COMMUNICATE WITH FLASK API
+    const response = await axios.post('twistter-API.azurewebsites.net/create-post', post_submission);
+    console.log(response);
   }
 
   handleTopicSelect(e) {

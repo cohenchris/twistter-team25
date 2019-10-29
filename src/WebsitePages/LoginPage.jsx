@@ -20,8 +20,8 @@ class LoginBoxes extends React.Component {
     super();
 
     this.state = {
-      UserName: "",
-      Password: ""
+      username: "",
+      password: ""
     };
     this.handleUserName = this.handleUserName.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -37,9 +37,13 @@ class LoginBoxes extends React.Component {
   }
 
   submitLoginRequest() {
-    console.log(this.state);
     //TODO: COMMUNICATE WITH API
-    this.setState({ Password: "" });
+    const response = axios.post(
+      "twistter-API.azurewebsites.net/validate-login",
+      this.state
+    );
+    console.log(response);
+    this.setState({ password: "" });
   }
 
   render() {
