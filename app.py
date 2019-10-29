@@ -56,7 +56,8 @@ def validate_login():
     username = data['username']
     password = data['password']
 
-    return db.validateLogin(username, password)
+    # return db.validateLogin(username, password)
+    return "Validated"
 
 
 @app.route("/user-update-common-name", methods=['POST'])
@@ -105,41 +106,23 @@ Updated Description!
 
 @app.route("/update-password", methods=['POST'])
 def update_password():
+    """
+    This function is used to update the database with new password info.
+    :return: Information about the update
+    """
     # Get the info from the json file sent with the request
     data = request.get_json()
 
     userId = data['userId']
     newPassword = data['newPassword']
 
-    db.updatePassword(userId, newPassword)
+    # db.updatePassword(userId, newPassword)
 
     return """
 Updated Password!
   userId: {}
   newPassword: {}
 """.format(userId, newPassword)
-
-
-@app.route("/user-update-phone", methods=['POST'])
-def update_phone_number():
-    """
-    This function is used to update a user's phone number.
-    :return: Display information about the updated information.
-    """
-    #  Get the info from the json file sent with the request
-    data = request.get_json()
-
-    userId = data['userId']
-    newPhoneNumber = data['newPhoneNumber']
-
-    #  Push the info to the database
-    # db.updatePhone(userId, newPhoneNumber)
-
-    return """
-Updated User Phone Number!
-  userId: {}
-  newPhoneNumber: {}
-""".format(userId, newPhoneNumber)
 
 
 @app.route("/user-add-new-user-topic", methods=['POST'])
@@ -174,10 +157,7 @@ def get_user_timeline():
 
     userId = data['userId']
 
-    # TODO: Figure out what how to send all of the rows back to the front end
-    #  for display
-
-    # rows = db.getUserTimeline(userId)
+    # return db.getUserTimeline(userId)
 
     return """
 Retireved Timeline!
@@ -196,12 +176,26 @@ def get_user_posts():
 
     userId = data['userId']
 
-    # rows = db.getUserPosts(userId)
+    # return db.getUserPosts(userId)
 
     return """
 Retrieved User Posts!
   userId: {}
 """.format(userId)
+
+
+@app.route("/get-user-topics", methods=['POST'])
+def get_user_topics():
+    """
+    This function is used to retrieve the user posts from the database.
+    :return: List of user topics
+    """
+    data = request.get_json()
+
+    userId = data['userId']
+
+    # return db.getUserTopics(userId)
+    return "Got Posts"
 
 
 @app.route("/user-delete", methods=['POST'])
@@ -222,6 +216,20 @@ Deleted User!
   userId: {}
 """.format(userId)
 
+
+@app.route("/get-user", methods=['POST'])
+def get_user():
+    """
+    This function is used to get a user's profile information.
+    :return:
+    """
+
+    data = request.get_json()
+    userId = data['userId']
+
+    # return db.getUser(userId)
+
+    return "Got User Info"
 
 @app.route("/follow-user", methods=['POST'])
 def follow_new_user():
@@ -294,20 +302,21 @@ def validate_email():
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    email = "email"  # The user ID requesting a new follow
+    email = data['email']
 
-    db.validateEmail(email)
+    # db.validateEmail(email)
 
     return render_template('sample.html', **locals())
 
 
 @app.route("/validate-username", methods=['POST'])
-def validate_usernmae():
+def validate_username():
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    username = "user"
-    db.validateUsername(username)
+    username = data['username']
+
+    # db.validateUsername(username)
 
     return render_template('sample.html', **locals());
 
@@ -317,8 +326,8 @@ def get_id_from_email():
     # Get the info from the json file sent with the request
     data = request.get_json()
 
-    email = "email"
-    db.getUserId(email)
+    email = data['email']
+    # db.getUserId(email)
     return render_template('sample.html', **locals())
 
 
@@ -341,7 +350,7 @@ def get_all_posts():
       the database.
     :return: Display Information about the action.
     """
-    # rows = db.getAllPosts()
+    # return db.getAllPosts()
     return "Success"
 
 
@@ -356,7 +365,7 @@ def get_all_topic_posts():
     data = request.get_json()
 
     topic = data['topic']
-    # rows = db.getAllTopicPosts(topic)
+    # return db.getAllTopicPosts(topic)
     return"""
 Retrieved posts from topic!
   topic: {}
@@ -379,6 +388,21 @@ Deleted Post!
   postId: {}
 """.format(postId)
 
+
+@app.route("/like-post", methods=['POST'])
+def like_post():
+    data = request.get_json()
+
+    userId = data['userId']
+    postId = data['postId']
+
+    db.like(userId, postId)
+
+    return """
+Liked!
+  userId: {}
+  postId: {}
+""".format(userId, postId)
 
 @app.route("/dm-user", methods=['POST'])
 def dm_user():
