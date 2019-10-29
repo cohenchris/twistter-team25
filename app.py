@@ -346,7 +346,7 @@ def get_id_from_email():
   data = request.get_json()
 
   email = ['email']
-  userId = db.getUserId(email)
+  # userId = db.getUserId(email)
 
 #  return """
  # Retrieved UserId from given email!
@@ -432,7 +432,7 @@ def like_post():
   userId = data['userId']
   postId = data['postId']
 
-  db.like(userId, postId)
+  # db.like(userId, postId)
 
   return """
 Liked!
@@ -476,7 +476,7 @@ def unlike_post():
   userId = data['userId']
   postId = data['postId']
 
-  db.unlike(userId, postId)
+  # db.unlike(userId, postId)
 
   return """
 Unliked!
@@ -497,7 +497,7 @@ def retweet():
   userId = data['userId']
   postId = data['postId']
 
-  db.retweet(userId, postId)
+  # db.retweet(userId, postId)
 
   return """
   Retweeded!
@@ -516,7 +516,7 @@ def unretweet():
   userId = data['userId']
   postId = data['postId']
 
-  db.retweet(userId, postId)
+  # db.retweet(userId, postId)
 
   return """
   Unretweeded!
@@ -534,7 +534,7 @@ def deleteDMs():
   userId = data['userId']
   receiverId = data['receiverId']
 
-  db.deleteDMs(userId, receiverId)
+  # db.deleteDMs(userId, receiverId)
 
   return """
   DMs successfully deleted!
@@ -548,7 +548,7 @@ def clearDMs():
   :return: Returns that the dms were successfully wiped
   """
 
-  db.clearDMs()
+  # db.clearDMs()
 
   return "DMs successfully cleared"
 
@@ -564,7 +564,8 @@ def get_DMConvo():
   userId = data['userId']
   receiverId = data['receiverId']
 
-  convo = db.getDMConvo(userId, receiverId)
+  # convo = db.getDMConvo(userId, receiverId)
+  convo = "convo"
 
   return """
   convo: {}
@@ -582,7 +583,8 @@ def get_DMList():
 
   userID = data['userId']
 
-  dmList = db.getDMLIST(userID)
+  # dmList = db.getDMLIST(userID)
+  dmList = "list"
 
   return """
 userID: {}
