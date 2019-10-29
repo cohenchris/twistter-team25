@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, url_for, redirect, render_template, request
 import DatabaseLibrary as db
 
