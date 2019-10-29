@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET'])
 def display_home_page():
-  return render_template('sample.html', **locals())
+    return "API is running"
 
 
 # TODO: Un-comment all the calls to the database
