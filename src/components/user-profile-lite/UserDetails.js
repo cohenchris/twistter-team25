@@ -1,6 +1,7 @@
 import React from "react";
 import BlogPosts from "../../views/BlogPosts";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
+const axios = require("axios");
 
 export default class UserDetails extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class UserDetails extends React.Component {
     //TODO: COMMUNICATE WITH API
 
     this.state = {
+      /*
       UserName: "kbuzza",
       CommonName: "Kyle Buzza",
       Following: 0,
@@ -16,10 +18,23 @@ export default class UserDetails extends React.Component {
       Posts: 4,
       Email: "kylesucks@purdue.edu",
       Description: "This is my description."
+      */
     };
+    this.getBlogData = this.getBlogData.bind(this);
+  }
+
+  async getBlogData() {
+    // TODO: save userId from validate-login (LoginPage)
+    const response = await axios.post(
+      "http://twistter-API.azurewebsites.net/get-user",
+      { userId: 4 }
+    );
+    this.state = response;
   }
 
   render() {
+    this.getBlogData();
+
     return (
       <div>
         <Card small className="mb-4 pt-3">
@@ -63,6 +78,7 @@ export default class UserDetails extends React.Component {
         </Card>
         <br></br>
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
+        {/* TODO: pass userId into BlogPosts */}
         <BlogPosts />
       </div>
     );

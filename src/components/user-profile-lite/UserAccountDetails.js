@@ -12,6 +12,7 @@ import {
   Button
 } from "shards-react";
 import Alert from "react-bootstrap/Alert";
+const axios = require("axios");
 
 class UserAccountDetails extends React.Component {
   constructor() {
@@ -27,11 +28,31 @@ class UserAccountDetails extends React.Component {
       passwordInvalid: false
     };
     this.handleName = this.handleName.bind(this);
-    this.handleEmail = this.handleEmail.bind(this);
+    //this.handleEmail = this.handleEmail.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
     this.handleSecondPassword = this.handleSecondPassword.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.updateUserDetails = this.updateUserDetails.bind(this);
+  }
+
+  updateUserDetails(post_data) {
+    //TODO: /get-user-id-from-email
+    const common_name_response = axios.post(
+      "twistter-API.azurewebsites.net/user-update-common-name",
+      post_data
+    );
+    console.log(common_name_response);
+    const description_response = axios.post(
+      "twistter-API.azurewebsites.net/user-update-description",
+      post_data
+    );
+    console.log(description_response);
+    const password_response = axios.post(
+      "twistter-API.azurewebsites.net/update-password",
+      post_data
+    );
+    console.log(password_response);
   }
 
   submitForm() {
@@ -49,15 +70,9 @@ class UserAccountDetails extends React.Component {
         Email: this.state.Email,
         newDescription: this.state.Description
       };
-      
+
       //TODO: COMMUNICATE WITH API
-      // ***** email!!!!
-      const common_name_response = await axios.post('twistter-API.azurewebsites.net/user-update-common-name', userSubmission);
-      console.log(common_name_response);
-      const description_response = await axios.post('twistter-API.azurewebsites.net/user-update-description', userSubmission);
-      console.log(description_response);
-      const password_response = await axios.post('twistter-API.azurewebsites.net/update-password', userSubmission);
-      console.log(password_response);
+      this.updateUserDetails(userSubmission);
     }
   }
 
@@ -65,9 +80,11 @@ class UserAccountDetails extends React.Component {
     this.setState({ CommonName: e.target.value });
   }
 
+  /*
   handleEmail(e) {
     this.setState({ Email: e.target.value });
   }
+  */
 
   handleFirstPassword(e) {
     this.setState({ FirstPassword: e.target.value });
@@ -103,7 +120,8 @@ class UserAccountDetails extends React.Component {
                       onChange={this.handleName}
                     />
                   </Col>
-                  {/* Email */}
+                  {/*
+                  {/* Email /}
                   <Col md="6" className="form-group">
                     <label htmlFor="feEmail">Email</label>
                     <FormInput
@@ -116,6 +134,7 @@ class UserAccountDetails extends React.Component {
                       autoComplete="email"
                     />
                   </Col>
+                  */}
                 </Row>
                 <Row form>
                   {/* Password */}

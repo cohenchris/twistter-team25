@@ -12,13 +12,13 @@ import Button from "react-bootstrap/Button";
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
-import Axios from "axios";
+const axios = require("axios");
 
 export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      PostId: 0,
+      PostId: -1,
       PostTitle: "",
       PostText: "",
       Topics: "All",
@@ -39,6 +39,15 @@ export default class Editor extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.handleTopicSelect = this.handleTopicSelect.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
+    this.postData = this.postData.bind(this);
+  }
+
+  async postData(post_data) {
+    const response = await axios.post(
+      "http://twistter-API.azurewebsites.net/create-post",
+      post_data
+    );
+    return response;
   }
 
   submitForm() {
@@ -67,8 +76,7 @@ export default class Editor extends React.Component {
       UserName: this.state.b[0].UserName,
       CommonName: this.state.b[0].CommonName,
       Likes: this.state.b[0].Lines,
-      Retweets: this.state.b[0].Retweets
-      /*
+      Retweets: this.state.b[0].Retweets,
       b: [
         {
           userId: this.state.b[0].UserId,
@@ -78,10 +86,9 @@ export default class Editor extends React.Component {
           Retweets: this.state.b[0].Retweets
         }
       ]
-      */
     };
     //TODO: COMMUNICATE WITH FLASK API
-    const response = await axios.post('twistter-API.azurewebsites.net/create-post', post_submission);
+    let response = this.postData(post_submission);
     console.log(response);
   }
 
