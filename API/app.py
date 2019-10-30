@@ -26,6 +26,7 @@ def create_user():
 
   try:
     username = data['username']
+    password = data['password']
     commonName = data['commonName']
     email = data['email']
     description = data['description']
@@ -33,7 +34,7 @@ def create_user():
     return invalid_json_format_string
 
   #  Push the info to the database
-  db.newUser(username, commonName, email, description)
+  db.newUser(username, password, commonName, email, description)
 
   return '''
 Created User!
@@ -61,7 +62,7 @@ def validate_login():
   except KeyError:
     return invalid_json_format_string
 
-  return db.validateLogin(username, password)
+  return str(db.validateLogin(username, password)) + "\n"
   # return "Validated"
 
 
@@ -438,9 +439,7 @@ def get_all_posts():
     the database.
   :return: Display Information about the action.
   """
-  # return db.getAllPosts()
-  return "Success"
-
+  return db.getAllPosts()
 
 @app.route("/get-topic-posts", methods=['POST'])
 def get_all_topic_posts():
