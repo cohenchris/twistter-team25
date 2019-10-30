@@ -9,6 +9,11 @@ curl -X POST \
 https://twistter-api.azurewebsites.net/user-create-new-user
 printf "\n\n"
 
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"username":"cornettn", "password":"1234pass"}' \
+https://twistter-api.azurewebsites.net/validate-login
+
 echo Update Common Name
 curl -X POST \
 -H "Content-Type: application/json" \
