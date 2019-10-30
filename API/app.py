@@ -6,10 +6,13 @@ app = Flask(__name__)
 # Constants
 invalid_json_format_string = "Invalid json format for this request\n"
 
+err_file = open("error_file.log", "w+")
+
+
 @app.route("/", methods=['GET'])
 @app.route("/home", methods=['GET'])
 def display_home_page():
-  return "API is running\n"
+  return "API is running great\n"
 
 
 @app.route("/user-create-new-user", methods=['POST'])
@@ -253,22 +256,22 @@ def get_user():
   This function is used to get a user's profile information.
   :return:
   """
-
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  try:
-    val = db.getUser(userId)
-  except TypeError:
-    return "Invalid User Id"
+    try:
+      userId = data['userId']
+    except KeyError:
+      return invalid_json_format_string
 
-  return val
+    try:
+      val = db.getUser(userId)
+    except TypeError:
+      return "Invalid User Id"
 
-#   return "Got User Info"
+    return val
+  except Exception as e:
+    err_file.write(str(e))
 
 
 @app.route("/follow-user", methods=['POST'])
