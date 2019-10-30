@@ -262,11 +262,13 @@ def get_user():
     try:
       userId = data['userId']
     except KeyError:
+      log_file.write(invalid_json_format_string)
       return invalid_json_format_string
 
     try:
       val = db.getUser(userId)
     except TypeError:
+      log_file.write("Invalid User Id")
       return "Invalid User Id"
 
     log_file.write("Got User")
