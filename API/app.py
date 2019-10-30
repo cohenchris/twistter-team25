@@ -12,9 +12,6 @@ def display_home_page():
   return "API is running\n"
 
 
-# TODO: Un-comment all the calls to the database
-
-
 @app.route("/user-create-new-user", methods=['POST'])
 def create_user():
   """
@@ -36,7 +33,7 @@ def create_user():
     return invalid_json_format_string
 
   #  Push the info to the database
-  # db.newUser(username, commonName, email, phone, birthday, description)
+  db.newUser(username, commonName, email, description)
 
   return '''
 Created User!
@@ -64,8 +61,8 @@ def validate_login():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.validateLogin(username, password)
-  return "Validated"
+  return db.validateLogin(username, password)
+  # return "Validated"
 
 
 @app.route("/user-update-common-name", methods=['POST'])
@@ -84,7 +81,7 @@ def update_common_name():
     return invalid_json_format_string
 
   #  Push the info to the database
-  # db.updateCommonName(userId, newCommonName)
+  db.updateCommonName(userId, newCommonName)
 
   return """
 Updated Users Common Name!
@@ -109,7 +106,7 @@ def update_description():
     return invalid_json_format_string
 
   # Send the info to the database
-  # db.updateDescription(userId, newDescription)
+  db.updateDescription(userId, newDescription)
 
   return """
 Updated Description!
@@ -133,7 +130,7 @@ def update_password():
   except KeyError:
     return invalid_json_format_string
 
-  # db.updatePassword(userId, newPassword)
+  db.updatePassword(userId, newPassword)
 
   return """
 Updated Password!
@@ -157,7 +154,7 @@ def add_user_topic():
   except KeyError:
     return invalid_json_format_string
 
-  # db.newUserTopic(userId, newTopic)
+  db.newUserTopic(userId, newTopic)
 
   return """
 Added a new Topic!
@@ -180,12 +177,12 @@ def get_user_timeline():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.getUserTimeline(userId)
+  return db.getUserTimeline(userId)
 
-  return """
-Retireved Timeline!
-  userId: {}
-""".format(userId)
+#    return """
+#  Retireved Timeline!
+#    userId: {}
+#  """.format(userId)
 
 
 @app.route("/user-get-user-posts", methods=['POST'])
@@ -202,12 +199,12 @@ def get_user_posts():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.getUserPosts(userId)
+  return db.getUserPosts(userId)
 
-  return """
-Retrieved User Posts!
-  userId: {}
-""".format(userId)
+#    return """
+#  Retrieved User Posts!
+#    userId: {}
+#  """.format(userId)
 
 
 @app.route("/get-user-topics", methods=['POST'])
@@ -223,8 +220,8 @@ def get_user_topics():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.getUserTopics(userId)
-  return "Got Posts"
+  return db.getUserTopics(userId)
+#   return "Got Posts"
 
 
 @app.route("/user-delete", methods=['POST'])
@@ -241,12 +238,12 @@ def delete_user():
   except KeyError:
     return invalid_json_format_string
 
-  # db.deleteUser(userId)
+  db.deleteUser(userId)
 
-  return """
-Deleted User!
-  userId: {}
-""".format(userId)
+#    return """
+#  Deleted User!
+#    userId: {}
+#  """.format(userId)
 
 
 @app.route("/get-user", methods=['POST'])
@@ -263,9 +260,9 @@ def get_user():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.getUser(userId)
+  return db.getUser(userId)
 
-  return "Got User Info"
+#   return "Got User Info"
 
 
 @app.route("/follow-user", methods=['POST'])
@@ -274,6 +271,7 @@ def follow_new_user():
   This function is used to follow a new user.
   :return: Display information about the update.
   """
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -283,7 +281,7 @@ def follow_new_user():
   except KeyError:
     return invalid_json_format_string
 
-  # db.newFollow(userId, followingId)
+  db.newFollow(userId, followingId)
 
   return """
 Followed a new user!
@@ -307,7 +305,7 @@ def unfollow_user():
   except KeyError:
     return invalid_json_format_string
 
-  # db.unfollowUser(userId, followingId)
+  db.unfollowUser(userId, followingId)
 
   return """
 Unfollowed User!
@@ -333,7 +331,7 @@ def follow_user_topics():
   except KeyError:
     return invalid_json_format_string
 
-  # db.updateFollow(userId, followingId, topics=topicsSelected)
+  db.updateFollow(userId, followingId, topics=topicsSelected)
 
   return """
 Followed a user's topics!
@@ -357,7 +355,7 @@ def validate_email():
   except KeyError:
     return invalid_json_format_string
 
-  # db.validateEmail(email)
+  db.validateEmail(email)
 
   return """
   Email successfully validated!
@@ -379,7 +377,7 @@ def validate_username():
   except KeyError:
     return invalid_json_format_string
 
-  # db.validateUsername(username)
+  db.validateUsername(username)
 
   return """
   Username successfully validated!
@@ -402,7 +400,7 @@ def get_id_from_email():
   except KeyError:
     return invalid_json_format_string
 
-  # userId = db.getUserId(email)
+  userId = db.getUserId(email)
 
   #  return """
   # Retrieved UserId from given email!
@@ -428,7 +426,7 @@ def post():
   except KeyError:
     return invalid_json_format_string
 
-  # db.newPost(userId, postText, topics)
+  db.newPost(userId, postText, topics)
 
   return "Post successfully created!"
 
@@ -459,12 +457,12 @@ def get_all_topic_posts():
   except KeyError:
     return invalid_json_format_string
 
-  # return db.getAllTopicPosts(topic)
+  return db.getAllTopicPosts(topic)
 
-  return """
-Retrieved posts from topic!
-  topic: {}
-""".format(topic)
+#  return """
+#Retrieved posts from topic!
+#  topic: {}
+#""".format(topic)
 
 
 @app.route("/delete-post", methods=['POST'])
@@ -481,7 +479,7 @@ def delete_post():
   except KeyError:
     return invalid_json_format_string
 
-  # db.deletePost(postId)
+  db.deletePost(postId)
   return """
 Deleted Post!
   postId: {}
@@ -503,7 +501,7 @@ def like_post():
   except KeyError:
     return invalid_json_format_string
 
-  # db.like(userId, postId)
+  db.like(userId, postId)
 
   return """
 Liked!
@@ -528,7 +526,7 @@ def dm_user():
   except KeyError:
     return invalid_json_format_string
 
-  # db.newDM(senderId, receiverId, message)
+  db.newDM(senderId, receiverId, message)
 
   return """
 DM Sent!
@@ -553,7 +551,7 @@ def unlike_post():
   except KeyError:
     return invalid_json_format_string
 
-  # db.unlike(userId, postId)
+  db.unlike(userId, postId)
 
   return """
 Unliked!
@@ -577,7 +575,7 @@ def retweet():
   except KeyError:
     return invalid_json_format_string
 
-  # db.retweet(userId, postId)
+  db.retweet(userId, postId)
 
   return """
   Retweeded!
@@ -599,7 +597,7 @@ def unretweet():
   except KeyError:
     return invalid_json_format_string
 
-  # db.retweet(userId, postId)
+  db.retweet(userId, postId)
 
   return """
   Unretweeded!
@@ -620,7 +618,7 @@ def deleteDMs():
   except KeyError:
     return invalid_json_format_string
 
-  # db.deleteDMs(userId, receiverId)
+  db.deleteDMs(userId, receiverId)
 
   return """
   DMs successfully deleted!
@@ -653,8 +651,8 @@ def get_DMConvo():
   except KeyError:
     return invalid_json_format_string
 
-  # convo = db.getDMConvo(userId, receiverId)
-  convo = "convo"
+  convo = db.getDMConvo(userId, receiverId)
+  # convo = "convo"
 
   return """
   convo: {}
@@ -675,8 +673,8 @@ def get_DMList():
   except KeyError:
     return invalid_json_format_string
 
-  # dmList = db.getDMLIST(userID)
-  dmList = "list"
+  dmList = db.getDMLIST(userID)
+  # dmList = "list"
 
   return """
 userID: {}
