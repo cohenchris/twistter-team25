@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Constants
 invalid_json_format_string = "Invalid json format for this request\n"
 
-err_file = open("error_file.log", "w+")
+log_file = open("error_file.log", "w+")
 
 
 @app.route("/", methods=['GET'])
@@ -269,9 +269,10 @@ def get_user():
     except TypeError:
       return "Invalid User Id"
 
+    log_file.write("Got User")
     return val
   except Exception as e:
-    err_file.write(str(e))
+    log_file.write(str(e))
 
 
 @app.route("/follow-user", methods=['POST'])
