@@ -110,7 +110,7 @@ import time
 #d.deleteUser(3)
 
 
-d.like(1,1)
+#d.like(1,1)
 #d.unlike(1,1)
 
 
@@ -150,12 +150,5 @@ d.like(1,1)
 
 
 #print(d.getDMList(1))
-<<<<<<< HEAD:307test.py
 
-
-#print(d.getUserPosts2(1))
-
-
-#print(d.getUserPosts(2))
-=======
->>>>>>> edacb6664e91109189df4a613fdb4b3806fe7b28:API/307test.py
+print(type(d.getAllPosts()))
