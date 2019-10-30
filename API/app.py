@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request
+from flask import Flask, url_for, redirect, render_template, request, jsonify
 import DatabaseLibrary as db
 
 app = Flask(__name__)
@@ -261,7 +261,12 @@ def get_user():
   except KeyError:
     return invalid_json_format_string
 
-  return db.getUser(userId)
+  try:
+    val = db.getUser(userId)
+  except TypeError:
+    return "Invalid User Id"
+
+  return val
 
 #   return "Got User Info"
 
@@ -439,7 +444,8 @@ def get_all_posts():
     the database.
   :return: Display Information about the action.
   """
-  return db.getAllPosts()
+  val = db.getAllPosts()
+  return jsonify(val)
 
 @app.route("/get-topic-posts", methods=['POST'])
 def get_all_topic_posts():
@@ -673,7 +679,6 @@ def get_DMList():
     return invalid_json_format_string
 
   dmList = db.getDMLIST(userID)
-  # dmList = "list"
 
   return """
 userID: {}
