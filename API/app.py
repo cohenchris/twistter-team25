@@ -1,4 +1,6 @@
 from flask import Flask, url_for, redirect, render_template, request, jsonify
+import time
+import inspect
 import DatabaseLibrary as db
 
 app = Flask(__name__)
@@ -6,12 +8,22 @@ app = Flask(__name__)
 # Constants
 invalid_json_format_string = "Invalid json format for this request\n"
 
-log_file = open("error_file.log", "w+")
+log_file = open("logs.log", "w+")
+
+def log(message):
+  log_file.write("{}: {}\n".format(time.asctime(time.localtime(time.time())),
+                                   message))
+  log_file.flush()
+
+
+log("Starting API")
 
 
 @app.route("/", methods=['GET'])
 @app.route("/home", methods=['GET'])
 def display_home_page():
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
   return "API is running great\n"
 
 
@@ -23,6 +35,9 @@ def create_user():
     send a json file with the appropriate information.
   :return: Display information about the newly created user.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
 
   #  Get the from the json file sent with the request
   data = request.get_json()
@@ -56,6 +71,9 @@ def validate_login():
   :return: -1 if no user exists, if the user exists it returns the userId
   """
 
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with POST request
   data = request.get_json()
 
@@ -75,6 +93,10 @@ def update_common_name():
   This function is used to update a user's common name in the database.
   :return: Display information about about the call.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -100,6 +122,10 @@ def update_description():
   This function is called to update a user's description.
   :return: Display information about the updated information.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -125,6 +151,10 @@ def update_password():
   This function is used to update the database with new password info.
   :return: Information about the update
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -149,6 +179,10 @@ def add_user_topic():
   This function is used to add a new topic to the user's profile.
   :return: Display information about the function call.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -173,6 +207,10 @@ def get_user_timeline():
   This function is used to get the timeline of a specific user
   :return: Display information about the timeline
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -195,6 +233,10 @@ def get_user_posts():
   This function is used to get all of the posts of the specific user.
   :return: Display information about the posts.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -217,6 +259,10 @@ def get_user_topics():
   This function is used to retrieve the user posts from the database.
   :return: List of user topics
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -234,6 +280,10 @@ def delete_user():
   This function is called in order to delete a user.
   :return: Display information about deleted user
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -256,25 +306,29 @@ def get_user():
   This function is used to get a user's profile information.
   :return:
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   try:
     data = request.get_json()
 
     try:
       userId = data['userId']
     except KeyError:
-      log_file.write(invalid_json_format_string)
+      log(invalid_json_format_string)
       return invalid_json_format_string
 
     try:
       val = db.getUser(userId)
     except TypeError:
-      log_file.write("Invalid User Id")
+      log("Invalid User Id")
       return "Invalid User Id"
 
-    log_file.write("Got User")
+    log("Got User")
     return val
   except Exception as e:
-    log_file.write(str(e))
+    log(str(e))
 
 
 @app.route("/follow-user", methods=['POST'])
@@ -283,6 +337,9 @@ def follow_new_user():
   This function is used to follow a new user.
   :return: Display information about the update.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
 
   # Get the info from the json file sent with the request
   data = request.get_json()
@@ -308,6 +365,10 @@ def unfollow_user():
   This function is used to unfollow a user.
   :return: Display information about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -333,6 +394,10 @@ def follow_user_topics():
     topics.
   :return: Display information about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -358,7 +423,11 @@ def validate_email():
   """
       This function is used to validate a given user's email.
       :return: Return a boolean that determines validation
-      """
+  """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -381,6 +450,10 @@ def validate_username():
   This function is used to validate a given user's username.
   :return: Return a boolean that determines validation
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -404,6 +477,10 @@ def get_id_from_email():
   a given email.
   :return: Return's the userId of the given email user.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -428,6 +505,10 @@ def post():
   This function is used to add a created post to the database.
   :return: Return a boolean that determines successful creation.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -450,6 +531,10 @@ def get_all_posts():
     the database.
   :return: Display Information about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   val = db.getAllPosts()
   return jsonify(val)
 
@@ -460,6 +545,10 @@ def get_all_topic_posts():
     from the database.
   :return: Display information about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -482,6 +571,10 @@ def delete_post():
   This function is used to delete a post from the database.
   :return: Display information about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -504,6 +597,10 @@ def like_post():
   counter in the database
   :return: Returns that the post was successfully liked
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -527,6 +624,10 @@ def dm_user():
   This function is used to send a DM to the database
   :return: Display information message about the action.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get the info from the json file sent with the request
   data = request.get_json()
 
@@ -554,6 +655,10 @@ def unlike_post():
   counter in the database
   :return: Returns that the post was successfully unliked
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -578,6 +683,9 @@ def retweet():
   :return: Returns that the post was successfully retweeted
   """
 
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -600,6 +708,9 @@ def unretweet():
    :return: Returns that the post was successfully unretweeted
    """
 
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -621,6 +732,10 @@ def deleteDMs():
   This function deletes the dms for a particular user
   :return: Returns that the dms were successfully deleted.
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -643,6 +758,9 @@ def clearDMs():
   :return: Returns that the dms were successfully wiped
   """
 
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # db.clearDMs()
 
   return "DMs successfully cleared"
@@ -654,6 +772,10 @@ def get_DMConvo():
   This function gets a dm conversation between two users
   :return: Returns the conversation between the two users
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   data = request.get_json()
 
   try:
@@ -676,6 +798,10 @@ def get_DMList():
   This function is used to get a list of dms from the database
   :return: Returns the associated userId and a list of DMs
   """
+
+  log("Request - {}".format(
+    inspect.getframeinfo(inspect.currentframe()).function))
+
   # Get info from json file
   data = request.get_json()
 
