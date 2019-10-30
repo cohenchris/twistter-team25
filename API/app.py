@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/home", methods=['GET'])
 def display_home_page():
-    return "API is running"
+  return "API is running"
 
 
 # TODO: Un-comment all the calls to the database
@@ -25,10 +25,13 @@ def create_user():
   #  Get the from the json file sent with the request
   data = request.get_json()
 
-  username = data['username']
-  commonName = data['commonName']
-  email = data['email']
-  description = data['description']
+  try:
+    username = data['username']
+    commonName = data['commonName']
+    email = data['email']
+    description = data['description']
+  except KeyError:
+    return "Invalid json format for this request"
 
   #  Push the info to the database
   # db.newUser(username, commonName, email, phone, birthday, description)
@@ -53,8 +56,11 @@ def validate_login():
   # Get the info from the json file sent with POST request
   data = request.get_json()
 
-  username = data['username']
-  password = data['password']
+  try:
+    username = data['username']
+    password = data['password']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # return db.validateLogin(username, password)
   return "Validated"
@@ -69,8 +75,11 @@ def update_common_name():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  newCommonName = data['newCommonName']
+  try:
+    userId = data['userId']
+    newCommonName = data['newCommonName']
+  except KeyError:
+    return "Invalid json format for this request"
 
   #  Push the info to the database
   # db.updateCommonName(userId, newCommonName)
@@ -91,8 +100,11 @@ def update_description():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data["userId"]
-  newDescription = ["newDescription"]
+  try:
+    userId = data["userId"]
+    newDescription = ["newDescription"]
+  except KeyError:
+    return "Invalid json format for this request"
 
   # Send the info to the database
   # db.updateDescription(userId, newDescription)
@@ -113,8 +125,11 @@ def update_password():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  newPassword = data['newPassword']
+  try:
+    userId = data['userId']
+    newPassword = data['newPassword']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.updatePassword(userId, newPassword)
 
@@ -134,8 +149,11 @@ def add_user_topic():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  newTopic = data['newTopic']
+  try:
+    userId = data['userId']
+    newTopic = data['newTopic']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.newUserTopic(userId, newTopic)
 
@@ -155,7 +173,10 @@ def get_user_timeline():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
+  try:
+    userId = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # return db.getUserTimeline(userId)
 
@@ -174,7 +195,10 @@ def get_user_posts():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
+  try:
+    userId = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # return db.getUserPosts(userId)
 
@@ -192,7 +216,10 @@ def get_user_topics():
   """
   data = request.get_json()
 
-  userId = data['userId']
+  try:
+    userId = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # return db.getUserTopics(userId)
   return "Got Posts"
@@ -207,7 +234,10 @@ def delete_user():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
+  try:
+    userId = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.deleteUser(userId)
 
@@ -225,7 +255,11 @@ def get_user():
   """
 
   data = request.get_json()
-  userId = data['userId']
+
+  try:
+    userId = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # return db.getUser(userId)
 
@@ -241,8 +275,11 @@ def follow_new_user():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  followingId = data['followingId']
+  try:
+    userId = data['userId']
+    followingId = data['followingId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.newFollow(userId, followingId)
 
@@ -262,8 +299,11 @@ def unfollow_user():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  followingId = data['followingId']
+  try:
+    userId = data['userId']
+    followingId = data['followingId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.unfollowUser(userId, followingId)
 
@@ -284,9 +324,12 @@ def follow_user_topics():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  followingId = data['followingId']
-  topicsSelected = data['topicsSelected']
+  try:
+    userId = data['userId']
+    followingId = data['followingId']
+    topicsSelected = data['topicsSelected']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.updateFollow(userId, followingId, topics=topicsSelected)
 
@@ -307,7 +350,10 @@ def validate_email():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  email = data['email']  # The user ID requesting a new follow
+  try:
+    email = data['email']  # The user ID requesting a new follow
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.validateEmail(email)
 
@@ -326,7 +372,11 @@ def validate_username():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  username = ['user']
+  try:
+    username = ['user']
+  except KeyError:
+    return "Invalid json format for this request"
+
   # db.validateUsername(username)
 
   return """
@@ -345,13 +395,17 @@ def get_id_from_email():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  email = ['email']
+  try:
+    email = ['email']
+  except KeyError:
+    return "Invalid json format for this request"
+
   # userId = db.getUserId(email)
 
-#  return """
- # Retrieved UserId from given email!
- # userId: {}
- # """.format(userId)
+  #  return """
+  # Retrieved UserId from given email!
+  # userId: {}
+  # """.format(userId)
 
   return "UserId found"
 
@@ -365,9 +419,12 @@ def post():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  userId = data['userId']
-  postText = data['postText']
-  topics = data['topics']
+  try:
+    userId = data['userId']
+    postText = data['postText']
+    topics = data['topics']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.newPost(userId, postText, topics)
 
@@ -395,8 +452,13 @@ def get_all_topic_posts():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  topic = data['topic']
+  try:
+    topic = data['topic']
+  except KeyError:
+    return "Invalid json format for this request"
+
   # return db.getAllTopicPosts(topic)
+
   return """
 Retrieved posts from topic!
   topic: {}
@@ -412,7 +474,11 @@ def delete_post():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  postId = data['postId']
+  try:
+    postId = data['postId']
+  except KeyError:
+    return "Invalid json format for this request"
+
   # db.deletePost(postId)
   return """
 Deleted Post!
@@ -429,8 +495,11 @@ def like_post():
   """
   data = request.get_json()
 
-  userId = data['userId']
-  postId = data['postId']
+  try:
+    userId = data['userId']
+    postId = data['postId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.like(userId, postId)
 
@@ -450,9 +519,12 @@ def dm_user():
   # Get the info from the json file sent with the request
   data = request.get_json()
 
-  senderId = data['senderId']
-  receiverId = data['receiverId']
-  message = data['Message']
+  try:
+    senderId = data['senderId']
+    receiverId = data['receiverId']
+    message = data['Message']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.newDM(senderId, receiverId, message)
 
@@ -473,8 +545,11 @@ def unlike_post():
   """
   data = request.get_json()
 
-  userId = data['userId']
-  postId = data['postId']
+  try:
+    userId = data['userId']
+    postId = data['postId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.unlike(userId, postId)
 
@@ -494,8 +569,11 @@ def retweet():
 
   data = request.get_json()
 
-  userId = data['userId']
-  postId = data['postId']
+  try:
+    userId = data['userId']
+    postId = data['postId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.retweet(userId, postId)
 
@@ -513,8 +591,11 @@ def unretweet():
 
   data = request.get_json()
 
-  userId = data['userId']
-  postId = data['postId']
+  try:
+    userId = data['userId']
+    postId = data['postId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.retweet(userId, postId)
 
@@ -531,8 +612,11 @@ def deleteDMs():
   """
   data = request.get_json()
 
-  userId = data['userId']
-  receiverId = data['receiverId']
+  try:
+    userId = data['userId']
+    receiverId = data['receiverId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # db.deleteDMs(userId, receiverId)
 
@@ -561,8 +645,11 @@ def get_DMConvo():
   """
   data = request.get_json()
 
-  userId = data['userId']
-  receiverId = data['receiverId']
+  try:
+    userId = data['userId']
+    receiverId = data['receiverId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # convo = db.getDMConvo(userId, receiverId)
   convo = "convo"
@@ -581,7 +668,10 @@ def get_DMList():
   # Get info from json file
   data = request.get_json()
 
-  userID = data['userId']
+  try:
+    userID = data['userId']
+  except KeyError:
+    return "Invalid json format for this request"
 
   # dmList = db.getDMLIST(userID)
   dmList = "list"
@@ -593,4 +683,4 @@ DMList: {}
 
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run()
