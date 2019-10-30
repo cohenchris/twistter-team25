@@ -5,19 +5,20 @@
 echo Create New User
 curl -X POST \
 -H "Content-Type: application/json" \
--d '{"username":"cornettn", "commonName":"Noah Cornett", "email":"blah", "phone":"2197793959", "birthday":"00/00/0000", "description":"This is a desc"}' \
-localhost:5000/user-create-new-user
+-d '{"username":"cornettn", "commonName":"Noah Cornett", "email":"blah", "description":"This is a desc"}' \
+https://twistter-api.azurewebsites.net/user-create-new-user
 printf "\n\n"
 
 echo Update Common Name
 curl -X POST \
 -H "Content-Type: application/json" \
 -d '{"userId":3, "newCommonName":"New Name"}' \
-localhost:5000/user-update-common-name
+https://twistter-api.azurewebsites.net/user-update-common-name
 printf "\n\n"
 
-echo Update Phone Number
+echo Invalid Json Test
 curl -X POST \
 -H "Content-Type: application/json" \
--d '{"userId":3, "newPhoneNumber":"(219) 779-3959"}' \
-localhost:5000/user-update-phone
+-d '{"invalid":3, "invalid":"New Name"}' \
+https://twistter-api.azurewebsites.net/user-update-common-name
+printf "\n\n"

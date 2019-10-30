@@ -3,11 +3,13 @@ import DatabaseLibrary as db
 
 app = Flask(__name__)
 
+# Constants
+invalid_json_format_string = "Invalid json format for this request\n"
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 @app.route("/home", methods=['GET'])
 def display_home_page():
-  return "API is running"
+  return "API is running\n"
 
 
 # TODO: Un-comment all the calls to the database
@@ -31,7 +33,7 @@ def create_user():
     email = data['email']
     description = data['description']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   #  Push the info to the database
   # db.newUser(username, commonName, email, phone, birthday, description)
@@ -60,7 +62,7 @@ def validate_login():
     username = data['username']
     password = data['password']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.validateLogin(username, password)
   return "Validated"
@@ -79,7 +81,7 @@ def update_common_name():
     userId = data['userId']
     newCommonName = data['newCommonName']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   #  Push the info to the database
   # db.updateCommonName(userId, newCommonName)
@@ -104,7 +106,7 @@ def update_description():
     userId = data["userId"]
     newDescription = ["newDescription"]
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # Send the info to the database
   # db.updateDescription(userId, newDescription)
@@ -129,7 +131,7 @@ def update_password():
     userId = data['userId']
     newPassword = data['newPassword']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.updatePassword(userId, newPassword)
 
@@ -153,7 +155,7 @@ def add_user_topic():
     userId = data['userId']
     newTopic = data['newTopic']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.newUserTopic(userId, newTopic)
 
@@ -176,7 +178,7 @@ def get_user_timeline():
   try:
     userId = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.getUserTimeline(userId)
 
@@ -198,7 +200,7 @@ def get_user_posts():
   try:
     userId = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.getUserPosts(userId)
 
@@ -219,7 +221,7 @@ def get_user_topics():
   try:
     userId = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.getUserTopics(userId)
   return "Got Posts"
@@ -237,7 +239,7 @@ def delete_user():
   try:
     userId = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.deleteUser(userId)
 
@@ -259,7 +261,7 @@ def get_user():
   try:
     userId = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.getUser(userId)
 
@@ -279,7 +281,7 @@ def follow_new_user():
     userId = data['userId']
     followingId = data['followingId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.newFollow(userId, followingId)
 
@@ -303,7 +305,7 @@ def unfollow_user():
     userId = data['userId']
     followingId = data['followingId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.unfollowUser(userId, followingId)
 
@@ -329,7 +331,7 @@ def follow_user_topics():
     followingId = data['followingId']
     topicsSelected = data['topicsSelected']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.updateFollow(userId, followingId, topics=topicsSelected)
 
@@ -353,7 +355,7 @@ def validate_email():
   try:
     email = data['email']  # The user ID requesting a new follow
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.validateEmail(email)
 
@@ -375,7 +377,7 @@ def validate_username():
   try:
     username = ['user']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.validateUsername(username)
 
@@ -398,7 +400,7 @@ def get_id_from_email():
   try:
     email = ['email']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # userId = db.getUserId(email)
 
@@ -424,7 +426,7 @@ def post():
     postText = data['postText']
     topics = data['topics']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.newPost(userId, postText, topics)
 
@@ -455,7 +457,7 @@ def get_all_topic_posts():
   try:
     topic = data['topic']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # return db.getAllTopicPosts(topic)
 
@@ -477,7 +479,7 @@ def delete_post():
   try:
     postId = data['postId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.deletePost(postId)
   return """
@@ -499,7 +501,7 @@ def like_post():
     userId = data['userId']
     postId = data['postId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.like(userId, postId)
 
@@ -524,7 +526,7 @@ def dm_user():
     receiverId = data['receiverId']
     message = data['Message']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.newDM(senderId, receiverId, message)
 
@@ -549,7 +551,7 @@ def unlike_post():
     userId = data['userId']
     postId = data['postId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.unlike(userId, postId)
 
@@ -573,7 +575,7 @@ def retweet():
     userId = data['userId']
     postId = data['postId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.retweet(userId, postId)
 
@@ -595,7 +597,7 @@ def unretweet():
     userId = data['userId']
     postId = data['postId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.retweet(userId, postId)
 
@@ -616,7 +618,7 @@ def deleteDMs():
     userId = data['userId']
     receiverId = data['receiverId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # db.deleteDMs(userId, receiverId)
 
@@ -649,7 +651,7 @@ def get_DMConvo():
     userId = data['userId']
     receiverId = data['receiverId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # convo = db.getDMConvo(userId, receiverId)
   convo = "convo"
@@ -671,7 +673,7 @@ def get_DMList():
   try:
     userID = data['userId']
   except KeyError:
-    return "Invalid json format for this request"
+    return invalid_json_format_string
 
   # dmList = db.getDMLIST(userID)
   dmList = "list"
