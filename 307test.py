@@ -110,7 +110,7 @@ import time
 #d.deleteUser(3)
 
 
-d.like(1,1)
+#d.like(1,1)
 #d.unlike(1,1)
 
 
@@ -150,9 +150,3 @@ d.like(1,1)
 
 
 #print(d.getDMList(1))
-
-
-#print(d.getUserPosts2(1))
-
-
-#print(d.getUserPosts(2))

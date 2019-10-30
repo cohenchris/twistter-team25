@@ -88,16 +88,24 @@ class NewUserForm extends React.Component {
       fields["Password_Duplicate"] = "";
       errors["Password_Duplicate"] = "";
 
+      /* Random lowercase fields are to communicate with the api better */
       let submitData = {
-        UserName: this.state.fields.UserName,
+        userName: this.state.fields.UserName,
         Password: this.state.fields.Password,
-        CommonName: this.state.fields.CommonName,
-        Email: this.state.fields.Email,
-        Description: this.state.fields.Description
+        commonName: this.state.fields.CommonName,
+        email: this.state.fields.Email,
+        description: this.state.fields.Description
       };
 
       this.setState({ fields: fields, errors: errors });
-      console.log(submitData);
+
+      //TODO: COMMUNICATE WITH API
+      //TODO: password!!!!!!!
+      const response = axios.post(
+        "twistter-API.azurewebsites.net/user-create-new-user",
+        submitData
+      );
+      console.log(response);
       console.log(this.state.topics);
     }
   }

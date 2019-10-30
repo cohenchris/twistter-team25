@@ -40,14 +40,24 @@ class UserAccountDetails extends React.Component {
     } else {
       this.setState({ passwordInvalid: false });
 
+      /* Random lowercase shit is to communicate with the api better */
+      // TODO:
       const userSubmission = {
         UserName: this.state.UserName,
-        Password: this.state.FirstPassword,
-        CommonName: this.state.CommonName,
+        newPassword: this.state.FirstPassword,
+        newCommonName: this.state.CommonName,
         Email: this.state.Email,
-        Description: this.state.Description
+        newDescription: this.state.Description
       };
-      console.log(userSubmission);
+      
+      //TODO: COMMUNICATE WITH API
+      // ***** email!!!!
+      const common_name_response = await axios.post('twistter-API.azurewebsites.net/user-update-common-name', userSubmission);
+      console.log(common_name_response);
+      const description_response = await axios.post('twistter-API.azurewebsites.net/user-update-description', userSubmission);
+      console.log(description_response);
+      const password_response = await axios.post('twistter-API.azurewebsites.net/update-password', userSubmission);
+      console.log(password_response);
     }
   }
 

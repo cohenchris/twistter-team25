@@ -6,6 +6,8 @@ export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
 
+    //TODO: COMMUNICATE WITH API
+
     this.state = {
       UserName: "kbuzza",
       CommonName: "Kyle Buzza",
