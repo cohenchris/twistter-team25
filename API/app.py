@@ -24,6 +24,7 @@ log("Starting API")
 def display_home_page():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
+
   return "API is running great\n"
 
 
@@ -49,18 +50,22 @@ def create_user():
     email = data['email']
     description = data['description']
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
   #  Push the info to the database
   db.newUser(username, password, commonName, email, description)
 
-  return '''
+  str = '''
 Created User!
   username: {}
   commonName: {}
   email: {}
   description: {}
 '''.format(username, commonName, email, description)
+
+  log("Created new user")
+  return str
 
 
 @app.route("/validate-login", methods=['POST'])
@@ -81,10 +86,11 @@ def validate_login():
     username = data['username']
     password = data['password']
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
+  log("Validated")
   return str(db.validateLogin(username, password)) + "\n"
-  # return "Validated"
 
 
 @app.route("/user-update-common-name", methods=['POST'])
@@ -104,10 +110,13 @@ def update_common_name():
     userId = data['userId']
     newCommonName = data['newCommonName']
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
   #  Push the info to the database
   db.updateCommonName(userId, newCommonName)
+
+  log("Updated common name")
 
   return """
 Updated Users Common Name!
@@ -133,10 +142,13 @@ def update_description():
     userId = data["userId"]
     newDescription = ["newDescription"]
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
   # Send the info to the database
   db.updateDescription(userId, newDescription)
+
+  log("Updated Description")
 
   return """
 Updated Description!
@@ -162,9 +174,12 @@ def update_password():
     userId = data['userId']
     newPassword = data['newPassword']
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
   db.updatePassword(userId, newPassword)
+
+  log("Updated password")
 
   return """
 Updated Password!
@@ -190,6 +205,7 @@ def add_user_topic():
     userId = data['userId']
     newTopic = data['newTopic']
   except KeyError:
+    log(invalid_json_format_string)
     return invalid_json_format_string
 
   db.newUserTopic(userId, newTopic)
@@ -200,6 +216,7 @@ Added a new Topic!
   newTopic: {}
 """.format(userId, newTopic)
 
+# TODO: Finish writing logs
 
 @app.route("/user-get-user-timeline", methods=['POST'])
 def get_user_timeline():
