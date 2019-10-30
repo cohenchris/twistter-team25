@@ -21,6 +21,13 @@ curl -X POST \
 https://twistter-api.azurewebsites.net/user-update-common-name
 printf "\n\n"
 
+echo Get User
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"userId":4}' \
+https://twistter-api.azurewebsites.net/get-user
+printf "\n\n"
+
 echo Invalid Json Test
 curl -X POST \
 -H "Content-Type: application/json" \
