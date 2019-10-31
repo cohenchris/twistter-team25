@@ -151,4 +151,5 @@ import time
 
 #print(d.getDMList(1))
 
-print(type(d.getAllPosts()))
+
+print(type(d.getAllPosts()) is str)
