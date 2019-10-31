@@ -1,6 +1,0 @@
-Wed Oct 30 19:37:20 2019: Starting API
-Wed Oct 30 19:37:28 2019: Request - display_home_page
-Wed Oct 30 19:37:52 2019: Request - get_user
-Wed Oct 30 19:37:53 2019: Got User
-Wed Oct 30 19:38:03 2019: Request - get_user
-Wed Oct 30 19:38:04 2019: Invalid User Id
