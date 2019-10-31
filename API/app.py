@@ -340,7 +340,7 @@ def get_user_topics():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
+    log(traceback.format_stack())
     return "Error"
 
 @app.route("/user-delete", methods=['POST'])
@@ -366,7 +366,7 @@ def delete_user():
     db.deleteUser(userId)
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
+    log(traceback.format_stack())
     return "Error"
 
   log("Deleted User")
@@ -405,7 +405,7 @@ def get_user():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
+    log(traceback.format_stack())
     return "error"
 
 
@@ -489,24 +489,28 @@ def follow_user_topics():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    followingId = data['followingId']
-    topicsSelected = data['topicsSelected']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.updateFollow(userId, followingId, topics=topicsSelected)
+    try:
+      userId = data['userId']
+      followingId = data['followingId']
+      topicsSelected = data['topicsSelected']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.updateFollow(userId, followingId, topics=topicsSelected)
+
+  except Exception as e:
+    log(str(e))
 
   return """
-Followed a user's topics!
+  Followed a user's topics!
   userId: {}
   followingId: {}
   topicsSelected: {}
-""".format(userId, followingId, topicsSelected)
+  """.format(userId, followingId, topicsSelected)
 
 
 @app.route("/validate-email", methods=['POST'])
@@ -519,15 +523,19 @@ def validate_email():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    email = data['email']  # The user ID requesting a new follow
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.validateEmail(email)
+    try:
+      email = data['email']  # The user ID requesting a new follow
+    except KeyError:
+      return invalid_json_format_string
+
+    db.validateEmail(email)
+
+  except Exception as e:
+    log(str(e))
 
   return """
   Email successfully validated!
@@ -545,15 +553,18 @@ def validate_username():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    username = ['user']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.validateUsername(username)
+    try:
+      username = data['user']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.validateUsername(username)
+  except Exception as e:
+    log(str(e))
 
   return """
   Username successfully validated!
@@ -572,22 +583,25 @@ def get_id_from_email():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    email = ['email']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  userId = db.getUserId(email)
+    try:
+      email = data['email']
+    except KeyError:
+      return invalid_json_format_string
 
-  #  return """
-  # Retrieved UserId from given email!
-  # userId: {}
-  # """.format(userId)
+    userId = db.getUserId(email)
+  except Exception as e:
+    log(str(e))
 
-  return "UserId found"
+  return """
+   Retrieved UserId from given email!
+   userId: {}
+   """.format(userId)
+
+ # return "UserId found"
 
 
 @app.route("/create-post", methods=['POST'])
@@ -600,17 +614,21 @@ def post():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    postText = data['postText']
-    topics = data['topics']
-  except KeyError:
-    return invalid_json_format_string
+        # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.newPost(userId, postText, topics)
+    try:
+      userId = data['userId']
+      postText = data['postText']
+      topics = data['topics']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.newPost(userId, postText, topics)
+
+  except Exception as e:
+    log(str(e))
 
   return "Post successfully created!"
 
@@ -626,8 +644,13 @@ def get_all_posts():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  val = db.getAllPosts()
+  try:
+    val = db.getAllPosts()
+  except Exception as e:
+    log(str(e))
+
   return jsonify(val)
+
 
 @app.route("/get-topic-posts", methods=['POST'])
 def get_all_topic_posts():
@@ -640,13 +663,16 @@ def get_all_topic_posts():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    topic = data['topic']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
+
+    try:
+      topic = data['topic']
+    except KeyError:
+      return invalid_json_format_string
+  except Exception as e:
+    log(str(e))
 
   return db.getAllTopicPosts(topic)
 
@@ -666,15 +692,19 @@ def delete_post():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    postId = data['postId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.deletePost(postId)
+    try:
+      postId = data['postId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.deletePost(postId)
+  except Exception as e:
+    log(str(e))
+
   return """
 Deleted Post!
   postId: {}
@@ -692,15 +722,19 @@ def like_post():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    postId = data['postId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  db.like(userId, postId)
+    try:
+      userId = data['userId']
+      postId = data['postId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.like(userId, postId)
+
+  except Exception as e:
+    log(str(e))
 
   return """
 Liked!
@@ -719,17 +753,21 @@ def dm_user():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    senderId = data['senderId']
-    receiverId = data['receiverId']
-    message = data['Message']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.newDM(senderId, receiverId, message)
+    try:
+      senderId = data['senderId']
+      receiverId = data['receiverId']
+      message = data['Message']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.newDM(senderId, receiverId, message)
+
+  except Exception as e:
+    log(str(e))
 
   return """
 DM Sent!
@@ -750,15 +788,19 @@ def unlike_post():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    postId = data['postId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  db.unlike(userId, postId)
+    try:
+      userId = data['userId']
+      postId = data['postId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.unlike(userId, postId)
+
+  except Exception as e:
+    log(str(e))
 
   return """
 Unliked!
@@ -777,15 +819,18 @@ def retweet():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    postId = data['postId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  db.retweet(userId, postId)
+    try:
+      userId = data['userId']
+      postId = data['postId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.retweet(userId, postId)
+  except Exception as e:
+    log(str(e))
 
   return """
   Retweeded!
@@ -802,15 +847,19 @@ def unretweet():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    postId = data['postId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  db.retweet(userId, postId)
+    try:
+      userId = data['userId']
+      postId = data['postId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.retweet(userId, postId)
+
+  except Exception as e:
+    log(str(e))
 
   return """
   Unretweeded!
@@ -827,15 +876,18 @@ def deleteDMs():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    receiverId = data['receiverId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  db.deleteDMs(userId, receiverId)
+    try:
+      userId = data['userId']
+      receiverId = data['receiverId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.deleteDMs(userId, receiverId)
+  except Exception as e:
+    log(str(e))
 
   return """
   DMs successfully deleted!
@@ -852,7 +904,11 @@ def clearDMs():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # db.clearDMs()
+  try:
+    db.clearDMs()
+  except Exception as e:
+    log(str(e))
+    return "DM Clear Error"
 
   return "DMs successfully cleared"
 
@@ -867,16 +923,18 @@ def get_DMConvo():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    receiverId = data['receiverId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  convo = db.getDMConvo(userId, receiverId)
-  # convo = "convo"
+    try:
+      userId = data['userId']
+      receiverId = data['receiverId']
+    except KeyError:
+      return invalid_json_format_string
+
+    convo = db.getDMConvo(userId, receiverId)
+  except Exception as e:
+    log(str(e))
 
   return """
   convo: {}
@@ -893,15 +951,18 @@ def get_DMList():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get info from json file
-  data = request.get_json()
-
   try:
-    userID = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get info from json file
+    data = request.get_json()
 
-  dmList = db.getDMLIST(userID)
+    try:
+      userID = data['userId']
+    except KeyError:
+      return invalid_json_format_string
+
+    dmList = db.getDMLIST(userID)
+  except Exception as e:
+    log(str(e))
 
   return """
 userID: {}
