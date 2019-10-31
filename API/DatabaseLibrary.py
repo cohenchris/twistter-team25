@@ -8,18 +8,13 @@ import pyodbc
 import datetime
 import json
 
+connectionString = "Driver={ODBC Driver 13 for SQL Server};Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;Database=Twistter-Database;Uid=kbuzza;Pwd=TestTwistter1;Encrypt=no;TrustServerCertificate=no;Connection Timeout=60;"
+
 ############################ USER METHODS #####################################
 
 # INSERTS A NEW USER INTO THE SYSTEM
 def newUser(userName, password, commonName, email, description):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("SELECT MAX(UserId) FROM UserTable")
@@ -41,14 +36,7 @@ def newUser(userName, password, commonName, email, description):
 
 #VALIDATES A USERNAME AND PASSWORD
 def validateLogin(username, password):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT UserId FROM UserTable WHERE UserName='" + username + "' AND " +
@@ -63,14 +51,7 @@ def validateLogin(username, password):
    
 # UPDATES A USER PROFILE COMMON NAME
 def updateCommonName(userId, newCommonName):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("UPDATE UserTable SET CommonName = '" + newCommonName +
@@ -80,14 +61,7 @@ def updateCommonName(userId, newCommonName):
 
 # UPDATES A USER PROFILE DESCRIPTION
 def updateDescription(userId, newDescription):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("UPDATE UserTable SET Description = '" + newDescription +
@@ -97,14 +71,7 @@ def updateDescription(userId, newDescription):
 
 # UPDATES A USER PASSWORD
 def updatePassword(userId, newPassword):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("UPDATE UserTable SET Password=ENCRYPTBYPASSPHRASE('team25','" + newPassword + "') " +
@@ -114,14 +81,7 @@ def updatePassword(userId, newPassword):
     
 # ADDS A TOPIC TO THE USERS PROFILE
 def newUserTopic(userId, topic):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO TopicTable (UserId, Topic)" +
@@ -131,14 +91,7 @@ def newUserTopic(userId, topic):
 
 # SHOWS THE TIMELINE FOR A USER
 def getUserTimeline(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId," +
@@ -162,14 +115,7 @@ def getUserTimeline(userId):
 
 # GETS ALL POSTS MADE BY A PARTICULAR USER
 def getUserPosts(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId," +
@@ -194,14 +140,7 @@ def getUserPosts(userId):
 
 # GETS ALL TOPICS FOR A PARTICULAR USER
 def getUserTopics(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT Topic FROM TopicTable WHERE UserId=" + str(userId))
@@ -215,14 +154,7 @@ def getUserTopics(userId):
 
 # REMOVES A USER AND ALL THEIR DATA FROM THE DATABASE
 def deleteUser(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM UserTable WHERE UserId=" + str(userId))
@@ -247,14 +179,7 @@ def deleteUser(userId):
 
 # GETS USER PROFILE INFORMATION FROM THE DATABASE
 def getUser(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("SELECT UserId,UserName,CommonName," +
@@ -272,14 +197,7 @@ def getUser(userId):
 
 # ALLOWS A USER TO FOLLOW ANOTHER USER-TOPIC COMBINATION
 def newFollow(userId, followingId, topic):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO FollowerTable (UserId, FollowingId, Topic)" +
@@ -289,14 +207,7 @@ def newFollow(userId, followingId, topic):
 
 # ALLOWS A USER TO COMPLETELY UNFOLLOW ANOTHER USER
 def unfollowUser(userId, followingId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM FollowerTable WHERE UserId=" + str(userId) +
@@ -318,14 +229,7 @@ def updateFollow(userId, followingId, topics = []):
 
 # VALIDATES NEW EMAILS FOR NEW USERS; RETURNS TRUE IF NOT IN THE DATABASE    
 def validateEmail(email):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("SELECT TOP 1 UserId FROM UserTable WHERE Email = '" + email + "'")
@@ -337,14 +241,7 @@ def validateEmail(email):
     
     
 def validateUsername(username):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("SELECT TOP 1 UserId FROM UserTable WHERE UserName = '" + username + "'")
@@ -357,14 +254,7 @@ def validateUsername(username):
 
 # RETURNS USER ID FROM ACCOUNT EMAIL
 def getUserId(email):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
     
     cursor = cnxn.cursor()
     cursor.execute("SELECT TOP 1 UserId FROM UserTable WHERE Email = '" + email + "'")
@@ -382,14 +272,7 @@ def getUserId(email):
 
 # CREATES A NEW POST
 def newPost(userId, postTitle, postText, topics):    
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT MAX(PostId) FROM PostTable")
@@ -409,14 +292,7 @@ def newPost(userId, postTitle, postText, topics):
 
 # GETS ALL POSTS ON THE PLATFORM
 def getAllPosts():
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT a.PostId,a.PostTitle, a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
@@ -432,14 +308,7 @@ def getAllPosts():
 
 # GETS ALL POST ON THE PLATFORM WITH A SPECIFIC TOPIC
 def getAllTopicPosts(topic):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT a.PostId,PostTitle,a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
@@ -455,14 +324,7 @@ def getAllTopicPosts(topic):
 
 # DELETES A POST ON THE PLATFORM
 def deletePost(postId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM PostTable WHERE PostId=" + str(postId) + " OR RetweetId=" + str(postId))
@@ -471,14 +333,7 @@ def deletePost(postId):
 
 # ADDS A LIKE TO A POST
 def like(userId, postId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
 
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO LikeTable (UserId,PostId)" +
@@ -488,14 +343,7 @@ def like(userId, postId):
 
 # REMOVES A LIKE FROM A POST
 def unlike(userId, postId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
 
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM LikeTable WHERE UserId=" + str(userId) +
@@ -505,14 +353,7 @@ def unlike(userId, postId):
 
 # RETWEETS A POST
 def retweet(userId, postId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
 
     cursor = cnxn.cursor()
     cursor.execute("SELECT MAX(PostId) FROM PostTable")
@@ -534,14 +375,7 @@ def retweet(userId, postId):
 
 # REMOVES A RETWEET FROM A POST
 def unretweet(userId, postId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
 
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM PostTable WHERE UserId=" + str(userId) + " AND RetweetId =" + str(postId))
@@ -554,14 +388,7 @@ def unretweet(userId, postId):
   
 # CREATES A NEW DM MESSAGE  
 def newDM(senderId, recieverId, message):    
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
@@ -572,14 +399,7 @@ def newDM(senderId, recieverId, message):
 
 # DELETES DMS FOR A PARTICULAR USER
 def deleteDMs(userId, recieverId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("UPDATE DMTable SET SenderDeleted=1 WHERE " +
@@ -596,14 +416,7 @@ def deleteDMs(userId, recieverId):
 
 # WIPES THE DATABASE OF ANY UNUSED DMS
 def clearDMs():
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("DELETE FROM DMTable WHERE SenderDeleted=1 AND RecieverDeleted=1")
@@ -611,14 +424,7 @@ def clearDMs():
 
 # GETS A DM CONVERSATION BETWEEN TWO USERS
 def getDMConvo(userId, recieverId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT SenderId,RecieverId,Message,TimeStamp FROM DMTable " +
@@ -632,14 +438,7 @@ def getDMConvo(userId, recieverId):
 
 # GETS LIST OF DM CONVOS FOR A USER
 def getDMList(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT y.UserName,y.CommonName,x.Message,x.TimeStamp,x.OtherUser FROM (" +
@@ -662,14 +461,7 @@ def getDMList(userId):
 ############################## Sprint 2 Stuff #####################################
 # SHOWS THE TIMELINE FOR A USER
 def getUserTimeline2(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT DISTINCT a.PostId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
@@ -686,14 +478,7 @@ def getUserTimeline2(userId):
 
 # GETS ALL POSTS MADE BY A PARTICULAR USER
 def getUserPosts2(userId):
-    cnxn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};" +
-                      "Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;" +
-                      "Database=Twistter-Database;" +
-                      "Uid=kbuzza;" +
-                      "Pwd=TestTwistter1;" +
-                      "Encrypt=no;" +
-                      "TrustServerCertificate=no;" +
-                      "Connection Timeout=60;")
+    cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
     cursor.execute("SELECT a.PostId,a.PostTitle, a.RetweetId,b.UserId,b.UserName,b.CommonName,a.PostText,a.Topics,a.Timestamp," +
