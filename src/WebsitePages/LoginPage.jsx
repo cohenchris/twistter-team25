@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Nav, Row } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
 import { otherDivStyle } from "..";
+const axios = require("axios");
 
 export default class LoginPage extends React.Component {
   render() {
@@ -36,9 +37,9 @@ class LoginBoxes extends React.Component {
     this.setState({ Password: e.target.value });
   }
 
-  submitLoginRequest() {
+  async submitLoginRequest() {
     //TODO: COMMUNICATE WITH API
-    const response = axios.post(
+    const response = await axios.post(
       "twistter-API.azurewebsites.net/validate-login",
       this.state
     );

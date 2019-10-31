@@ -3,6 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import { Form, Button, Col, FormCheck } from "react-bootstrap";
 import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
+const axios = require("axios");
 
 export default class CreateNewAccount extends React.Component {
   render() {
@@ -30,6 +31,16 @@ class NewUserForm extends React.Component {
     );
     this.validate_form = this.validate_form.bind(this);
     this.handleCheckboxes = this.handleCheckboxes.bind(this);
+    this.postNewUser = this.postNewUser.bind(this);
+  }
+
+  async postNewUser(post_data) {
+    // TODO: get-user-id-from-email
+    const response = await axios.post(
+      "http://twistter-API.azurewebsites.net/user-create-new-user",
+      post_data
+    );
+    console.log(response);
   }
 
   validate_form() {
@@ -101,11 +112,7 @@ class NewUserForm extends React.Component {
 
       //TODO: COMMUNICATE WITH API
       //TODO: password!!!!!!!
-      const response = axios.post(
-        "twistter-API.azurewebsites.net/user-create-new-user",
-        submitData
-      );
-      console.log(response);
+      this.postNewUser(submitData);
       console.log(this.state.topics);
     }
   }
