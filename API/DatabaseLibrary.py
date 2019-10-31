@@ -8,7 +8,7 @@ import pyodbc
 import datetime
 import json
 
-connectionString = "Driver={ODBC Driver 13 for SQL Server};Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;Database=Twistter-Database;Uid=kbuzza;Pwd=TestTwistter1;Encrypt=no;TrustServerCertificate=no;Connection Timeout=60;"
+connectionString = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;Database=Twistter-Database;Uid=kbuzza;Pwd=TestTwistter1;Encrypt=no;TrustServerCertificate=no;Connection Timeout=60;"
 
 ############################ USER METHODS #####################################
 
