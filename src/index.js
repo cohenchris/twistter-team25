@@ -13,9 +13,7 @@ import HomePage from "./WebsitePages/HomePage";
 import LoginPage from "./WebsitePages/LoginPage";
 import ProfilePage from "./WebsitePages/ProfilePage";
 import ProfileSettings from "./WebsitePages/ProfileSettings";
-import DmPage from "./WebsitePages/DmPage/DmPage";
-import App from "./components/App";
-import MiscTopicPage from "./WebsitePages/MiscTopicPage";
+import DmPage from './components/DmPage';
 
 export const blogDivStyle = {
   marginLeft: "200px",
@@ -29,7 +27,7 @@ export const otherDivStyle = {
   marginTop: "30px"
 };
 
-ReactDOM.render(<AllTopics />, document.getElementById("root"));
+ReactDOM.render(<DmPage />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
