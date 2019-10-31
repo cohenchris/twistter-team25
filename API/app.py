@@ -638,7 +638,7 @@ def get_all_posts():
   except Exception as e:
     log(str(e))
 
-  return jsonify(val)
+  return val
 
 
 @app.route("/get-topic-posts", methods=['POST'])
