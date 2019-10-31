@@ -1,7 +1,8 @@
 from flask import Flask, url_for, redirect, render_template, request, jsonify
-from azure.storage.file import FileService, ContentSettings
+from azure.storage.file import FileService
 import time
 import inspect
+import traceback
 import DatabaseLibrary as db
 
 app = Flask(__name__)
@@ -49,32 +50,35 @@ def create_user():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  #  Get the from the json file sent with the request
-  data = request.get_json()
-
   try:
-    username = data['username']
-    password = data['password']
-    commonName = data['commonName']
-    email = data['email']
-    description = data['description']
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    #  Get the from the json file sent with the request
+    data = request.get_json()
 
-  #  Push the info to the database
-  db.newUser(username, password, commonName, email, description)
+    try:
+      username = data['username']
+      password = data['password']
+      commonName = data['commonName']
+      email = data['email']
+      description = data['description']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-  str = '''
-Created User!
-  username: {}
-  commonName: {}
-  email: {}
-  description: {}
-'''.format(username, commonName, email, description)
+    #  Push the info to the database
+    db.newUser(username, password, commonName, email, description)
+    log("Created new user")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
-  log("Created new user")
-  return str
+  return '''
+    Created User!
+      username: {}
+      commonName: {}
+      email: {}
+      description: {}
+    '''.format(username, commonName, email, description)
 
 
 @app.route("/validate-login", methods=['POST'])
@@ -88,18 +92,24 @@ def validate_login():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with POST request
-  data = request.get_json()
-
   try:
-    username = data['username']
-    password = data['password']
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    # Get the info from the json file sent with POST request
+    data = request.get_json()
 
-  log("Validated")
-  return str(db.validateLogin(username, password)) + "\n"
+    try:
+      username = data['username']
+      password = data['password']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
+
+    val = str(db.validateLogin(username, password)) + "\n"
+    log("Validated User")
+    return val
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
 
 @app.route("/user-update-common-name", methods=['POST'])
@@ -111,21 +121,24 @@ def update_common_name():
 
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
-
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    newCommonName = data['newCommonName']
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  #  Push the info to the database
-  db.updateCommonName(userId, newCommonName)
+    try:
+      userId = data['userId']
+      newCommonName = data['newCommonName']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-  log("Updated common name")
+    #  Push the info to the database
+    db.updateCommonName(userId, newCommonName)
+    log("Updated common name")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Updated Users Common Name!
@@ -144,20 +157,24 @@ def update_description():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data["userId"]
-    newDescription = ["newDescription"]
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  # Send the info to the database
-  db.updateDescription(userId, newDescription)
+    try:
+      userId = data["userId"]
+      newDescription = ["newDescription"]
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-  log("Updated Description")
+    # Send the info to the database
+    db.updateDescription(userId, newDescription)
+    log("Updated Description")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Updated Description!
@@ -176,19 +193,23 @@ def update_password():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    newPassword = data['newPassword']
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.updatePassword(userId, newPassword)
+    try:
+      userId = data['userId']
+      newPassword = data['newPassword']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-  log("Updated password")
+    db.updatePassword(userId, newPassword)
+    log("Updated password")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Updated Password!
@@ -207,17 +228,23 @@ def add_user_topic():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    newTopic = data['newTopic']
-  except KeyError:
-    log(invalid_json_format_string)
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.newUserTopic(userId, newTopic)
+    try:
+      userId = data['userId']
+      newTopic = data['newTopic']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
+
+    db.newUserTopic(userId, newTopic)
+    log("Added new user topic")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Added a new Topic!
@@ -225,7 +252,6 @@ Added a new Topic!
   newTopic: {}
 """.format(userId, newTopic)
 
-# TODO: Finish writing logs
 
 @app.route("/user-get-user-timeline", methods=['POST'])
 def get_user_timeline():
@@ -237,20 +263,23 @@ def get_user_timeline():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  return db.getUserTimeline(userId)
+    try:
+      userId = data['userId']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-#    return """
-#  Retireved Timeline!
-#    userId: {}
-#  """.format(userId)
+    val = db.getUserTimeline(userId)
+    log("Got user timeline")
+    return val
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
 
 @app.route("/user-get-user-posts", methods=['POST'])
@@ -263,15 +292,23 @@ def get_user_posts():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  return db.getUserPosts(userId)
+    try:
+      userId = data['userId']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
+
+    val = db.getUserPosts(userId)
+    log("Got user posts")
+    return val
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
 #    return """
 #  Retrieved User Posts!
@@ -289,16 +326,22 @@ def get_user_topics():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    data = request.get_json()
 
-  return db.getUserTopics(userId)
-#   return "Got Posts"
+    try:
+      userId = data['userId']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
+    val = db.getUserTopics(userId)
+    log("Got User Topics")
+    return val
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
 @app.route("/user-delete", methods=['POST'])
 def delete_user():
@@ -310,20 +353,27 @@ def delete_user():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
+  try :
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  try:
-    userId = data['userId']
-  except KeyError:
-    return invalid_json_format_string
+    try:
+      userId = data['userId']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
 
-  db.deleteUser(userId)
+    db.deleteUser(userId)
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
-#    return """
-#  Deleted User!
-#    userId: {}
-#  """.format(userId)
+  log("Deleted User")
+  return """
+Deleted User!
+  userId: {}
+""".format(userId)
 
 
 @app.route("/get-user", methods=['POST'])
@@ -355,6 +405,8 @@ def get_user():
     return val
   except Exception as e:
     log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "error"
 
 
 @app.route("/follow-user", methods=['POST'])
@@ -367,16 +419,22 @@ def follow_new_user():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    followingId = data['followingId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.newFollow(userId, followingId)
+    try:
+      userId = data['userId']
+      followingId = data['followingId']
+    except KeyError:
+      return invalid_json_format_string
+
+    db.newFollow(userId, followingId)
+    log("Followed new user")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Followed a new user!
@@ -395,16 +453,23 @@ def unfollow_user():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  # Get the info from the json file sent with the request
-  data = request.get_json()
-
   try:
-    userId = data['userId']
-    followingId = data['followingId']
-  except KeyError:
-    return invalid_json_format_string
+    # Get the info from the json file sent with the request
+    data = request.get_json()
 
-  db.unfollowUser(userId, followingId)
+    try:
+      userId = data['userId']
+      followingId = data['followingId']
+    except KeyError:
+      log(invalid_json_format_string)
+      return invalid_json_format_string
+
+    db.unfollowUser(userId, followingId)
+    log("Unfollowed User")
+  except Exception as e:
+    log(str(e))
+    log(traceback.format_exception(Exception, e, None))
+    return "Error"
 
   return """
 Unfollowed User!
