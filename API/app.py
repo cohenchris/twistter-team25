@@ -69,7 +69,6 @@ def create_user():
     log("Created new user")
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
   return '''
@@ -108,7 +107,6 @@ def validate_login():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
 
@@ -137,7 +135,6 @@ def update_common_name():
     log("Updated common name")
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
   return """
@@ -173,7 +170,6 @@ def update_description():
     log("Updated Description")
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
   return """
@@ -208,7 +204,6 @@ def update_password():
     log("Updated password")
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
   return """
@@ -243,7 +238,6 @@ def add_user_topic():
     log("Added new user topic")
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
   return """
@@ -278,7 +272,6 @@ def get_user_timeline():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
 
@@ -307,7 +300,6 @@ def get_user_posts():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_exception(Exception, e, None))
     return "Error"
 
 #    return """
@@ -340,7 +332,6 @@ def get_user_topics():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_stack())
     return "Error"
 
 @app.route("/user-delete", methods=['POST'])
@@ -366,7 +357,6 @@ def delete_user():
     db.deleteUser(userId)
   except Exception as e:
     log(str(e))
-    log(traceback.format_stack())
     return "Error"
 
   log("Deleted User")
@@ -405,7 +395,6 @@ def get_user():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.StackSummary.format())
     return "error"
 
 
