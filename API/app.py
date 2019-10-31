@@ -405,7 +405,7 @@ def get_user():
     return val
   except Exception as e:
     log(str(e))
-    log(traceback.format_stack())
+    log(traceback.StackSummary.format())
     return "error"
 
 
