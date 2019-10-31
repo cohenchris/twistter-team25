@@ -25,7 +25,7 @@ def display_home_page():
   log("Request - {}".format(
     inspect.getframeinfo(inspect.currentframe()).function))
 
-  return "API is running great\n"
+  return "Test\n"
 
 
 @app.route("/user-create-new-user", methods=['POST'])
