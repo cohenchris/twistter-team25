@@ -3,14 +3,16 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
+const axios = require("axios");
 
 export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
 
     //TODO: COMMUNICATE WITH API
+    this.state = {};
 
-    this.state = {
+    /*
       PostsList: [
         {
           PostId: 2,
@@ -79,9 +81,19 @@ export default class BlogPosts extends React.Component {
         }
       ]
     };
+    */
+    this.getBlogData = this.getBlogData.bind(this);
+  }
+
+  async getBlogData() {
+    const response = await axios.post(
+      "http://twistter-API.azurewebsites.net/get-all-posts"
+    );
+    this.state = response;
   }
 
   render() {
+    this.getBlogData();
     const { PostsList } = this.state;
 
     return (
