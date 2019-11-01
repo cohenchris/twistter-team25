@@ -8,6 +8,7 @@ export default class UserDetails extends React.Component {
     super(props);
 
     this.state = {
+      /*
       UserName: "kbuzza",
       CommonName: "Kyle Buzza",
       Following: 0,
@@ -15,26 +16,28 @@ export default class UserDetails extends React.Component {
       Posts: 4,
       Email: "kylesucks@purdue.edu",
       Description: "This is my description."
+      */
     };
   }
 
-  /*
-  async componentWillMount() {
-    let data = JSON.stringify({ userId: 4 });
-    let options = {
-      "Content-Type": "application/json"
+  async componentDidMount() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
     };
+
+    let data = JSON.stringify({ userId: 4 });
     // TODO: save userId from validate-login (LoginPage)
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/get-user",
       "http://localhost:5000/get-user",
       data,
-      options
+      config
     );
-    this.setState({ response });
-    console.log(this.state);
+    console.log(response.data);
+    this.setState(response.data);
   }
-*/
 
   render() {
     return (

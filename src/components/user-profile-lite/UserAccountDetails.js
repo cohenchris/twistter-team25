@@ -19,6 +19,7 @@ class UserAccountDetails extends React.Component {
     super();
 
     this.state = {
+      /*
       UserName: "kbuzza",
       Password:
         "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
@@ -26,6 +27,7 @@ class UserAccountDetails extends React.Component {
       Email: "kbuzza@purdue.edu",
       Description: "This is my description.",
       passwordInvalid: false
+      */
     };
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
@@ -55,6 +57,25 @@ class UserAccountDetails extends React.Component {
     console.log(password_response);
   }
 */
+  async componentDidMount() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+
+    let data = JSON.stringify({ userId: 4 });
+    // TODO: save userId from validate-login (LoginPage)
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/get-user",
+      "http://localhost:5000/get-user",
+      data,
+      config
+    );
+    console.log(response.data);
+    this.setState(response.data);
+  }
+
   submitForm() {
     if (this.state.FirstPassword.localeCompare(this.state.SecondPassword)) {
       this.setState({ passwordInvalid: true });
