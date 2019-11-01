@@ -82,22 +82,30 @@ export default class BlogPosts extends React.Component {
 
   /*
   async componentDidMount() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
     await axios
       .post(
         //"http://twistter-API.azurewebsites.net/get-all-posts"
-        "http://localhost:5000/get-all-posts"
+        "http://localhost:5000/get-all-posts",
+        config
       )
       .then(response => {
         const PostsList = [];
         PostsList.push(response);
+        //console.log(JSON.parse({ PostsList }));
         this.setState({ PostsList });
+        console.log(this.state);
       });
   }
   */
 
   render() {
-    const { PostsList } = this.state;
-    //console.log(PostsList);
+    const PostsList = this.state.PostsList;
+    console.log(PostsList);
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -105,6 +113,7 @@ export default class BlogPosts extends React.Component {
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
+              <div>{/*console.log(post)*/}</div>
               <Card small className="card-post card-post--1">
                 <div className="card-post__image">
                   <Col>

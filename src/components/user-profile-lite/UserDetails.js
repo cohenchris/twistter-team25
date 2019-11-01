@@ -17,7 +17,7 @@ export default class UserDetails extends React.Component {
       }
     };
 
-    let data = JSON.stringify({ userId: 4 });
+    let data = JSON.stringify({ userId: 1 });
     // TODO: save userId from validate-login (LoginPage)
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/get-user",
