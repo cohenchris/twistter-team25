@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Nav, Row } from "react-bootstrap";
+import { Form, Button, Nav, Row, Alert } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
 import { otherDivStyle } from "..";
 const axios = require("axios");
@@ -30,20 +30,33 @@ class LoginBoxes extends React.Component {
   }
 
   handleUserName(e) {
-    this.setState({ UserName: e.target.value });
+    this.setState({ username: e.target.value });
   }
 
   handlePassword(e) {
-    this.setState({ Password: e.target.value });
+    this.setState({ password: e.target.value });
   }
 
   async submitLoginRequest() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+
     //TODO: COMMUNICATE WITH API
     const response = await axios.post(
-      "twistter-API.azurewebsites.net/validate-login",
-      this.state
+      //"http://twistter-API.azurewebsites.net/validate-login",
+      "http://localhost:5000/validate-login",
+      this.state,
+      JSON.stringify(config)
     );
     console.log(response);
+    if (response.data == -1) {
+      window.alert("Login Failed.");
+    } else {
+      window.alert("Login Success!");
+    }
     this.setState({ password: "" });
   }
 

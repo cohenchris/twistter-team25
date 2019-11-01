@@ -9,10 +9,7 @@ export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
 
-    //TODO: COMMUNICATE WITH API
-    this.state = {};
-
-    /*
+    this.state = {
       PostsList: [
         {
           PostId: 2,
@@ -81,26 +78,30 @@ export default class BlogPosts extends React.Component {
         }
       ]
     };
-    */
-    this.getBlogData = this.getBlogData.bind(this);
   }
 
-  async getBlogData() {
-    const response = await axios.post(
-      "http://twistter-API.azurewebsites.net/get-all-posts"
-    );
-    this.state = response;
+  /*
+  async componentDidMount() {
+    await axios
+      .post(
+        //"http://twistter-API.azurewebsites.net/get-all-posts"
+        "http://localhost:5000/get-all-posts"
+      )
+      .then(response => {
+        const PostsList = [];
+        PostsList.push(response);
+        this.setState({ PostsList });
+      });
   }
+  */
 
   render() {
-    this.getBlogData();
     const { PostsList } = this.state;
-
+    //console.log(PostsList);
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4"></Row>
-
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
@@ -204,3 +205,7 @@ const LikeAndQuoteButtons = props => {
     </Row>
   );
 };
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

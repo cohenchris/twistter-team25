@@ -7,10 +7,7 @@ export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
 
-    //TODO: COMMUNICATE WITH API
-
     this.state = {
-      /*
       UserName: "kbuzza",
       CommonName: "Kyle Buzza",
       Following: 0,
@@ -18,23 +15,28 @@ export default class UserDetails extends React.Component {
       Posts: 4,
       Email: "kylesucks@purdue.edu",
       Description: "This is my description."
-      */
     };
-    this.getBlogData = this.getBlogData.bind(this);
   }
 
-  async getBlogData() {
+  /*
+  async componentWillMount() {
+    let data = JSON.stringify({ userId: 4 });
+    let options = {
+      "Content-Type": "application/json"
+    };
     // TODO: save userId from validate-login (LoginPage)
     const response = await axios.post(
-      "http://twistter-API.azurewebsites.net/get-user",
-      { userId: 4 }
+      //"http://twistter-API.azurewebsites.net/get-user",
+      "http://localhost:5000/get-user",
+      data,
+      options
     );
-    this.state = response;
+    this.setState({ response });
+    console.log(this.state);
   }
+*/
 
   render() {
-    this.getBlogData();
-
     return (
       <div>
         <Card small className="mb-4 pt-3">
@@ -77,7 +79,9 @@ export default class UserDetails extends React.Component {
           </ListGroup>
         </Card>
         <br></br>
+
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
+
         {/* TODO: pass userId into BlogPosts */}
         <BlogPosts />
       </div>

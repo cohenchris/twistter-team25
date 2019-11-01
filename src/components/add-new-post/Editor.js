@@ -39,9 +39,10 @@ export default class Editor extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.handleTopicSelect = this.handleTopicSelect.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
-    this.postData = this.postData.bind(this);
+    //this.postData = this.postData.bind(this);
   }
 
+  /*
   async postData(post_data) {
     const response = await axios.post(
       "http://twistter-API.azurewebsites.net/create-post",
@@ -49,6 +50,7 @@ export default class Editor extends React.Component {
     );
     return response;
   }
+  */
 
   submitForm() {
     var tempDate = new Date();
@@ -88,8 +90,9 @@ export default class Editor extends React.Component {
       ]
     };
     //TODO: COMMUNICATE WITH FLASK API
-    let response = this.postData(post_submission);
-    console.log(response);
+    //let response = this.postData(post_submission);
+    //console.log(response);
+    console.log(post_submission);
   }
 
   handleTopicSelect(e) {

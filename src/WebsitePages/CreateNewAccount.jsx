@@ -31,9 +31,10 @@ class NewUserForm extends React.Component {
     );
     this.validate_form = this.validate_form.bind(this);
     this.handleCheckboxes = this.handleCheckboxes.bind(this);
-    this.postNewUser = this.postNewUser.bind(this);
+    //this.postNewUser = this.postNewUser.bind(this);
   }
 
+  /*
   async postNewUser(post_data) {
     // TODO: get-user-id-from-email
     const response = await axios.post(
@@ -42,6 +43,7 @@ class NewUserForm extends React.Component {
     );
     console.log(response);
   }
+  */
 
   validate_form() {
     let fields = this.state.fields;
@@ -112,7 +114,8 @@ class NewUserForm extends React.Component {
 
       //TODO: COMMUNICATE WITH API
       //TODO: password!!!!!!!
-      this.postNewUser(submitData);
+      //this.postNewUser(submitData);
+      console.log(submitData);
       console.log(this.state.topics);
     }
   }

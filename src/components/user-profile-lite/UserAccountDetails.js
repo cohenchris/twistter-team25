@@ -28,33 +28,33 @@ class UserAccountDetails extends React.Component {
       passwordInvalid: false
     };
     this.handleName = this.handleName.bind(this);
-    //this.handleEmail = this.handleEmail.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
     this.handleSecondPassword = this.handleSecondPassword.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.updateUserDetails = this.updateUserDetails.bind(this);
+    //this.updateUserDetails = this.updateUserDetails.bind(this);
   }
 
+  /*
   updateUserDetails(post_data) {
     //TODO: /get-user-id-from-email
     const common_name_response = axios.post(
-      "twistter-API.azurewebsites.net/user-update-common-name",
+      "http://twistter-API.azurewebsites.net/user-update-common-name",
       post_data
     );
     console.log(common_name_response);
     const description_response = axios.post(
-      "twistter-API.azurewebsites.net/user-update-description",
+      "http://twistter-API.azurewebsites.net/user-update-description",
       post_data
     );
     console.log(description_response);
     const password_response = axios.post(
-      "twistter-API.azurewebsites.net/update-password",
+      "http://twistter-API.azurewebsites.net/update-password",
       post_data
     );
     console.log(password_response);
   }
-
+*/
   submitForm() {
     if (this.state.FirstPassword.localeCompare(this.state.SecondPassword)) {
       this.setState({ passwordInvalid: true });
@@ -72,19 +72,14 @@ class UserAccountDetails extends React.Component {
       };
 
       //TODO: COMMUNICATE WITH API
-      this.updateUserDetails(userSubmission);
+      //this.updateUserDetails(userSubmission);
+      console.log(userSubmission);
     }
   }
 
   handleName(e) {
     this.setState({ CommonName: e.target.value });
   }
-
-  /*
-  handleEmail(e) {
-    this.setState({ Email: e.target.value });
-  }
-  */
 
   handleFirstPassword(e) {
     this.setState({ FirstPassword: e.target.value });
