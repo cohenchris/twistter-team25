@@ -7,17 +7,7 @@ export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      /*
-      UserName: "kbuzza",
-      CommonName: "Kyle Buzza",
-      Following: 0,
-      Followers: 69,
-      Posts: 4,
-      Email: "kylesucks@purdue.edu",
-      Description: "This is my description."
-      */
-    };
+    this.state = {};
   }
 
   async componentDidMount() {
@@ -57,18 +47,7 @@ export default class UserDetails extends React.Component {
           </CardHeader>
           <ListGroup flush>
             <Col>
-              <Row form>
-                {/* Email */}
-                <Col md="6" className="form-group">
-                  <br />
-                  <label htmlFor="Email">
-                    <strong>Email</strong>
-                  </label>
-                  <p>{this.state.Email}</p>
-                  {/*<label htmlFor="feEmail">Email</label>*/}
-                </Col>
-              </Row>
-              <Row></Row>
+              <br />
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
