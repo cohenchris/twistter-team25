@@ -608,13 +608,14 @@ def post():
     data = request.get_json()
 
     try:
+      title = data['postTitle']
       userId = data['userId']
       postText = data['postText']
       topics = data['topics']
     except KeyError:
       return invalid_json_format_string
 
-    db.newPost(userId, postText, topics)
+    db.newPost(userId, title, postText, topics)
 
   except Exception as e:
     log(str(e))

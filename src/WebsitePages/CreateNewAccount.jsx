@@ -113,10 +113,10 @@ class NewUserForm extends React.Component {
       this.setState({ fields: fields, errors: errors });
 
       //TODO: COMMUNICATE WITH API
-      //TODO: password!!!!!!!
+      //TODO: password verification!!!!
       //this.postNewUser(submitData);
-      console.log(submitData);
-      console.log(this.state.topics);
+      console.log(submitData); //user-create-new-user
+      console.log(this.state.topics); //follow-users-topics
     }
   }
 
