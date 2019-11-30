@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Button, Nav, Row, Alert } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
+import { Link } from "react-router-dom";
 import { otherDivStyle } from "..";
+import { blackLink } from "../index.js";
 const axios = require("axios");
 
 export default class LoginPage extends React.Component {
@@ -93,7 +95,11 @@ class LoginBoxes extends React.Component {
         <Row>
           <Nav className="mr-auto">
             {/* RE-ROUTE TO CREATE NEW ACCOUNT PAGE */}
-            <Nav.Link>New User? Click Here!</Nav.Link>
+            <Nav.Link>
+              <Link to="/create-account" style={blackLink}>
+                New User? Click Here!
+              </Link>
+            </Nav.Link>
           </Nav>
         </Row>
       </Form>

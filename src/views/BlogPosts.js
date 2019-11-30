@@ -10,7 +10,9 @@ export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { PostsList: [] };
+    this.state = {
+      PostsList: []
+    };
   }
 
   async componentDidMount() {
@@ -61,7 +63,6 @@ export default class BlogPosts extends React.Component {
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-              <div>{/*console.log(post)*/}</div>
               <Card small className="card-post card-post--1">
                 <div className="card-post__image">
                   <Col>
@@ -69,9 +70,15 @@ export default class BlogPosts extends React.Component {
                       {post.Topics}
                     </Badge>
                     {/* TODO: make it so that this button only shows up when the post is created by the currently logged in user! */}
-                    <Button size="sm" variant="danger" className="float-right">
-                      X
-                    </Button>
+                    {post.UserId == global.ValidatedUser && (
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        className="float-right"
+                      >
+                        X
+                      </Button>
+                    )}
                   </Col>
                   <Col>
                     <div className="card-post__author d-flex">
@@ -79,10 +86,7 @@ export default class BlogPosts extends React.Component {
                         href="#"
                         className="card-post__author-avatar card-post__author-avatar--small"
                       >
-                        {post.b[0].CommonName +
-                          " (@" +
-                          post.b[0].UserName +
-                          ")"}
+                        {post.CommonName + " (@" + post.UserName + ")"}
                       </a>
                     </div>
                   </Col>
@@ -102,9 +106,12 @@ export default class BlogPosts extends React.Component {
                     {post.PostText}
                   </p>
                   <LikeAndQuoteButtons
-                    like_count={post.b[0].Likes}
-                    quote_count={post.b[0].Retweets}
+                    like_count={post.Likes}
+                    quote_count={post.Retweets}
                   />
+                  {post.z[0].RetweetUserName !== undefined && (
+                    <p>quoted by {post.z[0].RetweetUserName}</p>
+                  )}
                 </CardBody>
               </Card>
             </Col>

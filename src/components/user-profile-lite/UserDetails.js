@@ -1,6 +1,7 @@
 import React from "react";
 import BlogPosts from "../../views/BlogPosts";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
+import { updateJsxSpreadAttribute } from "typescript";
 const axios = require("axios");
 
 export default class UserDetails extends React.Component {
@@ -16,16 +17,19 @@ export default class UserDetails extends React.Component {
       }
     };
 
-    let data = JSON.stringify({ userId: 1 });
-    // TODO: save userId from validate-login (LoginPage)
-    const response = await axios.post(
-      //"http://twistter-API.azurewebsites.net/get-user",
-      "http://localhost:5000/get-user",
-      data,
-      config
-    );
-    console.log(response.data);
-    this.setState(response.data);
+    let userData = JSON.stringify({ userId: global.ValidatedUser });
+    console.log(userData);
+    if (global.ValidatedUser !== -1) {
+      // TODO: save userId from validate-login (LoginPage)
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/get-user",
+        "http://localhost:5000/get-user",
+        userData,
+        config
+      );
+      console.log(response.data);
+      this.setState(response.data);
+    }
   }
 
   render() {

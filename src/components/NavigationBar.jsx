@@ -10,7 +10,10 @@ import {
   Col
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { navStyle } from "../index";
+
+const navBarStyle = {
+  color: "white"
+};
 
 export default class NavigationBar extends React.Component {
   handleClick(page) {
@@ -22,17 +25,12 @@ export default class NavigationBar extends React.Component {
         <Container>
           <Navbar bg="dark" variant="dark" fixed="top">
             <Navbar.Brand>
-              <Link to="/home" style={navStyle}>
+              <Link to="/home" style={navBarStyle}>
                 Twistter
               </Link>
             </Navbar.Brand>
             {/* Website Title, #all, and Profile */}
             <Nav className="mr-auto">
-              <Nav.Link>
-                <Link style={navStyle} to="/all">
-                  #all
-                </Link>
-              </Nav.Link>
               <NavDropdown title="Profile">
                 <NavDropdown.Item>My Profile</NavDropdown.Item>
                 <NavDropdown.Item>Settings</NavDropdown.Item>
@@ -56,7 +54,7 @@ export default class NavigationBar extends React.Component {
             {/* Create a New Microblog */}
             <Col>
               <Nav className="float-right">
-                <Link to="/create-microblog" style={navStyle}>
+                <Link to="/create-microblog" style={navBarStyle}>
                   <Button variant="outline-light">
                     + Create A New Microblog
                   </Button>

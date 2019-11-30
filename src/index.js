@@ -40,8 +40,8 @@ export const otherDivStyle = {
   marginTop: "30px"
 };
 
-export const navStyle = {
-  color: "white"
+export const blackLink = {
+  color: "black"
 };
 
 const ValidatedUser = React.createContext("hey");

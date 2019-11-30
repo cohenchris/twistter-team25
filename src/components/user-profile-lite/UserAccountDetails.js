@@ -24,8 +24,7 @@ export default class UserAccountDetails extends React.Component {
         "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
       CommonName: "Kyle",
       Email: "kbuzza@purdue.edu",
-      Description: "This is my description.",
-      passwordInvalid: false
+      Description: "This is my description."
     };
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
@@ -62,16 +61,17 @@ export default class UserAccountDetails extends React.Component {
       }
     };
 
-    let data = JSON.stringify({ userId: 1 });
-    // TODO: save userId from validate-login (LoginPage)
-    const response = await axios.post(
-      //"http://twistter-API.azurewebsites.net/get-user",
-      "http://localhost:5000/get-user",
-      data,
-      config
-    );
-    console.log(response.data);
-    this.setState(response.data);
+    let data = JSON.stringify({ userId: global.ValidatedUser });
+    if (global.ValidatedUser !== -1) {
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/get-user",
+        "http://localhost:5000/get-user",
+        data,
+        config
+      );
+      console.log(response.data);
+      this.setState(response.data);
+    }
   }
 
   submitForm() {

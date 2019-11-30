@@ -245,12 +245,6 @@ class NewUserForm extends React.Component {
               label="Politics"
               onChange={this.handleCheckboxes}
             />
-            <FormCheck
-              type="checkbox"
-              name="Books"
-              label="Books"
-              onChange={this.handleCheckboxes}
-            />
           </Col>
           <Col>
             <Form.Label />
