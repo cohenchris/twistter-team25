@@ -1,9 +1,9 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BlogPosts from "../views/BlogPosts";
-import PageTitle from "../components/common/PageTitle";
-import { blogDivStyle } from "..";
+import BlogPosts from "../../views/BlogPosts";
+import PageTitle from "../../components/common/PageTitle";
+import { blogDivStyle } from "../..";
 
 export default class HomePage extends React.Component {
   render() {
@@ -16,7 +16,7 @@ export default class HomePage extends React.Component {
           subtitle="Your Followed Topics"
           className="text-sm-left"
         />
-        <BlogPosts />
+        <BlogPosts topic="all" />
       </div>
     );
   }

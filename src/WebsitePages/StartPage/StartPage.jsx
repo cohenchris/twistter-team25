@@ -2,6 +2,9 @@ import React from "react";
 import logo from "../../images/Logo.png";
 import "./StartPage.css";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import HomePage from "../TopicPages/HomePage";
+import { roundToNearestMinutes } from "date-fns";
 
 /* HOME PAGE WITH LOGO AND LOGIN BUTTON */
 export default class StartPage extends React.Component {
@@ -11,19 +14,19 @@ export default class StartPage extends React.Component {
   }
   render() {
     return (
-      <div className="StartPage">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            <h1>Welcome to Twistter</h1>
-            <h2>Go Team 25!</h2>
-            <br></br>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          <h1>Welcome to Twistter</h1>
+          <h2>Go Team 25!</h2>
+          <br></br>
+          <Link to="/login">
             <Button variant="dark" size="lg" onClick={this.handleClick}>
               Click Here to Enter The Website!
             </Button>
-          </p>
-        </header>
-      </div>
+          </Link>
+        </p>
+      </header>
     );
   }
 }

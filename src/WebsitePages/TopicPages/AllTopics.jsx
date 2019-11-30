@@ -1,8 +1,8 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar";
-import PageTitle from "../components/common/PageTitle";
-import { blogDivStyle } from "..";
-import BlogPosts from "../views/BlogPosts";
+import NavigationBar from "../../components/NavigationBar";
+import PageTitle from "../../components/common/PageTitle";
+import { blogDivStyle } from "../..";
+import BlogPosts from "../../views/BlogPosts";
 
 export default class AllTopics extends React.Component {
   render() {
@@ -15,7 +15,7 @@ export default class AllTopics extends React.Component {
           subtitle="All Topics"
           className="text-sm-left"
         />
-        <BlogPosts />
+        <BlogPosts topic="all" />
       </div>
     );
   }

@@ -43,7 +43,6 @@ class LoginBoxes extends React.Component {
         "content-type": "application/json"
       }
     };
-
     //TODO: SET RESPONSE.DATA (USERID) TO A GLOBAL VARIABLE FOR LATER USE!
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/validate-login",
@@ -58,6 +57,7 @@ class LoginBoxes extends React.Component {
       window.alert("Login Success!");
     }
     this.setState({ password: "" });
+    //global.ValidatedUser = ;
   }
 
   render() {

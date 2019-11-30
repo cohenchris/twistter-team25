@@ -14,12 +14,11 @@ import {
 import Alert from "react-bootstrap/Alert";
 const axios = require("axios");
 
-class UserAccountDetails extends React.Component {
+export default class UserAccountDetails extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      /*
       UserName: "kbuzza",
       Password:
         "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
@@ -27,7 +26,6 @@ class UserAccountDetails extends React.Component {
       Email: "kbuzza@purdue.edu",
       Description: "This is my description.",
       passwordInvalid: false
-      */
     };
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
@@ -77,21 +75,48 @@ class UserAccountDetails extends React.Component {
   }
 
   submitForm() {
-    if (this.state.FirstPassword.localeCompare(this.state.SecondPassword)) {
+    if (
+      !this.state.FirstPassword === undefined &&
+      this.state.SecondPassword === undefined
+    ) {
       this.setState({ passwordInvalid: true });
-    } else {
+    } else if (
+      this.state.FirstPassword === undefined &&
+      !this.state.SecondPassword === undefined
+    ) {
+      this.setState({ passwordInvalid: true });
+    } else if (
+      this.state.FirstPassword === undefined &&
+      this.state.SecondPassword === undefined
+    ) {
       this.setState({ passwordInvalid: false });
+    } else if (
+      this.state.FirstPassword.localeCompare(this.state.SecondPassword) != 0
+    ) {
+      this.setState({ passwordInvalid: true });
+    } else if (
+      this.state.FirstPassword.localeCompare(this.state.SecondPassword) == 0 &&
+      validate_password(this.state.FirstPassword) == true
+    ) {
+      this.setState({ passwordInvalid: false });
+    } else {
+      this.setState({ passwordInvalid: true });
+    }
 
+    var userSubmission = {};
+    if (this.state.passwordInvalid == false) {
       /* Random lowercase shit is to communicate with the api better */
-      // TODO:
-      const userSubmission = {
+      var userSubmission = {
         UserName: this.state.UserName,
-        newPassword: this.state.FirstPassword,
         newCommonName: this.state.CommonName,
         Email: this.state.Email,
         newDescription: this.state.Description
       };
 
+      if (this.state.FirstPassword === undefined) {
+      } else {
+        userSubmission.newPassword = this.state.FirstPassword;
+      }
       //TODO: COMMUNICATE WITH API
       //this.updateUserDetails(userSubmission);
       console.log(userSubmission);
@@ -176,7 +201,14 @@ class UserAccountDetails extends React.Component {
                       autoComplete="current-password"
                     />
                     {this.state.passwordInvalid && (
-                      <p>Passwords must match and be valid strings!</p>
+                      <div>
+                        <p>Passwords must match and be valid strings!</p>
+                        <p>
+                          Password must be 8-20 characters and contain at least
+                          one uppercase, lowercase, number, and special
+                          character.
+                        </p>
+                      </div>
                     )}
                   </Col>
                 </Row>
@@ -236,4 +268,19 @@ function DeleteAccountButton() {
   );
 }
 
-export default UserAccountDetails;
+/* Validates a password that is passed into the function with the following parameters:
+ * At least one uppercase letter, one lowercase letter, one number, one special
+ * character, with a total length between 8 and 20 characters, inclusive.
+ * TODO: clean password inputs and make sure that no SQL injection is possible.
+ *
+ * Returns true if password is valid, false otherwise.
+ */
+
+function validate_password(pass) {
+  if (typeof pass === "undefined" || pass === "") {
+    return true;
+  }
+  return /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/.test(
+    pass
+  );
+}

@@ -3,105 +3,53 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
+import LoginPage from "../WebsitePages/LoginPage.jsx";
 const axios = require("axios");
 
 export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      PostsList: [
-        {
-          PostId: 2,
-          PostTitle: "Post 1 Title",
-          PostText: "Post 1",
-          Topics: "Gaming,All",
-          Timestamp: "2019-10-24T20:56:56",
-          b: [
-            {
-              UserId: 1,
-              UserName: "kbuzza",
-              CommonName: "Kyle",
-              Likes: 0,
-              Retweets: 0
-            }
-          ]
-        },
-        {
-          PostId: 3,
-          PostTitle: "Post 2 Title",
-          PostText: "Post 2",
-          Topics: "Sports,News,All",
-          Timestamp: "2019-10-24T20:56:56",
-          b: [
-            {
-              UserId: 1,
-              UserName: "kbuzza",
-              CommonName: "Kyle",
-              Likes: 0,
-              Retweets: 0
-            }
-          ]
-        },
-        {
-          PostId: 4,
-          PostTitle: "Post 3 Title",
-          PostText: "Post 3",
-          Topics: "Gaming,Entertainment,All",
-          Timestamp: "2019-10-24T20:56:56",
-          b: [
-            {
-              UserId: 1,
-              UserName: "kbuzza",
-              CommonName: "Kyle",
-              Likes: 0,
-              Retweets: 0
-            }
-          ]
-        },
-
-        {
-          PostId: 1,
-          PostTitle: "Post 4 Title",
-          PostText: "Post 4",
-          Topics: "Gaming,All",
-          Timestamp: "2019-10-24T19:08:11",
-          b: [
-            {
-              UserId: 1,
-              UserName: "kbuzza",
-              CommonName: "Kyle",
-              Likes: 0,
-              Retweets: 0
-            }
-          ]
-        }
-      ]
-    };
+    this.state = { PostsList: [] };
   }
 
-  /*
   async componentDidMount() {
     let config = {
       headers: {
         "content-type": "application/json"
-      }
+      },
+      topic: this.props.topic
     };
-    await axios
-      .post(
-        //"http://twistter-API.azurewebsites.net/get-all-posts"
-        "http://localhost:5000/get-all-posts",
-        config
-      )
-      .then(response => {
-        const PostsList = [];
-        PostsList.push(response);
-        //console.log(JSON.parse({ PostsList }));
-        this.setState({ PostsList });
-        console.log(this.state);
-      });
+    if (this.props.topic.localeCompare("all") == 0) {
+      await axios
+        .post(
+          //"http://twistter-API.azurewebsites.net/get-all-posts"
+          "http://localhost:5000/get-all-posts",
+          config
+        )
+        .then(response => {
+          const PostsList = [];
+          PostsList.push(response);
+          //console.log(JSON.parse({ PostsList }));
+          this.setState({ PostsList });
+          console.log(this.state);
+        });
+    } else {
+      await axios
+        .post(
+          //"http://twistter-API.azurewebsites.net/get-topic-posts"
+          "http://localhost:5000/get-topic-posts",
+          config
+        )
+        .then(response => {
+          const PostsList = [];
+          PostsList.push(response);
+          //console.log(JSON.parse({ PostsList }));
+          this.setState({ PostsList });
+          console.log(this.state);
+        });
+    }
   }
-  */
 
   render() {
     const PostsList = this.state.PostsList;

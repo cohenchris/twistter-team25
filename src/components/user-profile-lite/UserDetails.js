@@ -6,8 +6,7 @@ const axios = require("axios");
 export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.state = { Posts: 0 };
   }
 
   async componentDidMount() {
@@ -65,7 +64,7 @@ export default class UserDetails extends React.Component {
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
 
         {/* TODO: pass userId into BlogPosts */}
-        <BlogPosts />
+        <BlogPosts topic="all" />
       </div>
     );
   }
