@@ -76,6 +76,7 @@ export default class NavigationBar extends React.Component {
             </Form>
           </Navbar>
         </Container>
+        <br />
       </div>
     );
   }

@@ -16,7 +16,6 @@ export default class Topic_CS extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          //TODO: COMMUNICATE WITH API
           subtitle="Computer Science"
           className="text-sm-left"
         />

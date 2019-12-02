@@ -16,7 +16,6 @@ export default class Topic_Politics extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          //TODO: COMMUNICATE WITH API
           subtitle="Politics"
           className="text-sm-left"
         />

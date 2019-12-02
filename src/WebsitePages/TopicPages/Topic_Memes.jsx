@@ -16,7 +16,6 @@ export default class Topic_Memes extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          //TODO: COMMUNICATE WITH API
           subtitle="Memes"
           className="text-sm-left"
         />

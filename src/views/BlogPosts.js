@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import LoginPage from "../WebsitePages/LoginPage.jsx";
+import ProfilePage from "../WebsitePages/ProfilePage";
 const axios = require("axios");
 
 export default class BlogPosts extends React.Component {
@@ -11,8 +13,38 @@ export default class BlogPosts extends React.Component {
     super(props);
 
     this.state = {
-      PostsList: []
+      PostsList: [
+        {
+          PostId: 5,
+          UserId: 2,
+          UserName: "testuser1",
+          CommonName: "User1",
+          PostTitle: "Title 5",
+          PostText: "Post 5",
+          Topics: "Sports,News,All",
+          Timestamp: "2019-10-28T16:48:36",
+          Likes: 0,
+          Retweets: 1,
+          TimelineTimestamp: "2019-10-28T16:48:46",
+          z: [{ RetweetUserName: "User1" }]
+        },
+        {
+          PostId: 4,
+          UserId: 3,
+          UserName: "testuser1",
+          CommonName: "User1",
+          PostTitle: "Title 4",
+          PostText: "Post 4",
+          Topics: "Gaming,All",
+          Timestamp: "2019-10-28T16:48:34",
+          Likes: 0,
+          Retweets: 1,
+          TimelineTimestamp: "2019-10-28T16:48:46",
+          z: [{ RetweetUserName: "User1" }]
+        }
+      ]
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   async componentDidMount() {
@@ -53,6 +85,15 @@ export default class BlogPosts extends React.Component {
     }
   }
 
+  async handleDelete(id) {
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/delete-post",
+      "http://localhost:5000/delete-post",
+      { postId: id }
+    );
+    console.log(response);
+  }
+
   render() {
     const PostsList = this.state.PostsList;
     console.log(PostsList);
@@ -69,12 +110,12 @@ export default class BlogPosts extends React.Component {
                     <Badge pill className={`card-post__category bg-dark`}>
                       {post.Topics}
                     </Badge>
-                    {/* TODO: make it so that this button only shows up when the post is created by the currently logged in user! */}
                     {post.UserId == global.ValidatedUser && (
                       <Button
                         size="sm"
                         variant="danger"
                         className="float-right"
+                        onClick={this.handleDelete.bind(this, post.PostId)}
                       >
                         X
                       </Button>
@@ -82,12 +123,14 @@ export default class BlogPosts extends React.Component {
                   </Col>
                   <Col>
                     <div className="card-post__author d-flex">
-                      <a
-                        href="#"
-                        className="card-post__author-avatar card-post__author-avatar--small"
+                      <Link
+                        to={{
+                          pathname: "/profile",
+                          id: post.UserId
+                        }}
                       >
                         {post.CommonName + " (@" + post.UserName + ")"}
-                      </a>
+                      </Link>
                     </div>
                   </Col>
                 </div>
@@ -108,6 +151,7 @@ export default class BlogPosts extends React.Component {
                   <LikeAndQuoteButtons
                     like_count={post.Likes}
                     quote_count={post.Retweets}
+                    postId={post.PostId}
                   />
                   {post.z[0].RetweetUserName !== undefined && (
                     <p>quoted by {post.z[0].RetweetUserName}</p>
@@ -126,20 +170,47 @@ const LikeAndQuoteButtons = props => {
   const [button, setButton] = useState();
   const [likes, setLikes] = useState(props.like_count);
   const [quotes, setQuotes] = useState(props.quote_count);
-  const handleLike = val => {
-    setButton(val);
-    if (val == 1) {
+
+  const handleLike = async num_likes => {
+    setButton(num_likes);
+    if (num_likes == 1) {
       setLikes(likes + 1);
+      // like-post
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/like-post",
+        "http://localhost:5000/like-post",
+        { userId: global.ValidatedUser, postId: props.postId }
+      );
+      console.log(response);
     } else {
       setLikes(likes - 1);
+      // unlike-post
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/unlike-post",
+        "http://localhost:5000/unlike-post",
+        { userId: global.ValidatedUser, postId: props.postId }
+      );
+      console.log(response);
     }
   };
-  const handleQuote = val => {
-    setButton(val);
-    if (val == 2) {
+  const handleQuote = async num_quotes => {
+    setButton(num_quotes);
+    if (num_quotes == 2) {
       setQuotes(quotes + 1);
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/retweet-post",
+        "http://localhost:5000/retweet-post",
+        { userId: global.ValidatedUser, postId: props.postId }
+      );
+      console.log(response);
     } else {
       setQuotes(quotes - 1);
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/unretweet-post",
+        "http://localhost:5000/unretweet-post",
+        { userId: global.ValidatedUser, postId: props.postId }
+      );
+      console.log(response);
     }
   };
 
@@ -169,7 +240,3 @@ const LikeAndQuoteButtons = props => {
     </Row>
   );
 };
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}

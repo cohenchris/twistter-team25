@@ -1,1 +1,1 @@
-global.ValidatedUser = -1;
+global.ValidatedUser = 2;

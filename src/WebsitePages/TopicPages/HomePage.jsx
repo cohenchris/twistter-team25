@@ -13,7 +13,7 @@ export default class HomePage extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          subtitle="Your Followed Topics"
+          subtitle="HOME"
           className="text-sm-left"
         />
         <BlogPosts topic="all" />

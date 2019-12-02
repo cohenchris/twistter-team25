@@ -7,7 +7,9 @@ const axios = require("axios");
 export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Posts: 0 };
+    this.state = { Posts: 0, UserId: this.props.id };
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.followUser = this.followUser.bind(this);
   }
 
   async componentDidMount() {
@@ -17,10 +19,9 @@ export default class UserDetails extends React.Component {
       }
     };
 
-    let userData = JSON.stringify({ userId: global.ValidatedUser });
+    let userData = JSON.stringify({ userId: this.state.UserId });
     console.log(userData);
-    if (global.ValidatedUser !== -1) {
-      // TODO: save userId from validate-login (LoginPage)
+    if (this.state.UserId !== -1) {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/get-user",
         "http://localhost:5000/get-user",
@@ -32,6 +33,19 @@ export default class UserDetails extends React.Component {
     }
   }
 
+  async followUser() {
+    let userData = JSON.stringify({
+      userId: global.ValidatedUser,
+      followingId: this.state.UserId
+    });
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/follow-user",
+      "http://localhost:5000/follow-user",
+      userData
+    );
+    console.log(response);
+  }
+
   render() {
     return (
       <div>
@@ -40,9 +54,18 @@ export default class UserDetails extends React.Component {
             <h2 className="mb-0">{this.state.CommonName}</h2>
             <h5>{this.state.UserName}</h5>
             <br />
-            <Button pill outline size="sm" className="mb-2">
-              <i className="material-icons mr-1">person_add</i> Follow
-            </Button>
+            {this.props.id != global.ValidatedUser && (
+              <Button
+                pill
+                outline
+                size="sm"
+                className="mb-2"
+                onClick={this.followUser}
+              >
+                <i className="material-icons mr-1">person_add</i> Follow
+              </Button>
+            )}
+
             <br />
             <br />
             <p>{this.state.Followers} Followers</p>

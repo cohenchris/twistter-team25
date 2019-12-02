@@ -16,7 +16,6 @@ export default class Topic_Animals extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          //TODO: COMMUNICATE WITH API
           subtitle="Animals"
           className="text-sm-left"
         />
