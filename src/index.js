@@ -4,16 +4,29 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./global.js";
+//Pages
 import StartPage from "./WebsitePages/StartPage/StartPage";
-import AllTopics from "./WebsitePages/AllTopics";
 import CreateMicroblog from "./WebsitePages/CreateMicroblog";
 import CreateNewAccount from "./WebsitePages/CreateNewAccount";
 import DownForMaintenance from "./WebsitePages/DownForMaintenance";
-import HomePage from "./WebsitePages/HomePage";
 import LoginPage from "./WebsitePages/LoginPage";
 import ProfilePage from "./WebsitePages/ProfilePage";
 import ProfileSettings from "./WebsitePages/ProfileSettings";
-import DmPage from './components/DmPage';
+import DmPage from "./components/DmPage";
+
+// TOPICS
+import AllTopics from "./WebsitePages/TopicPages/AllTopics";
+import HomePage from "./WebsitePages/TopicPages/HomePage";
+import Topic_Sports from "./WebsitePages/TopicPages/Topic_Sports.jsx";
+import Topic_Animals from "./WebsitePages/TopicPages/Topic_Animals";
+import Topic_Art from "./WebsitePages/TopicPages/Topic_Art";
+import Topic_Beauty from "./WebsitePages/TopicPages/Topic_Beauty";
+import Topic_CS from "./WebsitePages/TopicPages/Topic_CS";
+import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
+import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
+import Topic_Politics from "./WebsitePages/TopicPages/Topic_Politics";
 
 export const blogDivStyle = {
   marginLeft: "200px",
@@ -27,7 +40,39 @@ export const otherDivStyle = {
   marginTop: "30px"
 };
 
-ReactDOM.render(<DmPage />, document.getElementById("root"));
+export const blackLink = {
+  color: "black"
+};
+
+const ValidatedUser = React.createContext("hey");
+
+const routing = (
+  <Router>
+    <Switch>
+      <Route path="/" exact component={StartPage} />
+      <Route path="/create-microblog" component={CreateMicroblog} />
+      <Route path="/create-account" component={CreateNewAccount} />
+      <Route path="/maintenance" component={DownForMaintenance} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/profile" component={ProfilePage} />
+      <Route path="/settings" component={ProfileSettings} />
+      <Route path="/dm" component={DmPage} />
+      {/* TOPICS */}
+      <Route path="/home" component={HomePage} />
+      <Route path="/all" component={AllTopics} />
+      <Route path="/music" component={Topic_Music} />
+      <Route path="/cs" component={Topic_CS} />
+      <Route path="/politics" component={Topic_Politics} />
+      <Route path="/beauty" component={Topic_Beauty} />
+      <Route path="/animals" component={Topic_Animals} />
+      <Route path="/memes" component={Topic_Memes} />
+      <Route path="/art" component={Topic_Art} />
+      <Route path="/sports" component={Topic_Sports} />
+    </Switch>
+  </Router>
+);
+
+ReactDOM.render(routing, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

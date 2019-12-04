@@ -18,7 +18,14 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      PostId: -1,
+      UserId: 2,
+      PostTitle: "",
+      PostText: "",
+      Topics: "Sports,News,All",
+      post_characters_remaining: 150,
+      valid_post: true
+
+      /*
       PostTitle: "",
       PostText: "",
       Topics: "All",
@@ -34,6 +41,7 @@ export default class Editor extends React.Component {
           Retweets: 0
         }
       ]
+      */
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -44,7 +52,8 @@ export default class Editor extends React.Component {
 
   async postData(post_data) {
     const response = await axios.post(
-      "http://twistter-API.azurewebsites.net/create-post",
+      //"http://twistter-API.azurewebsites.net/create-post",
+      "http://localhost:5000/create-post",
       post_data
     );
     return response;
@@ -65,31 +74,24 @@ export default class Editor extends React.Component {
       ":" +
       tempDate.getSeconds();
 
+    var html = this.state.PostText;
+    var div = document.createElement("div");
+    div.innerHTML = html;
+    var stripped_text = div.textContent || div.innerText || "";
+
     /* Random lowercase variables are to try to communicate better with the api */
     const post_submission = {
-      PostId: this.state.PostId,
-      PostTitle: this.state.PostTitle,
+      //PostId: this.state.PostId,
+      postTitle: this.state.PostTitle,
       topics: this.state.Topics,
-      postText: this.state.PostText,
-      Timestamp: date,
-      userId: this.state.b[0].UserId,
-      UserName: this.state.b[0].UserName,
-      CommonName: this.state.b[0].CommonName,
-      Likes: this.state.b[0].Lines,
-      Retweets: this.state.b[0].Retweets,
-      b: [
-        {
-          userId: this.state.b[0].UserId,
-          UserName: this.state.b[0].UserName,
-          CommonName: this.state.b[0].CommonName,
-          Likes: this.state.b[0].Lines,
-          Retweets: this.state.b[0].Retweets
-        }
-      ]
+      postText: stripped_text,
+      userId: this.state.UserId
     };
+    console.log(post_submission);
     //TODO: COMMUNICATE WITH FLASK API
     let response = this.postData(post_submission);
     console.log(response);
+    //console.log(post_submission);
   }
 
   handleTopicSelect(e) {

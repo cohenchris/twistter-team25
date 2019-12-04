@@ -22,25 +22,13 @@ class NewUserForm extends React.Component {
     super();
     this.state = {
       fields: {},
-      errors: {},
-      topics: []
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitUserRegistrationForm = this.submitUserRegistrationForm.bind(
       this
     );
     this.validate_form = this.validate_form.bind(this);
-    this.handleCheckboxes = this.handleCheckboxes.bind(this);
-    this.postNewUser = this.postNewUser.bind(this);
-  }
-
-  async postNewUser(post_data) {
-    // TODO: get-user-id-from-email
-    const response = await axios.post(
-      "http://twistter-API.azurewebsites.net/user-create-new-user",
-      post_data
-    );
-    console.log(response);
   }
 
   validate_form() {
@@ -69,19 +57,7 @@ class NewUserForm extends React.Component {
     this.setState({ fields });
   }
 
-  handleCheckboxes(evt) {
-    let name = evt.target.name;
-    const temp_topics = this.state.topics;
-
-    if (this.state.topics.find(item => item.name === name)) {
-      temp_topics.splice(temp_topics.indexOf(name), 1);
-    } else {
-      temp_topics.push(name);
-    }
-    this.setState({ topics: temp_topics });
-  }
-
-  submitUserRegistrationForm(e) {
+  async submitUserRegistrationForm(e) {
     e.preventDefault();
     if (this.validate_form()) {
       let fields = {};
@@ -110,10 +86,21 @@ class NewUserForm extends React.Component {
 
       this.setState({ fields: fields, errors: errors });
 
-      //TODO: COMMUNICATE WITH API
-      //TODO: password!!!!!!!
-      this.postNewUser(submitData);
-      console.log(this.state.topics);
+      let config = {
+        headers: {
+          "content-type": "application/json"
+        }
+      };
+
+      console.log(submitData);
+      // user-create-new-user
+      const createUserResponse = await axios.post(
+        //"http://twistter-API.azurewebsites.net/user-create-new-user",
+        "http://localhost:5000/user-create-new-user",
+        submitData,
+        JSON.stringify(config)
+      );
+      console.log(createUserResponse);
     }
   }
 
@@ -214,74 +201,6 @@ class NewUserForm extends React.Component {
             </Form.Group>
           </Col>
           <Col />
-          {/* Topics */}
-          <Col>
-            <Form.Label>
-              <strong>Topics</strong>
-            </Form.Label>
-            <FormCheck
-              type="checkbox"
-              name="All"
-              label="All"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Music"
-              label="Music"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              id="Computer Science"
-              label="Computer Science"
-            />
-            <FormCheck
-              type="checkbox"
-              name="Politics"
-              label="Politics"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Books"
-              label="Books"
-              onChange={this.handleCheckboxes}
-            />
-          </Col>
-          <Col>
-            <Form.Label />
-            <FormCheck
-              type="checkbox"
-              name="Beauty"
-              label="Beauty"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Animals"
-              label="Animals"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Memes"
-              label="Memes"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Art"
-              label="Art"
-              onChange={this.handleCheckboxes}
-            />
-            <FormCheck
-              type="checkbox"
-              name="Sports"
-              label="Sports"
-              onChange={this.handleCheckboxes}
-            />
-          </Col>
         </Form.Row>
         <br></br>
         {/* Agree to Terms and Conditions */}

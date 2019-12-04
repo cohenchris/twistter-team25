@@ -1,0 +1,1 @@
+global.ValidatedUser = 2;

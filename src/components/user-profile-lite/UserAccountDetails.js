@@ -11,10 +11,11 @@ import {
   FormTextarea,
   Button
 } from "shards-react";
+import { Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 const axios = require("axios");
 
-class UserAccountDetails extends React.Component {
+export default class UserAccountDetails extends React.Component {
   constructor() {
     super();
 
@@ -24,11 +25,9 @@ class UserAccountDetails extends React.Component {
         "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
       CommonName: "Kyle",
       Email: "kbuzza@purdue.edu",
-      Description: "This is my description.",
-      passwordInvalid: false
+      Description: "This is my description."
     };
     this.handleName = this.handleName.bind(this);
-    //this.handleEmail = this.handleEmail.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
     this.handleSecondPassword = this.handleSecondPassword.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
@@ -36,55 +35,118 @@ class UserAccountDetails extends React.Component {
     this.updateUserDetails = this.updateUserDetails.bind(this);
   }
 
-  updateUserDetails(post_data) {
-    //TODO: /get-user-id-from-email
+  async updateUserDetails(post_data) {
+    // user-update-common-name
+    let newName = JSON.stringify({
+      userId: global.ValidatedUser,
+      newCommonName: post_data.newCommonName
+    });
     const common_name_response = axios.post(
-      "twistter-API.azurewebsites.net/user-update-common-name",
-      post_data
+      //"http://twistter-API.azurewebsites.net/user-update-common-name",
+      "http://localhost:5000/user-update-common-name",
+      newName
     );
     console.log(common_name_response);
+
+    // user-update-description
+    let newDesc = JSON.stringify({
+      userId: global.ValidatedUser,
+      newDescription: post_data.newDescription
+    });
     const description_response = axios.post(
-      "twistter-API.azurewebsites.net/user-update-description",
-      post_data
+      //"http://twistter-API.azurewebsites.net/user-update-description",
+      "http://localhost:5000/user-update-description",
+      newDesc
     );
     console.log(description_response);
-    const password_response = axios.post(
-      "twistter-API.azurewebsites.net/update-password",
-      post_data
-    );
-    console.log(password_response);
+
+    // update-password if applicable
+    if (post_data.newPassword !== undefined) {
+      let newPass = JSON.stringify({
+        userId: global.ValidatedUser,
+        newPassword: post_data.newPassword
+      });
+      const password_response = axios.post(
+        //"http://twistter-API.azurewebsites.net/update-password",
+        "http://localhost:5000/update-password",
+        newPass
+      );
+      console.log(password_response);
+    }
+  }
+
+  async componentDidMount() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+
+    let data = JSON.stringify({ userId: global.ValidatedUser });
+    if (global.ValidatedUser !== -1) {
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/get-user",
+        "http://localhost:5000/get-user",
+        data,
+        config
+      );
+      console.log(response.data);
+      this.setState(response.data);
+    }
   }
 
   submitForm() {
-    if (this.state.FirstPassword.localeCompare(this.state.SecondPassword)) {
+    if (
+      !this.state.FirstPassword === undefined &&
+      this.state.SecondPassword === undefined
+    ) {
       this.setState({ passwordInvalid: true });
-    } else {
+    } else if (
+      this.state.FirstPassword === undefined &&
+      !this.state.SecondPassword === undefined
+    ) {
+      this.setState({ passwordInvalid: true });
+    } else if (
+      this.state.FirstPassword === undefined &&
+      this.state.SecondPassword === undefined
+    ) {
       this.setState({ passwordInvalid: false });
+    } else if (
+      this.state.FirstPassword.localeCompare(this.state.SecondPassword) != 0
+    ) {
+      this.setState({ passwordInvalid: true });
+    } else if (
+      this.state.FirstPassword.localeCompare(this.state.SecondPassword) == 0 &&
+      validate_password(this.state.FirstPassword) == true
+    ) {
+      this.setState({ passwordInvalid: false });
+    } else {
+      this.setState({ passwordInvalid: true });
+    }
 
+    var userSubmission = {};
+    if (this.state.passwordInvalid == false) {
       /* Random lowercase shit is to communicate with the api better */
-      // TODO:
-      const userSubmission = {
+      var userSubmission = {
         UserName: this.state.UserName,
-        newPassword: this.state.FirstPassword,
         newCommonName: this.state.CommonName,
         Email: this.state.Email,
         newDescription: this.state.Description
       };
 
+      if (this.state.FirstPassword === undefined) {
+      } else {
+        userSubmission.newPassword = this.state.FirstPassword;
+      }
       //TODO: COMMUNICATE WITH API
       this.updateUserDetails(userSubmission);
+      console.log(userSubmission);
     }
   }
 
   handleName(e) {
     this.setState({ CommonName: e.target.value });
   }
-
-  /*
-  handleEmail(e) {
-    this.setState({ Email: e.target.value });
-  }
-  */
 
   handleFirstPassword(e) {
     this.setState({ FirstPassword: e.target.value });
@@ -120,21 +182,6 @@ class UserAccountDetails extends React.Component {
                       onChange={this.handleName}
                     />
                   </Col>
-                  {/*
-                  {/* Email /}
-                  <Col md="6" className="form-group">
-                    <label htmlFor="feEmail">Email</label>
-                    <FormInput
-                      type="email"
-                      id="Email"
-                      name="Email"
-                      defaultValue={this.state.Email}
-                      placeholder="Email Address"
-                      onChange={this.handleEmail}
-                      autoComplete="email"
-                    />
-                  </Col>
-                  */}
                 </Row>
                 <Row form>
                   {/* Password */}
@@ -160,7 +207,14 @@ class UserAccountDetails extends React.Component {
                       autoComplete="current-password"
                     />
                     {this.state.passwordInvalid && (
-                      <p>Passwords must match and be valid strings!</p>
+                      <div>
+                        <p>Passwords must match and be valid strings!</p>
+                        <p>
+                          Password must be 8-20 characters and contain at least
+                          one uppercase, lowercase, number, and special
+                          character.
+                        </p>
+                      </div>
                     )}
                   </Col>
                 </Row>
@@ -185,7 +239,7 @@ class UserAccountDetails extends React.Component {
                     </Button>
                   </Col>
                   <Col>
-                    <DeleteAccountButton />
+                    <DeleteAccountButton deleteUser={this.deleteUser} />
                   </Col>
                 </Row>
               </Form>
@@ -196,19 +250,35 @@ class UserAccountDetails extends React.Component {
     );
   }
 }
+async function deleteUser() {
+  let userToDelete = JSON.stringify({
+    userId: global.ValidatedUser
+  });
+  console.log("DELETE");
+  console.log(userToDelete);
+  const userDeleteResponse = axios.post(
+    //"http://twistter-API.azurewebsites.net/user-delete",
+    "http://localhost:5000/user-delete",
+    userToDelete
+  );
+  console.log(userDeleteResponse);
+}
 
 function DeleteAccountButton() {
   const [show, setShow] = useState(false);
 
   return (
-    <>
+    <div>
       <Alert variant="danger" show={show}>
         <Alert.Heading>WARNING</Alert.Heading>
         <p>CONTINUING WILL PERMANENTLY DELETE YOUR ACCOUNT!</p>
         <hr />
-        <Button onClick={() => setShow(false)}>
-          Yes, I would like to permanently delete my account.
-        </Button>
+        <Link to="/login">
+          <Button onClick={deleteUser}>
+            Yes, I would like to permanently delete my account! This will route
+            you back to the login page.
+          </Button>
+        </Link>
       </Alert>
 
       {!show && (
@@ -216,8 +286,23 @@ function DeleteAccountButton() {
           Delete Account
         </Button>
       )}
-    </>
+    </div>
   );
 }
 
-export default UserAccountDetails;
+/* Validates a password that is passed into the function with the following parameters:
+ * At least one uppercase letter, one lowercase letter, one number, one special
+ * character, with a total length between 8 and 20 characters, inclusive.
+ * TODO: clean password inputs and make sure that no SQL injection is possible.
+ *
+ * Returns true if password is valid, false otherwise.
+ */
+
+function validate_password(pass) {
+  if (typeof pass === "undefined" || pass === "") {
+    return true;
+  }
+  return /^(?=.*[a-z])+(?=.*[A-Z])+(?=.*\d)+(?=.*[~`!@#$%^&*()_\-+=:?])+[A-Za-z\d~`!@#$%^&*()_\-+=:?]{8,20}$/.test(
+    pass
+  );
+}

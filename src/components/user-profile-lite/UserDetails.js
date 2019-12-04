@@ -1,40 +1,52 @@
 import React from "react";
 import BlogPosts from "../../views/BlogPosts";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
+import { updateJsxSpreadAttribute } from "typescript";
 const axios = require("axios");
 
 export default class UserDetails extends React.Component {
   constructor(props) {
     super(props);
-
-    //TODO: COMMUNICATE WITH API
-
-    this.state = {
-      /*
-      UserName: "kbuzza",
-      CommonName: "Kyle Buzza",
-      Following: 0,
-      Followers: 69,
-      Posts: 4,
-      Email: "kylesucks@purdue.edu",
-      Description: "This is my description."
-      */
-    };
-    this.getBlogData = this.getBlogData.bind(this);
+    this.state = { Posts: 0, UserId: this.props.id };
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.followUser = this.followUser.bind(this);
   }
 
-  async getBlogData() {
-    // TODO: save userId from validate-login (LoginPage)
+  async componentDidMount() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+
+    let userData = JSON.stringify({ userId: this.state.UserId });
+    console.log(userData);
+    if (this.state.UserId !== -1) {
+      const response = await axios.post(
+        //"http://twistter-API.azurewebsites.net/get-user",
+        "http://localhost:5000/get-user",
+        userData,
+        config
+      );
+      console.log(response.data);
+      this.setState(response.data);
+    }
+  }
+
+  async followUser() {
+    let userData = JSON.stringify({
+      userId: global.ValidatedUser,
+      followingId: this.state.UserId
+    });
     const response = await axios.post(
-      "http://twistter-API.azurewebsites.net/get-user",
-      { userId: 4 }
+      //"http://twistter-API.azurewebsites.net/follow-user",
+      "http://localhost:5000/follow-user",
+      userData
     );
-    this.state = response;
+    console.log(response);
   }
 
   render() {
-    this.getBlogData();
-
     return (
       <div>
         <Card small className="mb-4 pt-3">
@@ -42,9 +54,18 @@ export default class UserDetails extends React.Component {
             <h2 className="mb-0">{this.state.CommonName}</h2>
             <h5>{this.state.UserName}</h5>
             <br />
-            <Button pill outline size="sm" className="mb-2">
-              <i className="material-icons mr-1">person_add</i> Follow
-            </Button>
+            {this.props.id != global.ValidatedUser && (
+              <Button
+                pill
+                outline
+                size="sm"
+                className="mb-2"
+                onClick={this.followUser}
+              >
+                <i className="material-icons mr-1">person_add</i> Follow
+              </Button>
+            )}
+
             <br />
             <br />
             <p>{this.state.Followers} Followers</p>
@@ -52,18 +73,7 @@ export default class UserDetails extends React.Component {
           </CardHeader>
           <ListGroup flush>
             <Col>
-              <Row form>
-                {/* Email */}
-                <Col md="6" className="form-group">
-                  <br />
-                  <label htmlFor="Email">
-                    <strong>Email</strong>
-                  </label>
-                  <p>{this.state.Email}</p>
-                  {/*<label htmlFor="feEmail">Email</label>*/}
-                </Col>
-              </Row>
-              <Row></Row>
+              <br />
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
@@ -77,9 +87,11 @@ export default class UserDetails extends React.Component {
           </ListGroup>
         </Card>
         <br></br>
+
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
+
         {/* TODO: pass userId into BlogPosts */}
-        <BlogPosts />
+        <BlogPosts topic="all" />
       </div>
     );
   }

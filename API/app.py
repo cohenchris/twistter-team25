@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request, jsonify
+from flask import Flask, url_for, redirect, render_template, request, jsonify, Response
 from azure.storage.file import FileService
 import time
 import inspect
@@ -611,6 +611,7 @@ def post():
     data = request.get_json()
 
     try:
+      title = data['postTitle']
       userId = data['userId']
       title = data['postTitle']
       postText = data['postText']
@@ -642,7 +643,8 @@ def get_all_posts():
   except Exception as e:
     log(str(e))
 
-  return val
+  #return val
+  return Response(val, mimetype='application/json')
 
 
 @app.route("/get-topic-posts", methods=['POST'])
