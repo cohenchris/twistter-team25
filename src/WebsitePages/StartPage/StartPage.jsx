@@ -3,8 +3,6 @@ import logo from "../../images/Logo.png";
 import "./StartPage.css";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import HomePage from "../TopicPages/HomePage";
-import { roundToNearestMinutes } from "date-fns";
 
 /* HOME PAGE WITH LOGO AND LOGIN BUTTON */
 export default class StartPage extends React.Component {

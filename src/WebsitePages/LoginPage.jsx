@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Nav, Row, Alert } from "react-bootstrap";
+import { Form, Button, Nav, Row } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { otherDivStyle } from "..";

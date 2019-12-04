@@ -1,7 +1,6 @@
 import React from "react";
 import BlogPosts from "../../views/BlogPosts";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
-import { updateJsxSpreadAttribute } from "typescript";
 const axios = require("axios");
 
 export default class UserDetails extends React.Component {

@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import LoginPage from "../WebsitePages/LoginPage.jsx";
-import ProfilePage from "../WebsitePages/ProfilePage";
+
 const axios = require("axios");
 
 export default class BlogPosts extends React.Component {

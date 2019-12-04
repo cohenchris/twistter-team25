@@ -27,6 +27,7 @@ import Topic_CS from "./WebsitePages/TopicPages/Topic_CS";
 import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
 import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
 import Topic_Politics from "./WebsitePages/TopicPages/Topic_Politics";
+import ConversationList from "./components/ConversationList";
 
 export const blogDivStyle = {
   marginLeft: "200px",
@@ -44,8 +45,6 @@ export const blackLink = {
   color: "black"
 };
 
-const ValidatedUser = React.createContext("hey");
-
 const routing = (
   <Router>
     <Switch>
@@ -56,7 +55,11 @@ const routing = (
       <Route path="/login" component={LoginPage} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/settings" component={ProfileSettings} />
-      <Route path="/dm" component={DmPage} />
+      {/*<Route path="/dm" component={DmPage} />*/}
+      <Route
+        path="/dm"
+        render={props => <DmPage {...props} key={Math.random()} />}
+      />
       {/* TOPICS */}
       <Route path="/home" component={HomePage} />
       <Route path="/all" component={AllTopics} />

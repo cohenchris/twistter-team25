@@ -29,3 +29,7 @@
   color: #888;
   margin: 0;
 }
+
+.unstyled-button {
+  border: none;
+}

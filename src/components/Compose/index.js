@@ -1,18 +1,59 @@
-import React from 'react';
-import './Compose.css';
+import React from "react";
+import { InputGroup, FormControl, Button, Form } from "react-bootstrap";
+import "./Compose.css";
+const axios = require("axios");
 
-export default function Compose(props) {
-    return (
-      <div className="compose">
-        <input
-          type="text"
-          className="compose-input"
-          placeholder="Type a message, @name"
-        />
+export default class Compose extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      Message: "",
+      SenderId: this.props.sender,
+      ReceiverId: this.props.receiver
+    };
+    this.handleMessage = this.handleMessage.bind(this);
+    this.submitMessage = this.submitMessage.bind(this);
+  }
 
-        {
-          props.rightItems
-        }
-      </div>
+  handleMessage(e) {
+    this.setState({ Message: e.target.value });
+  }
+
+  async submitMessage() {
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/dm-user",
+      "http://localhost:5000/dm-user",
+      this.state
     );
+    console.log(response);
+  }
+
+  render() {
+    return (
+      <InputGroup className="compose">
+        <FormControl
+          placeholder="Enter a message..."
+          aria-label="Enter a message..."
+          aria-describedby="basic-addon2"
+          onChange={this.handleMessage}
+        />
+        <InputGroup.Append>
+          {!this.props.validConvo && (
+            <Button
+              variant="outline-secondary"
+              onClick={this.submitMessage}
+              disabled
+            >
+              Send
+            </Button>
+          )}
+          {this.props.validConvo && (
+            <Button variant="outline-secondary" onClick={this.submitMessage}>
+              Send
+            </Button>
+          )}
+        </InputGroup.Append>
+      </InputGroup>
+    );
+  }
 }

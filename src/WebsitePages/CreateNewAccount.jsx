@@ -1,6 +1,6 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
-import { Form, Button, Col, FormCheck } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
 const axios = require("axios");

@@ -21,7 +21,7 @@ export default class Editor extends React.Component {
       UserId: 2,
       PostTitle: "",
       PostText: "",
-      Topics: "Sports,News,All",
+      Topics: "",
       post_characters_remaining: 150,
       valid_post: true
 
@@ -60,6 +60,7 @@ export default class Editor extends React.Component {
   }
 
   submitForm() {
+    /*
     var tempDate = new Date();
     var date =
       tempDate.getFullYear() +
@@ -73,6 +74,7 @@ export default class Editor extends React.Component {
       tempDate.getMinutes() +
       ":" +
       tempDate.getSeconds();
+    */
 
     var html = this.state.PostText;
     var div = document.createElement("div");

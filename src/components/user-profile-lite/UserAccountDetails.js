@@ -127,7 +127,7 @@ export default class UserAccountDetails extends React.Component {
     var userSubmission = {};
     if (this.state.passwordInvalid == false) {
       /* Random lowercase shit is to communicate with the api better */
-      var userSubmission = {
+      userSubmission = {
         UserName: this.state.UserName,
         newCommonName: this.state.CommonName,
         Email: this.state.Email,
