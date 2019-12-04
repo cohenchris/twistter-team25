@@ -8,7 +8,7 @@ import pyodbc
 import datetime
 import json
 
-connectionString = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:twistter-dns.eastus.cloudapp.azure.com,1401;Database=Twistter-Database;Uid=kbuzza;Pwd=TestTwistter1;Encrypt=no;TrustServerCertificate=no;Connection Timeout=60;"
+connectionString = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:twistter-dns3.eastus.cloudapp.azure.com,1401;Database=master;Uid=kbuzza;Pwd=TestTwistter1;Encrypt=no;TrustServerCertificate=no;Connection Timeout=60;"
 
 ############################ USER METHODS #####################################
 
@@ -65,7 +65,7 @@ def updateDescription(userId, newDescription):
         
     cursor = cnxn.cursor()
     cursor.execute("UPDATE UserTable SET Description = '" + newDescription +
-                   "' WHERE UserId = '" + str(userId) + "'")
+                   "' WHERE UserId = " + str(userId))
     cnxn.commit()
 
 
@@ -216,7 +216,11 @@ def unfollowUser(userId, followingId):
     
 
 # ALLOWS A USER TO UPDATE TOPICS THEY FOLLOW FOR A PARTICULAR USER
-def updateFollow(userId, followingId, topics = []):
+def updateFollow(userId, followingId, topics):
+    test = ""
+    for letter in topics:
+        test += letter
+    topics = test.split(",")
     unfollowUser(userId, followingId)
     
     for topic in topics:

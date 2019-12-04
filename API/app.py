@@ -159,16 +159,17 @@ def update_description():
     data = request.get_json()
 
     try:
-      userId = data["userId"]
-      newDescription = ["newDescription"]
+      userId = data['userId']
+      newDescription = data['newDescription']
     except KeyError:
       log(invalid_json_format_string)
       return invalid_json_format_string
-
+    
     # Send the info to the database
     db.updateDescription(userId, newDescription)
     log("Updated Description")
   except Exception as e:
+    return str(e)
     log(str(e))
     return "Error"
 
@@ -486,10 +487,12 @@ def follow_user_topics():
       userId = data['userId']
       followingId = data['followingId']
       topicsSelected = data['topicsSelected']
+      
     except KeyError:
       return invalid_json_format_string
 
     db.updateFollow(userId, followingId, topics=topicsSelected)
+
 
   except Exception as e:
     log(str(e))
@@ -610,6 +613,7 @@ def post():
     try:
       title = data['postTitle']
       userId = data['userId']
+      title = data['postTitle']
       postText = data['postText']
       topics = data['topics']
     except KeyError:
@@ -951,7 +955,7 @@ def get_DMList():
     except KeyError:
       return invalid_json_format_string
 
-    dmList = db.getDMLIST(userID)
+    dmList = db.getDMList(userID)
   except Exception as e:
     log(str(e))
 
