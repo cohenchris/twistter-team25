@@ -1,5 +1,7 @@
 import React from "react";
 import Messenger from "../Messenger";
+import NavigationBar from "../NavigationBar";
+import { DMPageStyle } from "../..";
 
 export default class DmPage extends React.Component {
   constructor(props) {
@@ -22,7 +24,8 @@ export default class DmPage extends React.Component {
   }
   render() {
     return (
-      <div className="DmPage">
+      <div className="DmPage" style={DMPageStyle}>
+        <NavigationBar />
         <Messenger sender={this.state.sender} receiver={this.state.receiver} />
       </div>
     );

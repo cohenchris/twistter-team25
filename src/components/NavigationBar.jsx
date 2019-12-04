@@ -3,8 +3,6 @@ import {
   Nav,
   Navbar,
   NavDropdown,
-  Form,
-  FormControl,
   Button,
   Container,
   Col
@@ -16,6 +14,9 @@ const navBarStyle = {
 };
 
 export default class NavigationBar extends React.Component {
+  logOut() {
+    global.ValidatedUser = -1;
+  }
   handleClick(page) {
     /* Redirect to appropriate page here */
   }
@@ -32,23 +33,27 @@ export default class NavigationBar extends React.Component {
             {/* Website Title, #all, and Profile */}
             <Nav className="mr-auto">
               <NavDropdown title="Profile">
-                <NavDropdown.Item>My Profile</NavDropdown.Item>
-                <NavDropdown.Item>Settings</NavDropdown.Item>
+                <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
+                <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+                <NavDropdown.Item href="/dm">Direct Messages</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item>Log Out</NavDropdown.Item>
+                <NavDropdown.Item href="/login" onClick={this.logOut}>
+                  Log Out
+                </NavDropdown.Item>
               </NavDropdown>
+
               <NavDropdown title="Topics">
-                <NavDropdown.Item>All Topics</NavDropdown.Item>
-                <NavDropdown.Item>Home</NavDropdown.Item>
+                <NavDropdown.Item href="/all">All Topics</NavDropdown.Item>
+                <NavDropdown.Item href="/home">Home</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item>Sports</NavDropdown.Item>
-                <NavDropdown.Item>Animals</NavDropdown.Item>
-                <NavDropdown.Item>Art</NavDropdown.Item>
-                <NavDropdown.Item>Beauty</NavDropdown.Item>
-                <NavDropdown.Item>Computer Science</NavDropdown.Item>
-                <NavDropdown.Item>Memes</NavDropdown.Item>
-                <NavDropdown.Item>Music</NavDropdown.Item>
-                <NavDropdown.Item>Politics</NavDropdown.Item>
+                <NavDropdown.Item href="/sports">Sports</NavDropdown.Item>
+                <NavDropdown.Item href="/animals">Animals</NavDropdown.Item>
+                <NavDropdown.Item href="/art">Art</NavDropdown.Item>
+                <NavDropdown.Item href="/beauty">Beauty</NavDropdown.Item>
+                <NavDropdown.Item href="/cs">Computer Science</NavDropdown.Item>
+                <NavDropdown.Item href="/memes">Memes</NavDropdown.Item>
+                <NavDropdown.Item href="/music">Music</NavDropdown.Item>
+                <NavDropdown.Item href="/politics">Politics</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             {/* Create a New Microblog */}
@@ -62,6 +67,7 @@ export default class NavigationBar extends React.Component {
               </Nav>
             </Col>
             {/* Search Bar */}
+            {/*
             <Form>
               <Nav>
                 <FormControl
@@ -74,6 +80,7 @@ export default class NavigationBar extends React.Component {
                 </Button>
               </Nav>
             </Form>
+            */}
           </Navbar>
         </Container>
         <br />

@@ -17,7 +17,7 @@ export default class Messenger extends React.Component {
           <ConversationList />
         </div>
 
-        <div className="scrollable content">
+        <div className=" scrollable content">
           <MessageList
             sender={this.state.sender}
             receiver={this.state.receiver}

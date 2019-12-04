@@ -1,4 +1,4 @@
-import React, { useEffect, useState, getMessages } from "react";
+import React, { useEffect, useState } from "react";
 import Compose from "../Compose";
 import Toolbar from "../Toolbar";
 import Message from "../Message";
@@ -16,7 +16,7 @@ export default function MessageList(props) {
 
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    if (receiver !== -1) {
+    if (receiver !== -1 && sender !== -1) {
       //TODO: get-user for each, extract names
       convoTitle = "Conversation with " + receiver;
       getMessages();

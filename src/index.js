@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./global.js";
-//Pages
+// PAGES
 import StartPage from "./WebsitePages/StartPage/StartPage";
 import CreateMicroblog from "./WebsitePages/CreateMicroblog";
 import CreateNewAccount from "./WebsitePages/CreateNewAccount";
@@ -15,8 +15,7 @@ import LoginPage from "./WebsitePages/LoginPage";
 import ProfilePage from "./WebsitePages/ProfilePage";
 import ProfileSettings from "./WebsitePages/ProfileSettings";
 import DmPage from "./components/DmPage";
-
-// TOPICS
+// Topics
 import AllTopics from "./WebsitePages/TopicPages/AllTopics";
 import HomePage from "./WebsitePages/TopicPages/HomePage";
 import Topic_Sports from "./WebsitePages/TopicPages/Topic_Sports.jsx";
@@ -27,7 +26,6 @@ import Topic_CS from "./WebsitePages/TopicPages/Topic_CS";
 import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
 import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
 import Topic_Politics from "./WebsitePages/TopicPages/Topic_Politics";
-import ConversationList from "./components/ConversationList";
 
 export const blogDivStyle = {
   marginLeft: "200px",
@@ -43,6 +41,10 @@ export const otherDivStyle = {
 
 export const blackLink = {
   color: "black"
+};
+
+export const DMPageStyle = {
+  marginTop: "15px"
 };
 
 const routing = (
