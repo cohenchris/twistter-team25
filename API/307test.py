@@ -12,6 +12,7 @@ import time
 #d.newUser("testuser1", "pass1", "User1", "test1@test.net", "desc1")
 #d.newUser("testuser2", "pass2", "User2", "test2@test.net", "desc2")
 
+#d.updateDescription(1, "new")
 
 #print(d.validateLogin('kbuzza', 'password'))
 #print(d.validateLogin('testuser1', 'pass1'))
@@ -78,7 +79,7 @@ import time
 #time.sleep(1.5)
 #d.newPost(3, "Title 9", "Post 9", "Gaming,Entertainment")
 #time.sleep(1.5)
-#d.newPost(1, "Title 10", "Post 10", "")
+d.newPost(1, "work?", "idk", "Gaming")
 
 
 #print(d.getAllPosts())
@@ -152,4 +153,5 @@ import time
 #print(d.getDMList(1))
 
 
-print(type(d.getAllPosts()) is str)
+#print(d.getAllPosts())
+

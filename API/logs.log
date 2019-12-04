@@ -1,0 +1,27 @@
+Fri Nov  1 14:34:07 2019: Starting API
+Fri Nov  1 14:34:14 2019: Request - create_user
+Fri Nov  1 14:34:15 2019: Created new user
+Fri Nov  1 14:34:16 2019: Request - validate_login
+Fri Nov  1 14:34:16 2019: Validated User
+Fri Nov  1 14:34:16 2019: Request - update_common_name
+Fri Nov  1 14:34:16 2019: Updated common name
+Fri Nov  1 14:34:17 2019: Request - update_password
+Fri Nov  1 14:34:17 2019: Updated password
+Fri Nov  1 14:34:17 2019: Request - get_user
+Fri Nov  1 14:34:18 2019: Got User
+Fri Nov  1 14:34:18 2019: Request - validate_login
+Fri Nov  1 14:34:18 2019: Validated User
+Fri Nov  1 14:34:19 2019: Request - add_user_topic
+Fri Nov  1 14:34:19 2019: Added new user topic
+Fri Nov  1 14:34:19 2019: Request - delete_user
+Fri Nov  1 14:34:20 2019: Deleted User
+Fri Nov  1 14:34:20 2019: Request - follow_user_topics
+Fri Nov  1 14:34:21 2019: Request - unfollow_user
+Fri Nov  1 14:34:21 2019: Unfollowed User
+Fri Nov  1 14:34:21 2019: Request - dm_user
+Fri Nov  1 14:34:22 2019: Request - deleteDMs
+Fri Nov  1 14:34:22 2019: Request - get_DMConvo
+Fri Nov  1 14:34:23 2019: Request - get_DMList
+Fri Nov  1 14:34:23 2019: Request - update_common_name
+Fri Nov  1 14:34:23 2019: Invalid json format for this request
+
