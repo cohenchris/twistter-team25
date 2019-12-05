@@ -7,10 +7,25 @@ import axios from "axios";
 import "./ConversationList.css";
 
 export default function ConversationList() {
-  const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState([
+    {
+      UserName: "kbuzza",
+      CommonName: "Kyle",
+      Message: "message6",
+      TimeStamp: "2019-12-04 21:48:34",
+      OtherUser: 4
+    },
+    {
+      UserName: "cornettn",
+      CommonName: "New Name",
+      Message: "message1",
+      TimeStamp: "2019-12-04 21:11:47",
+      OtherUser: 3
+    }
+  ]);
 
   useEffect(() => {
-    getConversations();
+    //getConversations();
   }, []);
 
   const getConversations = async () => {
