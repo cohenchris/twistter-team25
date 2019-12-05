@@ -18,7 +18,12 @@ export default function MessageList(props) {
 
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    if (receiver !== -1 && sender !== -1) {
+    if (
+      receiver !== -1 &&
+      sender !== -1 &&
+      receiver !== undefined &&
+      sender !== undefined
+    ) {
       //TODO: get-user for each, extract names
       convoTitle = "Conversation with " + receiver;
       getMessages();
@@ -43,7 +48,8 @@ export default function MessageList(props) {
       send,
       JSON.stringify(config)
     );
-    console.log(response);
+    console.log(response.data);
+    tempMessages = response.data;
     /*
     var tempMessages = [
       {
@@ -160,9 +166,9 @@ export default function MessageList(props) {
 
       <div className="message-list-container">{renderMessages()}</div>
       <Compose
-        sender={SenderId}
-        receiver={ReceiverId}
-        validConvo={ReceiverId !== -1}
+        sender={global.ValidatedUser}
+        receiver={receiverId}
+        validConvo={receiverId !== -1}
       />
     </div>
   );

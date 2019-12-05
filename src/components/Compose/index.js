@@ -8,8 +8,8 @@ export default class Compose extends React.Component {
     super(props);
     this.state = {
       Message: "",
-      SenderId: this.props.sender,
-      ReceiverId: this.props.receiver
+      senderId: this.props.sender,
+      receiverId: this.props.receiver
     };
     this.handleMessage = this.handleMessage.bind(this);
     this.submitMessage = this.submitMessage.bind(this);
@@ -18,14 +18,16 @@ export default class Compose extends React.Component {
   handleMessage(e) {
     this.setState({ Message: e.target.value });
   }
-
   async submitMessage() {
+    console.log("state = " + this.state);
+
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/dm-user",
       "http://localhost:5000/dm-user",
       this.state
     );
     console.log(response);
+    window.location.reload();
   }
 
   render() {
