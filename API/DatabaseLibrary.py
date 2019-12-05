@@ -306,7 +306,7 @@ def getAllPosts():
     "WHERE a.RetweetId IS NULL " +
     "ORDER BY a.Timestamp DESC")
 
-    test = [{"PostId": x[0], "PostTitle": x[1], "PostText": x[6], "Topics": x[7], "Timestamp": str(x[8]), "b": [{"UserId": x[3], "UserName": x[4], "CommonName": x[5], "Likes": x[9], "Retweets": x[10]}]} for x in cursor.fetchall()]
+    test = [{"PostId": x[0], "PostTitle": x[1], "PostText": x[6], "Topics": x[7], "Timestamp": str(x[8]), "UserId": x[3], "UserName": x[4], "CommonName": x[5], "Likes": x[9], "Retweets": x[10]} for x in cursor.fetchall()]
     return json.dumps(test)
     
 
@@ -446,20 +446,21 @@ def getDMList(userId):
     cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT y.UserName,y.CommonName,x.Message,x.TimeStamp,x.OtherUser FROM (" +
+    cursor.execute("SELECT q.UserName,q.CommonName,x.Message,x.TimeStamp,x.OtherUser FROM (" +
 	               "SELECT SenderId,RecieverId," +
 		           "CASE WHEN SenderId=" + str(userId) + " THEN RecieverId ELSE SenderId END AS OtherUser," +
 		           "Message,TimeStamp," +
                    "ROW_NUMBER() OVER (PARTITION BY CASE WHEN SenderId=" + str(userId) + " THEN RecieverId ELSE SenderId END " +
 				   "ORDER BY TimeStamp DESC) as part " +
                    "FROM DMTable) as x LEFT JOIN UserTable as y on x.SenderId=y.UserId " +
+                   "LEFT JOIN UserTable as q on q.UserId = x.OtherUser " +
                    "WHERE x.part=1 AND (x.SenderId=" + str(userId) + " OR x.RecieverId=" + str(userId) + ") AND " +
                    "(EXISTS (SELECT 1 FROM DMTable WHERE SenderId=" + str(userId) + " AND SenderDeleted=0) OR " +
                    "EXISTS (SELECT 1 FROM DMTable WHERE RecieverId=" + str(userId) + " AND RecieverDeleted=0)) " +
-                   "ORDER BY TimeStamp DESC FOR JSON AUTO")
+                   "ORDER BY TimeStamp DESC")
 
-    ret = cursor.fetchall()[0][0]
-    return ret[1 : len(ret) - 1]
+    test = [{"UserName": x[0], "CommonName": x[1], "Message": x[2], "TimeStamp": str(x[3]), "OtherUser": x[4]} for x in cursor.fetchall()]
+    return json.dumps(test)
 
 ###############################################################################
 
