@@ -66,7 +66,7 @@ const routing = (
       <Route path="/home" component={HomePage} />
       <Route path="/all" component={AllTopics} />
       <Route path="/music" component={Topic_Music} />
-      <Route path="/cs" component={Topic_CS} />
+      <Route path="/computerscience" component={Topic_CS} />
       <Route path="/gaming" component={Topic_Gaming} />
       <Route path="/beauty" component={Topic_Beauty} />
       <Route path="/animals" component={Topic_Animals} />

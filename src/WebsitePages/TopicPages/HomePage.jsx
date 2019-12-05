@@ -1,17 +1,17 @@
 import React from "react";
 import NavigationBar from "../../components/NavigationBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BlogPosts from "../../views/BlogPosts";
+import UserTimeline from "../../views/UserTimeline";
 import PageTitle from "../../components/common/PageTitle";
 import { blogDivStyle } from "../..";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 export default class HomePage extends React.Component {
   render() {
     return (
       <div className="HomePage" style={blogDivStyle}>
         <NavigationBar />
-         <Container>
+        <Container>
           <Row>
             <Col sm={8}>
               <PageTitle
@@ -21,14 +21,9 @@ export default class HomePage extends React.Component {
                 className="text-sm-left"
               />
             </Col>
-            <Col sm={4}>
-              <Button type="submit" variant="dark">
-                Follow Topic
-              </Button>
-            </Col>
           </Row>
         </Container>
-        <BlogPosts topic="all" />
+        <UserTimeline />
       </div>
     );
   }

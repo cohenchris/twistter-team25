@@ -19,30 +19,12 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      UserId: 2,
+      UserId: global.ValidatedUser,
       PostTitle: "",
       PostText: "",
       Topics: "",
       post_characters_remaining: 150,
       valid_post: true
-
-      /*
-      PostTitle: "",
-      PostText: "",
-      Topics: "All",
-      Timestamp: "",
-      post_characters_remaining: 150,
-      valid_post: true,
-      b: [
-        {
-          UserId: 1,
-          UserName: "kbuzza",
-          CommonName: "Kyle Buzza",
-          Likes: 0,
-          Retweets: 0
-        }
-      ]
-      */
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -61,22 +43,6 @@ export default class Editor extends React.Component {
   }
 
   submitForm() {
-    /*
-    var tempDate = new Date();
-    var date =
-      tempDate.getFullYear() +
-      "-" +
-      (tempDate.getMonth() + 1) +
-      "-" +
-      tempDate.getDate() +
-      "T" +
-      tempDate.getHours() +
-      ":" +
-      tempDate.getMinutes() +
-      ":" +
-      tempDate.getSeconds();
-    */
-
     var html = this.state.PostText;
     var div = document.createElement("div");
     div.innerHTML = html;
@@ -84,17 +50,14 @@ export default class Editor extends React.Component {
 
     /* Random lowercase variables are to try to communicate better with the api */
     const post_submission = {
-      //PostId: this.state.PostId,
       postTitle: this.state.PostTitle,
       topics: this.state.Topics,
       postText: stripped_text,
       userId: this.state.UserId
     };
     console.log(post_submission);
-    //TODO: COMMUNICATE WITH FLASK API
     let response = this.postData(post_submission);
     console.log(response);
-    //console.log(post_submission);
   }
 
   handleTopicSelect(e) {
@@ -159,7 +122,7 @@ export default class Editor extends React.Component {
                 <option>All</option>
                 <option>Music</option>
                 <option>Computer Science</option>
-                <option>Politics</option>
+                <option>Gaming</option>
                 <option>Beauty</option>
                 <option>Animals</option>
                 <option>Memes</option>
@@ -174,7 +137,7 @@ export default class Editor extends React.Component {
             </Button>
           )}
           {this.state.valid_post && (
-            <Link to={"/" + this.state.Topics}>
+            <Link to={"/" + this.state.Topics.replace(" ", "")}>
               <Button type="submit" variant="dark" onClick={this.submitForm}>
                 Post
               </Button>

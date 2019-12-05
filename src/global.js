@@ -2,4 +2,4 @@
 
 //export const ValidatedUser = React.createContext(-1);
 
-global.ValidatedUser = 1;
+global.ValidatedUser = 4;

@@ -4,8 +4,24 @@ import PageTitle from "../../components/common/PageTitle";
 import { blogDivStyle } from "../..";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import BlogPosts from "../../views/BlogPosts";
+const axios = require("axios");
 
 export default class Topic_Animals extends React.Component {
+  async handleFollow() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/user-add-new-user-topic",
+      "http://localhost:5000/user-add-new-user-topic",
+      { userId: global.ValidatedUser, newTopic: "animals" },
+      JSON.stringify(config)
+    );
+    console.log(response);
+  }
+
   render() {
     return (
       <div className="MiscTopic" style={blogDivStyle}>
@@ -21,7 +37,7 @@ export default class Topic_Animals extends React.Component {
               />
             </Col>
             <Col sm={4}>
-              <Button type="submit" variant="dark">
+              <Button type="submit" variant="dark" onClick={this.handleFollow}>
                 Follow Topic
               </Button>
             </Col>

@@ -1,5 +1,5 @@
 import React from "react";
-import BlogPosts from "../../views/BlogPosts";
+import UserTimeline from "../../views/UserTimeline";
 import "../../global.js";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
 const axios = require("axios");
@@ -90,7 +90,7 @@ export default class UserDetails extends React.Component {
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
 
         {/* TODO: pass userId into BlogPosts */}
-        <BlogPosts topic="all" userTimeline="true" />
+        <UserTimeline userId={this.state.UserId} />
       </div>
     );
   }

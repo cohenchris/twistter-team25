@@ -3,7 +3,7 @@ import NavigationBar from "../../components/NavigationBar";
 import PageTitle from "../../components/common/PageTitle";
 import { blogDivStyle } from "../..";
 import BlogPosts from "../../views/BlogPosts";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 export default class AllTopics extends React.Component {
   render() {
@@ -19,11 +19,6 @@ export default class AllTopics extends React.Component {
                 subtitle="All Topics"
                 className="text-sm-left"
               />
-            </Col>
-            <Col sm={4}>
-              <Button type="submit" variant="dark">
-                Follow Topic
-              </Button>
             </Col>
           </Row>
         </Container>

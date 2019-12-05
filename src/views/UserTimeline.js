@@ -23,32 +23,17 @@ export default class BlogPosts extends React.Component {
         "content-type": "application/json"
       }
     };
-    let topic = {
-      topic: this.props.topic
+    let userId = {
+      userId: global.ValidatedUser
     };
-    if (this.props.topic.localeCompare("all") == 0) {
-      await axios
-        .post(
-          //"http://twistter-API.azurewebsites.net/get-all-posts"
-          "http://localhost:5000/get-all-posts",
-          config
-        )
-        .then(response => {
-          this.setState({ PostsList: response.data });
-        });
-    } else {
-      console.log(topic);
-      await axios
-        .post(
-          //"http://twistter-API.azurewebsites.net/get-topic-posts"
-          "http://localhost:5000/get-topic-posts",
-          topic,
-          config
-        )
-        .then(response => {
-          this.setState({ PostsList: response.data });
-        });
-    }
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/user-get-user-timeline"
+      "http://localhost:5000/user-get-user-timeline",
+      userId,
+      config
+    );
+
+    console.log(response);
   }
 
   async handleDelete(id) {

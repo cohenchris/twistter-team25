@@ -51,7 +51,9 @@ export default class NavigationBar extends React.Component {
                 <NavDropdown.Item href="/animals">Animals</NavDropdown.Item>
                 <NavDropdown.Item href="/art">Art</NavDropdown.Item>
                 <NavDropdown.Item href="/beauty">Beauty</NavDropdown.Item>
-                <NavDropdown.Item href="/cs">Computer Science</NavDropdown.Item>
+                <NavDropdown.Item href="/computerscience">
+                  Computer Science
+                </NavDropdown.Item>
                 <NavDropdown.Item href="/memes">Memes</NavDropdown.Item>
                 <NavDropdown.Item href="/music">Music</NavDropdown.Item>
                 <NavDropdown.Item href="/gaming">Gaming</NavDropdown.Item>
