@@ -12,38 +12,7 @@ export default class BlogPosts extends React.Component {
     super(props);
 
     this.state = {
-      PostsList: [
-        /*
-        {
-          PostId: 5,
-          UserId: 2,
-          UserName: "testuser1",
-          CommonName: "User1",
-          PostTitle: "Title 5",
-          PostText: "Post 5",
-          Topics: "Sports,News,All",
-          Timestamp: "2019-10-28T16:48:36",
-          Likes: 0,
-          Retweets: 1,
-          TimelineTimestamp: "2019-10-28T16:48:46",
-          z: [{ RetweetUserName: "User1" }]
-        },
-        {
-          PostId: 4,
-          UserId: 3,
-          UserName: "testuser1",
-          CommonName: "User1",
-          PostTitle: "Title 4",
-          PostText: "Post 4",
-          Topics: "Gaming,All",
-          Timestamp: "2019-10-28T16:48:34",
-          Likes: 0,
-          Retweets: 1,
-          TimelineTimestamp: "2019-10-28T16:48:46",
-          z: [{ RetweetUserName: "User1" }]
-        }
-        */
-      ]
+      PostsList: []
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -65,8 +34,8 @@ export default class BlogPosts extends React.Component {
           config
         )
         .then(response => {
-          const PostsList = [];
-          PostsList.push(response);
+          const PostsList = response.data;
+          //PostsList.push(response.data);
           //console.log(JSON.parse({ PostsList }));
           this.setState({ PostsList });
           //console.log(this.state);
@@ -81,8 +50,8 @@ export default class BlogPosts extends React.Component {
         )
         .then(response => {
           const PostsList = [];
-          PostsList.push(response);
-          //console.log(JSON.parse({ PostsList }));
+          PostsList.push(response.data);
+          //console.log(JSON.parse({ PostsList.data }));
           this.setState({ PostsList });
           console.log(this.state);
         });
@@ -108,6 +77,7 @@ export default class BlogPosts extends React.Component {
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
+              <p>{console.log(post)}</p>
               <Card small className="card-post card-post--1">
                 <div className="card-post__image">
                   <Col>
@@ -157,9 +127,10 @@ export default class BlogPosts extends React.Component {
                     quote_count={post.Retweets}
                     postId={post.PostId}
                   />
-                  {post.z[0].RetweetUserName !== undefined && (
-                    <p>quoted by {post.z[0].RetweetUserName}</p>
-                  )}
+                  {post.z !== undefined &&
+                    post.z[0].RetweetUserName !== undefined && (
+                      <p>quoted by {post.z[0].RetweetUserName}</p>
+                    )}
                 </CardBody>
               </Card>
             </Col>

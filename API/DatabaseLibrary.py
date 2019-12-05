@@ -306,7 +306,7 @@ def getAllPosts():
     "WHERE a.RetweetId IS NULL " +
     "ORDER BY a.Timestamp DESC")
 
-    test = [{"PostId": x[0], "PostTitle": x[1], "PostText": x[6], "Topics": x[7], "Timestamp": str(x[8]), "b": [{"UserId": x[3], "UserName": x[4], "CommonName": x[5], "Likes": x[9], "Retweets": x[10]}]} for x in cursor.fetchall()]
+    test = [{"PostId": x[0], "PostTitle": x[1], "PostText": x[6], "Topics": x[7], "Timestamp": str(x[8]), "UserId": x[3], "UserName": x[4], "CommonName": x[5], "Likes": x[9], "Retweets": x[10]} for x in cursor.fetchall()]
     return json.dumps(test)
     
 
