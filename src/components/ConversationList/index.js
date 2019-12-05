@@ -9,11 +9,11 @@ import "./ConversationList.css";
 export default function ConversationList() {
   const [conversations, setConversations] = useState([
     {
-      UserName: "kbuzza",
-      CommonName: "Kyle",
-      Message: "message6",
+      UserName: "kbuzza", //user that you're messaging
+      CommonName: "Kyle", //name of user that you're messaging
+      Message: "message6", //last message sent
       TimeStamp: "2019-12-04 21:48:34",
-      OtherUser: 4
+      OtherUser: 4 //userId of user that you're messaging
     },
     {
       UserName: "cornettn",
