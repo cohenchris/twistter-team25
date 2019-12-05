@@ -1,5 +1,5 @@
 import React from "react";
-import UserTimeline from "../../views/UserTimeline";
+import ProfilePosts from "../../views/ProfilePosts";
 import "../../global.js";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
 const axios = require("axios");
@@ -47,7 +47,6 @@ export default class UserDetails extends React.Component {
   render() {
     return (
       <div>
-        <p>{console.log(this.state)}</p>
         <Card small className="mb-4 pt-3">
           <CardHeader className="border-bottom text-center">
             <h2 className="mb-0">{this.state.CommonName}</h2>
@@ -90,7 +89,7 @@ export default class UserDetails extends React.Component {
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
 
         {/* TODO: pass userId into BlogPosts */}
-        <UserTimeline userId={this.state.UserId} />
+        <ProfilePosts userId={this.state.UserId} />
       </div>
     );
   }

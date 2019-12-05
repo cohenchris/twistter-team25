@@ -7,14 +7,15 @@ import { Link } from "react-router-dom";
 
 const axios = require("axios");
 
-export default class UserTimeline extends React.Component {
+export default class BlogPosts extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      PostsList: []
+      PostsList: [],
+      id: this.props.userId
     };
     this.handleDelete = this.handleDelete.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   async componentDidMount() {
@@ -23,17 +24,14 @@ export default class UserTimeline extends React.Component {
         "content-type": "application/json"
       }
     };
-    let userId = {
-      userId: global.ValidatedUser
-    };
     const response = await axios.post(
-      //"http://twistter-API.azurewebsites.net/user-get-user-timeline"
-      "http://localhost:5000/user-get-user-timeline",
-      userId,
+      //"http://twistter-API.azurewebsites.net/user-get-user-posts"
+      "http://localhost:5000/user-get-user-posts",
+      { userId: this.state.id },
       config
     );
-
-    console.log(response);
+    console.log(response.data);
+    //this.setState({ PostsList: response.data });
   }
 
   async handleDelete(id) {
@@ -47,7 +45,6 @@ export default class UserTimeline extends React.Component {
 
   render() {
     const PostsList = this.state.PostsList;
-    console.log(PostsList);
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
