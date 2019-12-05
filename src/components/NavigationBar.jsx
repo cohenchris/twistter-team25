@@ -30,6 +30,7 @@ export default class NavigationBar extends React.Component {
                 Twistter
               </Link>
             </Navbar.Brand>
+
             {/* Website Title, #all, and Profile */}
             <Nav className="mr-auto">
               <NavDropdown title="Profile">
