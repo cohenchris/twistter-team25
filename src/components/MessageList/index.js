@@ -24,7 +24,6 @@ export default function MessageList(props) {
       receiver !== undefined &&
       sender !== undefined
     ) {
-      //TODO: get-user for each, extract names
       convoTitle = "Conversation with " + receiver;
       getMessages();
     }
@@ -50,50 +49,6 @@ export default function MessageList(props) {
     );
     console.log(response.data);
     tempMessages = response.data;
-    /*
-    var tempMessages = [
-      {
-        SenderId: 1,
-        RecieverId: 2,
-        Message: "message1",
-        TimeStamp: "2019-10-24T20:23:50"
-      },
-      {
-        SenderId: 2,
-        RecieverId: 1,
-        Message: "message2",
-        TimeStamp: "2019-10-24T20:23:52"
-      },
-
-      {
-        SenderId: 1,
-        RecieverId: 2,
-        Message: "message3",
-        TimeStamp: "2019-10-24T21:23:54"
-      },
-
-      {
-        SenderId: 2,
-        RecieverId: 1,
-        Message: "message4",
-        TimeStamp: "2019-10-24T21:23:55"
-      },
-
-      {
-        SenderId: 1,
-        RecieverId: 2,
-        Message: "message5",
-        TimeStamp: "2019-10-24T21:23:57"
-      },
-
-      {
-        SenderId: 2,
-        RecieverId: 1,
-        Message: "message6",
-        TimeStamp: "2019-10-24T21:23:59"
-      }
-    ];
-    */
 
     setMessages([...messages, ...tempMessages]);
   };

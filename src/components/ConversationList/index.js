@@ -6,22 +6,7 @@ import axios from "axios";
 import "./ConversationList.css";
 
 export default function ConversationList() {
-  const [conversations, setConversations] = useState([
-    {
-      UserName: "kbuzza", //user that you're messaging
-      CommonName: "Kyle", //name of user that you're messaging
-      Message: "message6", //last message sent
-      TimeStamp: "2019-12-04 21:48:34",
-      OtherUser: 4 //userId of user that you're messaging
-    },
-    {
-      UserName: "cornettn",
-      CommonName: "New Name",
-      Message: "message1",
-      TimeStamp: "2019-12-04 21:11:47",
-      OtherUser: 3
-    }
-  ]);
+  const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
     getConversations();
@@ -39,20 +24,9 @@ export default function ConversationList() {
       { userId: global.ValidatedUser },
       JSON.stringify(config)
     );
-    console.log(response.data);
+    var newConversations = response.data;
 
-    /*
-    axios.get("https://randomuser.me/api/?results=20").then(response => {
-      let newConversations = response.data.results.map(result => {
-        return {
-          name: `${result.name.first} ${result.name.last}`,
-          text:
-            "Hello world! This is a long message that needs to be truncated."
-        };
-      });
-      setConversations([...conversations, ...newConversations]);
-    });
-    */
+    setConversations([...conversations, ...newConversations]);
   };
 
   return (

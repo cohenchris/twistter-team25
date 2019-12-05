@@ -24,4 +24,4 @@ npm-debug.log*
 __pycache__/
 create-react-app
 /node_modules
-
+API/logs.log
