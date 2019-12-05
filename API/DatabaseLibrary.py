@@ -435,10 +435,10 @@ def getDMConvo(userId, recieverId):
     cursor.execute("SELECT SenderId,RecieverId,Message,TimeStamp FROM DMTable " +
     "WHERE (SenderId=" + str(userId) + " AND RecieverId=" + str(recieverId) + " AND SenderDeleted=0) OR " +
     "(SenderId=" + str(recieverId) + " AND RecieverId=" + str(userId) + " AND RecieverDeleted=0) " +
-    "ORDER BY TimeStamp FOR JSON AUTO")
+    "ORDER BY TimeStamp")
 
-    ret = cursor.fetchall()[0][0]
-    return ret[1 : len(ret) - 1]
+    test = [{"SenderId": x[0], "RecieverId": x[1], "Message": x[2], "TimeStamp": str(x[3])} for x in cursor.fetchall()]
+    return json.dumps(test)
 
 
 # GETS LIST OF DM CONVOS FOR A USER
