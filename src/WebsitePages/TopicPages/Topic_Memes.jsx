@@ -3,18 +3,31 @@ import NavigationBar from "../../components/NavigationBar";
 import PageTitle from "../../components/common/PageTitle";
 import { blogDivStyle } from "../..";
 import BlogPosts from "../../views/BlogPosts";
+import { Button, Container, Row, Col } from "react-bootstrap";
+
 
 export default class Topic_Memes extends React.Component {
   render() {
     return (
       <div className="MiscTopic" style={blogDivStyle}>
         <NavigationBar />
-        <PageTitle
-          sm="4"
-          title="Blog Posts"
-          subtitle="Memes"
-          className="text-sm-left"
-        />
+        <Container>
+          <Row>
+            <Col sm={8}>
+              <PageTitle
+                sm="4"
+                title="Blog Posts"
+                subtitle="Memes"
+                className="text-sm-left"
+              />
+            </Col>
+            <Col sm={4}>
+              <Button type="submit" variant="dark">
+                Follow Topic
+              </Button>
+            </Col>
+          </Row>
+        </Container>
         <BlogPosts topic="memes" />
       </div>
     );

@@ -89,13 +89,18 @@ class LoginBoxes extends React.Component {
           </Form.Group>
         </Row>
         <Row>
-          <Link to="/home">
-            {global.ValidatedUser != -1 &&
+            {global.ValidatedUser == -1 &&
               <Button variant="dark" onClick={this.submitLoginRequest}>
                 Submit
               </Button>
             }
-          </Link>
+            {global.ValidatedUser != -1 &&
+              <Link to="/home">
+                <Button variant="dark" onClick={this.submitLoginRequest}>
+                  Submit
+                </Button>
+              </Link>
+            }
         </Row>
         <Row>
           <Nav className="mr-auto">
