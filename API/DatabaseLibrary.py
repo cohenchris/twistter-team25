@@ -321,10 +321,11 @@ def getAllTopicPosts(topic):
 	"(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets " +
     "FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId " +
     "WHERE a.RetweetId IS NULL AND (Topics LIKE '" + topic + ",%' OR ""Topics LIKE '%," + topic + "' OR ""Topics LIKE '%," + topic + ",%' OR ""Topics LIKE '" + topic + "') " +
-    "ORDER BY a.Timestamp DESC FOR JSON AUTO")
+    "ORDER BY a.Timestamp DESC")
     
-    ret = cursor.fetchall()[0][0]
-    return ret[1 : len(ret) - 1]
+    test = [{"PostId": x[0], "PostTitle": x[1], "PostText": x[6], "Topics": x[7], "Timestamp": str(x[8]), "UserId": x[3], "UserName": x[4], "CommonName": x[5], "Likes": x[9], "Retweets": x[10]} for x in cursor.fetchall()]
+    return json.dumps(test)
+    
 
 
 # DELETES A POST ON THE PLATFORM
