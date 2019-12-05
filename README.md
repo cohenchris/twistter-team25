@@ -14,12 +14,13 @@ Backend (Python Flask & MySQL): Kyle, Noah, Ryan
 
 ----------
 
-# Start React App:
+# Start React App Manually:
 
 git submodule init
-
 git submodule update
-
 npm install
-
 npm start
+
+# Start React App Automatically:
+
+./run.sh

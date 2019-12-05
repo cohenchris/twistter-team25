@@ -61,7 +61,6 @@ export default class Editor extends React.Component {
   }
 
   handleTopicSelect(e) {
-    //TODO: concatenate this with 'All' always
     this.setState({ Topics: e.target.value });
   }
 

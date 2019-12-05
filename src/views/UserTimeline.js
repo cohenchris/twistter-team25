@@ -105,10 +105,12 @@ export default class UserTimeline extends React.Component {
                     quote_count={post.Retweets}
                     postId={post.PostId}
                   />
-                  {post.z !== undefined &&
-                    post.z[0].RetweetUserName !== undefined && (
-                      <p>quoted by {post.z[0].RetweetUserName}</p>
-                    )}
+                  {post.RetweetUserName !== null && (
+                    <div>
+                      <br />
+                      <strong>quoted by {post.RetweetUserName}</strong>
+                    </div>
+                  )}
                 </CardBody>
               </Card>
             </Col>
