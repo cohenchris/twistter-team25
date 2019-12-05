@@ -1,5 +1,5 @@
 from flask import Flask, url_for, redirect, render_template, request, jsonify, Response
-from azure.storage.file import FileService
+#from azure.storage.file import FileService
 import time
 import inspect
 import traceback
@@ -931,9 +931,10 @@ def get_DMConvo():
   except Exception as e:
     log(str(e))
 
-  return """
-  convo: {}
-  """.format(convo)
+  return convo
+  #return """
+  #convo: {}
+  #""".format(convo)
 
 
 @app.route("/get-DMList", methods=['POST'])
