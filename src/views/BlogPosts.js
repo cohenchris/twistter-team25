@@ -69,7 +69,7 @@ export default class BlogPosts extends React.Component {
           PostsList.push(response);
           //console.log(JSON.parse({ PostsList }));
           this.setState({ PostsList });
-          console.log(this.state);
+          //console.log(this.state);
         });
     } else {
       await axios

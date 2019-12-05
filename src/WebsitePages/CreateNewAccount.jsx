@@ -178,6 +178,13 @@ class NewUserForm extends React.Component {
             <Form.Group>
               <Form.Label>
                 <strong>Password</strong>
+                <p>
+                  <h8>
+                    Password must contain at least one uppercase letter, one
+                    lowercase letter, one number, one special character, with a
+                    total length between 8 and 20 characters, inclusive.
+                  </h8>
+                </p>
               </Form.Label>
               <Form.Control
                 type="password"
