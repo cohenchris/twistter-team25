@@ -107,10 +107,10 @@ def getUserTimeline(userId):
                    "(a.Topics LIKE CONCAT(e.Topic, ',%') OR	a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR	a.Topics LIKE e.Topic) " +
                    "WHERE e.UserId=" + str(userId) + "ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC " +
                    ") AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId LEFT JOIN UserTable as z ON y.UserId = z.UserId " +
-                   "ORDER BY x.TimelineTimestamp DESC FOR JSON AUTO")
+                   "ORDER BY x.TimelineTimestamp DESC")
     
-    ret = cursor.fetchall()[0][0]
-    return ret[1 : len(ret) - 1]
+    test = [{"PostId": x[0], "UserId": x[1], "UserName": x[2], "CommonName": x[3], "PostTitle": x[4], "PostText": x[5], "Topics": x[6], "Timestamp": str(x[7]), "Likes": x[8], "Retweets": x[9], "RetweetUserName": x[10]} for x in cursor.fetchall()]
+    return json.dumps(test)
 
 
 # GETS ALL POSTS MADE BY A PARTICULAR USER
@@ -133,10 +133,11 @@ def getUserPosts(userId):
                    " ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC" +
                    ") AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId " +
                    "LEFT JOIN UserTable as z ON y.UserId = z.UserId " +
-                   "ORDER BY x.TimelineTimestamp DESC FOR JSON AUTO")
+                   "ORDER BY x.TimelineTimestamp DESC")
     
-    ret = cursor.fetchall()[0][0]
-    return ret[1 : len(ret) - 1]
+    test = [{"PostId": x[0], "UserId": x[1], "UserName": x[2], "CommonName": x[3], "PostTitle": x[4], "PostText": x[5], "Topics": x[6], "Timestamp": str(x[7]), "Likes": x[8], "Retweets": x[9], "RetweetUserName": x[10]} for x in cursor.fetchall()]
+    return json.dumps(test)
+
 
 # GETS ALL TOPICS FOR A PARTICULAR USER
 def getUserTopics(userId):
