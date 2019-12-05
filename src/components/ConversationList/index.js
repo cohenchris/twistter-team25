@@ -3,7 +3,6 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Toolbar from "../Toolbar";
 import axios from "axios";
-
 import "./ConversationList.css";
 
 export default function ConversationList() {
@@ -65,16 +64,20 @@ export default function ConversationList() {
     <div className="conversation-list">
       <Toolbar title="MESSENGER" />
       {conversations.map(conversation => (
-        //TODO: substitute conversation.name for new receiverId
         <Link
           to={{
             pathname: "/dm",
-            state: { receiver: conversation.name }
+            state: {
+              receiver: conversation.CommonName,
+              receiverId: conversation.OtherUser
+            }
           }}
         >
           <Button className="unstyled-button" variant="outline-dark">
-            <h1 className="conversation-title">{conversation.name}</h1>
-            <p className="conversation-snippet">{conversation.text}</p>
+            <h1 className="conversation-title">
+              {conversation.CommonName} (@{conversation.UserName})
+            </h1>
+            <p className="conversation-snippet">{conversation.Message}</p>
           </Button>
         </Link>
       ))}

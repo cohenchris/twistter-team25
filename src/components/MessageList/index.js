@@ -3,8 +3,10 @@ import Compose from "../Compose";
 import Toolbar from "../Toolbar";
 import Message from "../Message";
 import moment from "moment";
-
+import "../../global.js";
 import "./MessageList.css";
+
+const axios = require("axios");
 
 const MY_USER_ID = global.ValidatedUser;
 let convoTitle = "Conversation with ...";
@@ -12,7 +14,7 @@ let SenderId = -1;
 let ReceiverId = -1;
 
 export default function MessageList(props) {
-  let { sender, receiver } = props;
+  let { sender, receiver, receiverId } = props;
 
   const [messages, setMessages] = useState([]);
   useEffect(() => {
@@ -23,7 +25,26 @@ export default function MessageList(props) {
     }
   }, []);
 
-  const getMessages = () => {
+  const getMessages = async () => {
+    var tempMessages = [];
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
+    let send = {
+      userId: global.ValidatedUser,
+      receiverId: receiverId
+    };
+    console.log(send);
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/get-DMConvo",
+      "http://localhost:5000/get-DMConvo",
+      send,
+      JSON.stringify(config)
+    );
+    console.log(response);
+    /*
     var tempMessages = [
       {
         SenderId: 1,
@@ -66,6 +87,7 @@ export default function MessageList(props) {
         TimeStamp: "2019-10-24T21:23:59"
       }
     ];
+    */
 
     setMessages([...messages, ...tempMessages]);
   };

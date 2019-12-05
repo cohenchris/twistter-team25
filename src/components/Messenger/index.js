@@ -6,8 +6,11 @@ import "./Messenger.css";
 export default class Messenger extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { sender: this.props.sender, receiver: this.props.receiver };
-    console.log(this.state);
+    this.state = {
+      sender: this.props.sender,
+      receiver: this.props.receiver,
+      receiverId: this.props.receiverId
+    };
   }
 
   render() {
@@ -21,6 +24,7 @@ export default class Messenger extends React.Component {
           <MessageList
             sender={this.state.sender}
             receiver={this.state.receiver}
+            receiverId={this.state.receiverId}
           />
         </div>
       </div>

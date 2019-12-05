@@ -1,19 +1,97 @@
-Wed Dec  4 21:27:52 2019: Starting API
-Wed Dec  4 21:27:57 2019: Request - get_DMList
-Wed Dec  4 21:35:22 2019: Request - validate_login
-Wed Dec  4 21:35:22 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
-Wed Dec  4 21:37:22 2019: Request - validate_login
-Wed Dec  4 21:37:22 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
-Wed Dec  4 21:37:25 2019: Request - validate_login
-Wed Dec  4 21:37:25 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
-Wed Dec  4 21:37:40 2019: Request - validate_login
-Wed Dec  4 21:37:40 2019: Validated User
-Wed Dec  4 21:37:51 2019: Request - validate_login
-Wed Dec  4 21:37:51 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
-Wed Dec  4 21:37:55 2019: Request - validate_login
-Wed Dec  4 21:37:55 2019: Validated User
-Wed Dec  4 21:39:59 2019: Request - get_DMList
-Wed Dec  4 21:41:49 2019: Request - get_all_posts
-Wed Dec  4 21:41:49 2019: Request - get_user
-Wed Dec  4 21:41:49 2019: Got User
-Wed Dec  4 22:02:12 2019: Request - get_DMList
+Wed Dec  4 22:13:49 2019: Starting API
+Wed Dec  4 22:13:54 2019: Request - get_DMList
+Wed Dec  4 22:37:03 2019: Request - get_all_posts
+Wed Dec  4 22:37:32 2019: Request - get_all_posts
+Wed Dec  4 22:37:34 2019: Request - get_all_posts
+Wed Dec  4 22:37:34 2019: Request - get_user
+Wed Dec  4 22:37:34 2019: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'None'. (207) (SQLExecDirectW)")
+Wed Dec  4 22:37:38 2019: Request - get_all_posts
+Wed Dec  4 22:37:44 2019: Request - get_all_posts
+Wed Dec  4 22:37:46 2019: Request - get_all_posts
+Wed Dec  4 22:37:46 2019: Request - get_user
+Wed Dec  4 22:37:46 2019: Got User
+Wed Dec  4 22:37:53 2019: Request - get_all_posts
+Wed Dec  4 22:37:54 2019: Request - get_all_posts
+Wed Dec  4 22:37:54 2019: Request - get_user
+Wed Dec  4 22:37:54 2019: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'None'. (207) (SQLExecDirectW)")
+Wed Dec  4 22:37:57 2019: Request - get_all_posts
+Wed Dec  4 22:38:01 2019: Request - get_all_posts
+Wed Dec  4 22:38:03 2019: Request - get_all_posts
+Wed Dec  4 22:38:08 2019: Request - get_all_posts
+Wed Dec  4 22:38:08 2019: Request - get_user
+Wed Dec  4 22:38:08 2019: Got User
+Wed Dec  4 22:43:46 2019: Request - get_DMConvo
+Wed Dec  4 22:43:49 2019: Request - get_DMConvo
+Wed Dec  4 22:43:49 2019: Request - get_DMConvo
+Wed Dec  4 22:44:06 2019: Request - get_DMConvo
+Wed Dec  4 22:44:09 2019: Request - get_DMConvo
+Wed Dec  4 22:44:23 2019: Request - get_DMConvo
+Wed Dec  4 22:44:23 2019: 'NoneType' object is not subscriptable
+Wed Dec  4 22:45:16 2019: Request - get_DMConvo
+Wed Dec  4 22:45:16 2019: 'NoneType' object is not subscriptable
+Wed Dec  4 22:46:41 2019: Request - get_DMConvo
+Wed Dec  4 22:46:41 2019: 'NoneType' object is not subscriptable
+Wed Dec  4 22:46:49 2019: Request - get_DMConvo
+Wed Dec  4 22:46:51 2019: Request - get_DMConvo
+Wed Dec  4 22:46:53 2019: Request - get_DMConvo
+Wed Dec  4 22:46:56 2019: Request - get_DMConvo
+Wed Dec  4 22:47:25 2019: Request - get_DMConvo
+Wed Dec  4 22:47:25 2019: Request - get_DMConvo
+Wed Dec  4 22:47:43 2019: Request - get_DMConvo
+Wed Dec  4 22:47:54 2019: Request - get_DMConvo
+Wed Dec  4 22:48:21 2019: Request - get_DMConvo
+Wed Dec  4 22:48:22 2019: Request - get_DMConvo
+Wed Dec  4 22:48:51 2019: Request - get_DMConvo
+Wed Dec  4 22:49:00 2019: Request - get_DMConvo
+Wed Dec  4 22:49:02 2019: Request - get_DMConvo
+Wed Dec  4 22:49:31 2019: Request - get_DMConvo
+Wed Dec  4 22:49:32 2019: Request - get_DMConvo
+Wed Dec  4 22:49:34 2019: Request - get_DMConvo
+Wed Dec  4 22:51:58 2019: Request - get_DMConvo
+Wed Dec  4 22:52:43 2019: Request - get_DMConvo
+Wed Dec  4 22:52:45 2019: Request - get_DMConvo
+Wed Dec  4 22:52:46 2019: Request - get_DMConvo
+Wed Dec  4 22:52:48 2019: Request - get_DMConvo
+Wed Dec  4 22:52:50 2019: Request - get_DMConvo
+Wed Dec  4 22:52:50 2019: Request - get_DMConvo
+Wed Dec  4 22:52:51 2019: Request - get_DMConvo
+Wed Dec  4 22:52:51 2019: Request - get_DMConvo
+Wed Dec  4 22:52:51 2019: Request - get_DMConvo
+Wed Dec  4 22:52:52 2019: Request - get_DMConvo
+Wed Dec  4 22:56:20 2019: Request - get_DMConvo
+Wed Dec  4 22:56:26 2019: Request - get_DMConvo
+Wed Dec  4 22:56:27 2019: Request - get_DMConvo
+Wed Dec  4 22:56:31 2019: Request - get_DMConvo
+Wed Dec  4 22:56:32 2019: Request - get_DMConvo
+Wed Dec  4 22:56:33 2019: Request - get_DMConvo
+Wed Dec  4 22:56:33 2019: Request - get_DMConvo
+Wed Dec  4 22:56:34 2019: Request - get_DMConvo
+Wed Dec  4 22:56:44 2019: Request - get_DMConvo
+Wed Dec  4 22:56:45 2019: Request - get_DMConvo
+Wed Dec  4 22:59:13 2019: Request - get_DMConvo
+Wed Dec  4 22:59:55 2019: Request - get_DMConvo
+Wed Dec  4 22:59:56 2019: Request - get_DMConvo
+Wed Dec  4 23:00:02 2019: Request - get_DMConvo
+Wed Dec  4 23:00:05 2019: Request - get_DMConvo
+Wed Dec  4 23:00:11 2019: Request - get_DMConvo
+Wed Dec  4 23:01:07 2019: Request - get_DMConvo
+Wed Dec  4 23:01:08 2019: Request - get_DMConvo
+Wed Dec  4 23:01:18 2019: Request - get_DMConvo
+Wed Dec  4 23:01:31 2019: Request - get_DMConvo
+Wed Dec  4 23:01:32 2019: Request - get_DMConvo
+Wed Dec  4 23:02:09 2019: Request - get_DMConvo
+Wed Dec  4 23:02:10 2019: Request - get_DMConvo
+Wed Dec  4 23:02:11 2019: Request - get_DMConvo
+Wed Dec  4 23:02:12 2019: Request - get_DMConvo
+Wed Dec  4 23:02:13 2019: Request - get_DMConvo
+Wed Dec  4 23:02:30 2019: Request - get_DMConvo
+Wed Dec  4 23:02:31 2019: Request - get_DMConvo
+Wed Dec  4 23:02:34 2019: Request - get_DMConvo
+Wed Dec  4 23:02:46 2019: Request - get_DMConvo
+Wed Dec  4 23:02:49 2019: Request - get_DMConvo
+Wed Dec  4 23:03:35 2019: Request - get_DMConvo
+Wed Dec  4 23:03:38 2019: Request - get_DMConvo
+Wed Dec  4 23:03:43 2019: Request - get_DMConvo
+Wed Dec  4 23:03:53 2019: Request - get_DMConvo
+Wed Dec  4 23:04:13 2019: Request - get_DMConvo
+Wed Dec  4 23:04:29 2019: Request - get_DMConvo
