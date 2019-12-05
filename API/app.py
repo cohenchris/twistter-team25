@@ -931,9 +931,10 @@ def get_DMConvo():
   except Exception as e:
     log(str(e))
 
-  return """
-  convo: {}
-  """.format(convo)
+  return convo
+  #return """
+  #convo: {}
+  #""".format(convo)
 
 
 @app.route("/get-DMList", methods=['POST'])
