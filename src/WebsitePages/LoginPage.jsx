@@ -88,9 +88,12 @@ class LoginBoxes extends React.Component {
           </Form.Group>
         </Row>
         <Row>
-          <Button variant="dark" onClick={this.submitLoginRequest}>
+        <Link to="/profile">
+        <Button variant="dark" onClick={this.submitLoginRequest}>
             Submit
           </Button>
+        </Link>
+          
         </Row>
         <Row>
           <Nav className="mr-auto">
