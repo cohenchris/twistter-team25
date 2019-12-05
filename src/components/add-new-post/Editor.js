@@ -12,6 +12,7 @@ import Button from "react-bootstrap/Button";
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
+import { Link } from "react-router-dom";
 const axios = require("axios");
 
 export default class Editor extends React.Component {
@@ -173,9 +174,11 @@ export default class Editor extends React.Component {
             </Button>
           )}
           {this.state.valid_post && (
-            <Button type="submit" variant="dark" onClick={this.submitForm}>
-              Post
-            </Button>
+            <Link to={"/" + this.state.Topics}>
+              <Button type="submit" variant="dark" onClick={this.submitForm}>
+                Post
+              </Button>
+            </Link>
           )}
         </CardBody>
       </Card>

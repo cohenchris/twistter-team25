@@ -46,6 +46,7 @@ class LoginBoxes extends React.Component {
         "content-type": "application/json"
       }
     };
+    console.log(this.state);
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/validate-login",
       "http://localhost:5000/validate-login",
@@ -88,9 +89,18 @@ class LoginBoxes extends React.Component {
           </Form.Group>
         </Row>
         <Row>
-          <Button variant="dark" onClick={this.submitLoginRequest}>
-            Submit
-          </Button>
+            {global.ValidatedUser == -1 &&
+              <Button variant="dark" onClick={this.submitLoginRequest}>
+                Submit
+              </Button>
+            }
+            {global.ValidatedUser != -1 &&
+              <Link to="/home">
+                <Button variant="dark" onClick={this.submitLoginRequest}>
+                  Submit
+                </Button>
+              </Link>
+            }
         </Row>
         <Row>
           <Nav className="mr-auto">
