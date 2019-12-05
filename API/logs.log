@@ -1,6 +1,19 @@
-Wed Dec  4 22:07:04 2019: Starting API
-Wed Dec  4 22:07:09 2019: Request - get_user
-Wed Dec  4 22:07:10 2019: Got User
-Wed Dec  4 22:07:21 2019: Request - validate_login
-Wed Dec  4 22:07:21 2019: Request - get_all_posts
-Wed Dec  4 22:07:21 2019: Validated User
+Wed Dec  4 21:27:52 2019: Starting API
+Wed Dec  4 21:27:57 2019: Request - get_DMList
+Wed Dec  4 21:35:22 2019: Request - validate_login
+Wed Dec  4 21:35:22 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+Wed Dec  4 21:37:22 2019: Request - validate_login
+Wed Dec  4 21:37:22 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+Wed Dec  4 21:37:25 2019: Request - validate_login
+Wed Dec  4 21:37:25 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+Wed Dec  4 21:37:40 2019: Request - validate_login
+Wed Dec  4 21:37:40 2019: Validated User
+Wed Dec  4 21:37:51 2019: Request - validate_login
+Wed Dec  4 21:37:51 2019: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+Wed Dec  4 21:37:55 2019: Request - validate_login
+Wed Dec  4 21:37:55 2019: Validated User
+Wed Dec  4 21:39:59 2019: Request - get_DMList
+Wed Dec  4 21:41:49 2019: Request - get_all_posts
+Wed Dec  4 21:41:49 2019: Request - get_user
+Wed Dec  4 21:41:49 2019: Got User
+Wed Dec  4 22:02:12 2019: Request - get_DMList

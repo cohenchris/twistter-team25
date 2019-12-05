@@ -89,9 +89,8 @@ export default class UserDetails extends React.Component {
 
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
 
-        {/* TODO: pass userId into BlogPosts 
-        <BlogPosts topic="all" />
-        */}
+        {/* TODO: pass userId into BlogPosts */}
+        <BlogPosts topic="all" userTimeline="true" />
       </div>
     );
   }
