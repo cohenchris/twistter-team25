@@ -20,6 +20,7 @@ export default class Topic_Animals extends React.Component {
       JSON.stringify(config)
     );
     console.log(response);
+    window.alert("Sucessfully followed!");
   }
 
   render() {
