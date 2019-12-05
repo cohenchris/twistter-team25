@@ -960,10 +960,11 @@ def get_DMList():
   except Exception as e:
     log(str(e))
 
-  return """
-userID: {}
-DMList: {}
-""".format(userID, dmList)
+  return dmList
+  #return """
+  #userID: {}
+  #DMList: {}
+  #""".format(userID, dmList)
 
 
 if __name__ == '__main__':
