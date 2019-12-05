@@ -53,7 +53,7 @@ export default class NavigationBar extends React.Component {
                 <NavDropdown.Item href="/cs">Computer Science</NavDropdown.Item>
                 <NavDropdown.Item href="/memes">Memes</NavDropdown.Item>
                 <NavDropdown.Item href="/music">Music</NavDropdown.Item>
-                <NavDropdown.Item href="/politics">Politics</NavDropdown.Item>
+                <NavDropdown.Item href="/gaming">Gaming</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             {/* Create a New Microblog */}
@@ -66,21 +66,6 @@ export default class NavigationBar extends React.Component {
                 </Link>
               </Nav>
             </Col>
-            {/* Search Bar */}
-            {/*
-            <Form>
-              <Nav>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-light" type="submit">
-                  Go!
-                </Button>
-              </Nav>
-            </Form>
-            */}
           </Navbar>
         </Container>
         <br />

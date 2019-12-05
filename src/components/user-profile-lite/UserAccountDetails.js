@@ -15,17 +15,25 @@ import { Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 const axios = require("axios");
 
+let config = {
+  headers: {
+    "content-type": "application/json"
+  }
+};
+
 export default class UserAccountDetails extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      /*
       UserName: "kbuzza",
       Password:
         "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
       CommonName: "Kyle",
       Email: "kbuzza@purdue.edu",
       Description: "This is my description."
+      */
     };
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
@@ -41,11 +49,15 @@ export default class UserAccountDetails extends React.Component {
       userId: global.ValidatedUser,
       newCommonName: post_data.newCommonName
     });
+    console.log("common name submit:");
+    console.log(newName);
     const common_name_response = axios.post(
       //"http://twistter-API.azurewebsites.net/user-update-common-name",
       "http://localhost:5000/user-update-common-name",
-      newName
+      newName,
+      config
     );
+    console.log("common name");
     console.log(common_name_response);
 
     // user-update-description
@@ -56,8 +68,10 @@ export default class UserAccountDetails extends React.Component {
     const description_response = axios.post(
       //"http://twistter-API.azurewebsites.net/user-update-description",
       "http://localhost:5000/user-update-description",
-      newDesc
+      newDesc,
+      config
     );
+    console.log("description");
     console.log(description_response);
 
     // update-password if applicable
@@ -69,19 +83,15 @@ export default class UserAccountDetails extends React.Component {
       const password_response = axios.post(
         //"http://twistter-API.azurewebsites.net/update-password",
         "http://localhost:5000/update-password",
-        newPass
+        newPass,
+        config
       );
+      console.log("pass");
       console.log(password_response);
     }
   }
 
   async componentDidMount() {
-    let config = {
-      headers: {
-        "content-type": "application/json"
-      }
-    };
-
     let data = JSON.stringify({ userId: global.ValidatedUser });
     if (global.ValidatedUser !== -1) {
       const response = await axios.post(
@@ -130,7 +140,7 @@ export default class UserAccountDetails extends React.Component {
       userSubmission = {
         UserName: this.state.UserName,
         newCommonName: this.state.CommonName,
-        Email: this.state.Email,
+        //Email: this.state.Email,
         newDescription: this.state.Description
       };
 
@@ -259,7 +269,8 @@ async function deleteUser() {
   const userDeleteResponse = axios.post(
     //"http://twistter-API.azurewebsites.net/user-delete",
     "http://localhost:5000/user-delete",
-    userToDelete
+    userToDelete,
+    config
   );
   console.log(userDeleteResponse);
 }

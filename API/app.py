@@ -8,10 +8,10 @@ import DatabaseLibrary as db
 app = Flask(__name__)
 
 # Set up log generation
-file_service = FileService(account_name='twistterteam25diag',
-                           account_key='jRhZRiTX3YZCaaN3CdvgYxOtwVUg+24afoxdqQ3nqI+8OOEMKzsd5M1rvd3rOf8P7SpDOWCm5xDgp5dpIKdJGw==')
-file_service.create_share('logs')
-file_service.create_directory('logs', 'logs')
+#file_service = FileService(account_name='twistterteam25diag',
+#                           account_key='jRhZRiTX3YZCaaN3CdvgYxOtwVUg+24afoxdqQ3nqI+8OOEMKzsd5M1rvd3rOf8P7SpDOWCm5xDgp5dpIKdJGw==')
+#file_service.create_share('logs')
+#file_service.create_directory('logs', 'logs')
 
 # Constants
 invalid_json_format_string = "Invalid json format for this request\n"
@@ -22,8 +22,8 @@ def log(message):
   log_file.write("{}: {}\n".format(time.asctime(time.localtime(time.time())),
                                    message))
   log_file.flush()
-  file_service.create_file_from_path('logs', 'logs', 'logs.log',
-                                     'logs.log')
+#  file_service.create_file_from_path('logs', 'logs', 'logs.log',
+#                                     'logs.log')
 
 
 log("Starting API")

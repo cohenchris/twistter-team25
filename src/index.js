@@ -25,7 +25,7 @@ import Topic_Beauty from "./WebsitePages/TopicPages/Topic_Beauty";
 import Topic_CS from "./WebsitePages/TopicPages/Topic_CS";
 import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
 import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
-import Topic_Politics from "./WebsitePages/TopicPages/Topic_Politics";
+import Topic_Gaming from "./WebsitePages/TopicPages/Topic_Gaming";
 
 export const blogDivStyle = {
   marginLeft: "200px",
@@ -67,7 +67,7 @@ const routing = (
       <Route path="/all" component={AllTopics} />
       <Route path="/music" component={Topic_Music} />
       <Route path="/cs" component={Topic_CS} />
-      <Route path="/politics" component={Topic_Politics} />
+      <Route path="/gaming" component={Topic_Gaming} />
       <Route path="/beauty" component={Topic_Beauty} />
       <Route path="/animals" component={Topic_Animals} />
       <Route path="/memes" component={Topic_Memes} />

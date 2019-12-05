@@ -2,6 +2,7 @@ import React from "react";
 import NavigationBar from "../components/NavigationBar";
 import UserDetails from "../components/user-profile-lite/UserDetails";
 import { otherDivStyle } from "..";
+import "../global.js";
 
 export default class ProfilePage extends React.Component {
   constructor(props) {

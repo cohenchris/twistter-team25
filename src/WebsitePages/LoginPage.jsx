@@ -4,6 +4,7 @@ import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { otherDivStyle } from "..";
 import { blackLink } from "../index.js";
+import "../global.js";
 const axios = require("axios");
 
 export default class LoginPage extends React.Component {
@@ -57,8 +58,8 @@ class LoginBoxes extends React.Component {
     } else {
       window.alert("Login Success!");
     }
-    this.setState({ password: "" });
     global.ValidatedUser = response.data;
+    console.log("GLOBAL = " + global.ValidatedUser);
   }
 
   render() {

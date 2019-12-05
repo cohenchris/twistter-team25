@@ -13,6 +13,7 @@ export default class BlogPosts extends React.Component {
 
     this.state = {
       PostsList: [
+        /*
         {
           PostId: 5,
           UserId: 2,
@@ -41,6 +42,7 @@ export default class BlogPosts extends React.Component {
           TimelineTimestamp: "2019-10-28T16:48:46",
           z: [{ RetweetUserName: "User1" }]
         }
+        */
       ]
     };
     this.handleDelete = this.handleDelete.bind(this);
@@ -50,7 +52,9 @@ export default class BlogPosts extends React.Component {
     let config = {
       headers: {
         "content-type": "application/json"
-      },
+      }
+    };
+    let topic = {
       topic: this.props.topic
     };
     if (this.props.topic.localeCompare("all") == 0) {
@@ -72,6 +76,7 @@ export default class BlogPosts extends React.Component {
         .post(
           //"http://twistter-API.azurewebsites.net/get-topic-posts"
           "http://localhost:5000/get-topic-posts",
+          topic,
           config
         )
         .then(response => {

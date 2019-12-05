@@ -1,5 +1,6 @@
 import React from "react";
 import BlogPosts from "../../views/BlogPosts";
+import "../../global.js";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
 const axios = require("axios");
 
@@ -19,7 +20,6 @@ export default class UserDetails extends React.Component {
     };
 
     let userData = JSON.stringify({ userId: this.state.UserId });
-    console.log(userData);
     if (this.state.UserId !== -1) {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/get-user",
@@ -27,7 +27,6 @@ export default class UserDetails extends React.Component {
         userData,
         config
       );
-      console.log(response.data);
       this.setState(response.data);
     }
   }
@@ -48,12 +47,13 @@ export default class UserDetails extends React.Component {
   render() {
     return (
       <div>
+        <p>{console.log(this.state)}</p>
         <Card small className="mb-4 pt-3">
           <CardHeader className="border-bottom text-center">
             <h2 className="mb-0">{this.state.CommonName}</h2>
             <h5>{this.state.UserName}</h5>
             <br />
-            {this.props.id != global.ValidatedUser && (
+            {this.props.id !== global.ValidatedUser && (
               <Button
                 pill
                 outline
@@ -81,7 +81,7 @@ export default class UserDetails extends React.Component {
                   </label>
                   <p>{this.state.Description}</p>
                 </Col>
-              </Row>{" "}
+              </Row>
             </Col>
           </ListGroup>
         </Card>
@@ -89,8 +89,9 @@ export default class UserDetails extends React.Component {
 
         <h1>{this.state.Posts} POSTS BY THIS USER</h1>
 
-        {/* TODO: pass userId into BlogPosts */}
+        {/* TODO: pass userId into BlogPosts 
         <BlogPosts topic="all" />
+        */}
       </div>
     );
   }

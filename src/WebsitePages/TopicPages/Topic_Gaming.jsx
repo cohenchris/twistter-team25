@@ -12,10 +12,10 @@ export default class Topic_Politics extends React.Component {
         <PageTitle
           sm="4"
           title="Blog Posts"
-          subtitle="Politics"
+          subtitle="Gaming"
           className="text-sm-left"
         />
-        <BlogPosts topic="politics" />
+        <BlogPosts topic="gaming" />
       </div>
     );
   }
