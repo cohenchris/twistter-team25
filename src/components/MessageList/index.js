@@ -49,8 +49,7 @@ export default function MessageList(props) {
       JSON.stringify(config)
     );
     console.log(response.data);
-    var tempMessages = response.data;
-    //console.log(tempMessages);
+    tempMessages = response.data;
     /*
     var tempMessages = [
       {
@@ -167,9 +166,9 @@ export default function MessageList(props) {
 
       <div className="message-list-container">{renderMessages()}</div>
       <Compose
-        sender={SenderId}
-        receiver={ReceiverId}
-        validConvo={ReceiverId !== -1}
+        sender={global.ValidatedUser}
+        receiver={receiverId}
+        validConvo={receiverId !== -1}
       />
     </div>
   );

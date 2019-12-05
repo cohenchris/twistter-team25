@@ -24,7 +24,7 @@ export default function ConversationList() {
   ]);
 
   useEffect(() => {
-    //getConversations();
+    getConversations();
   }, []);
 
   const getConversations = async () => {
