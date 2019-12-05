@@ -28,26 +28,20 @@ export default function ConversationList() {
   }, []);
 
   const getConversations = async () => {
-    /*
     let config = {
       headers: {
         "content-type": "application/json"
       }
     };
-    const response = await axios
-      .post(
-        //"http://twistter-API.azurewebsites.net/get-DMList",
-        "http://localhost:5000/get-DMList",
-        this.state,
-        JSON.stringify(config)
-      )
-      .then(response => {
-        let newConversation = response.data.results.map(result => {
-          return {};
-        });
-      });
-      */
+    const response = await axios.post(
+      //"http://twistter-API.azurewebsites.net/get-DMList",
+      "http://localhost:5000/get-DMList",
+      { userId: global.ValidatedUser },
+      JSON.stringify(config)
+    );
+    console.log(response.data);
 
+    /*
     axios.get("https://randomuser.me/api/?results=20").then(response => {
       let newConversations = response.data.results.map(result => {
         return {
@@ -58,6 +52,7 @@ export default function ConversationList() {
       });
       setConversations([...conversations, ...newConversations]);
     });
+    */
   };
 
   return (

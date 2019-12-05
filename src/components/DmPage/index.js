@@ -9,9 +9,9 @@ export default class DmPage extends React.Component {
     let receive;
     let receiveId;
     if (
-      this.props.location !== undefined ||
-      this.props.location.state !== undefined ||
-      this.props.location.state.receiver !== undefined ||
+      this.props.location !== undefined &&
+      this.props.location.state !== undefined &&
+      this.props.location.state.receiver !== undefined &&
       this.props.location.state.receiverId !== undefined
     ) {
       receive = this.props.location.state.receiver;
