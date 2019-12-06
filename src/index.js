@@ -26,6 +26,8 @@ import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
 import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
 import Topic_Gaming from "./WebsitePages/TopicPages/Topic_Gaming";
 
+document.body.style = "background: lightgrey;";
+
 export const blogDivStyle = {
   marginLeft: "200px",
   marginRight: "200px",
@@ -49,8 +51,6 @@ export const whiteLink = {
 export const DMPageStyle = {
   marginTop: "15px"
 };
-
-//localStorage.setItem("ValidatedUser", 4);
 
 const routing = (
   <Router>

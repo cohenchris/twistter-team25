@@ -25,16 +25,7 @@ export default class UserAccountDetails extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      /*
-      UserName: "kbuzza",
-      Password:
-        "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
-      CommonName: "Kyle",
-      Email: "kbuzza@purdue.edu",
-      Description: "This is my description."
-      */
-    };
+    this.state = {};
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
     this.handleSecondPassword = this.handleSecondPassword.bind(this);
@@ -175,12 +166,17 @@ export default class UserAccountDetails extends React.Component {
 
   render() {
     return (
-      <Card small className="mb-4" bg="secondary">
+      <Card small bg="dark" text="white" style={{ background: "#353A40" }}>
         <CardHeader className="border-bottom">
-          <h6 className="m-0">Account Details</h6>
+          <h6 className="m-0" style={{ color: "white" }}>
+            Account Details
+          </h6>
         </CardHeader>
         <ListGroup flush>
-          <ListGroupItem className="p-3">
+          <ListGroupItem
+            className="p-3"
+            style={{ background: "#353A40", color: "white" }}
+          >
             <Col>
               <Form>
                 <Row form>
@@ -190,7 +186,6 @@ export default class UserAccountDetails extends React.Component {
                     <FormInput
                       id="DisplayName"
                       name="DisplayName"
-                      placeholder="Display Name"
                       defaultValue={this.state.CommonName}
                       onChange={this.handleName}
                     />
@@ -204,18 +199,16 @@ export default class UserAccountDetails extends React.Component {
                       type="password"
                       id="Password"
                       name="Password"
-                      placeholder="Password"
                       onChange={this.handleFirstPassword}
                       autoComplete="current-password"
                     />
-                    <label htmlFor="PasswordConfirm">
+                    <p htmlFor="PasswordConfirm" color="black">
                       Confirm Password Change
-                    </label>
+                    </p>
                     <FormInput
                       type="password"
                       id="PasswordConfirm"
                       name="PasswordConfirm"
-                      placeholder="Password"
                       onChange={this.handleSecondPassword}
                       autoComplete="current-password"
                     />
@@ -239,7 +232,6 @@ export default class UserAccountDetails extends React.Component {
                       id="Description"
                       name="Description"
                       defaultValue={this.state.Description}
-                      placeholder="Description"
                       rows="5"
                       onChange={this.handleDescription}
                     />
@@ -247,7 +239,7 @@ export default class UserAccountDetails extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <Button theme="dark" onClick={this.submitForm}>
+                    <Button theme="outline-light" onClick={this.submitForm}>
                       Update Account
                     </Button>
                   </Col>
@@ -286,17 +278,21 @@ function DeleteAccountButton() {
       <Alert variant="danger" show={show}>
         <Alert.Heading>WARNING</Alert.Heading>
         <p>CONTINUING WILL PERMANENTLY DELETE YOUR ACCOUNT!</p>
+        <p>This will route you back to the login page.</p>
         <hr />
         <Link to="/login">
-          <Button onClick={deleteUser}>
-            Yes, I would like to permanently delete my account! This will route
-            you back to the login page.
+          <Button theme="danger" onClick={deleteUser}>
+            Yes, I would like to permanently delete my account!
           </Button>
         </Link>
       </Alert>
 
       {!show && (
-        <Button className="float-right" onClick={() => setShow(true)}>
+        <Button
+          theme="outline-danger"
+          className="float-right"
+          onClick={() => setShow(true)}
+        >
           Delete Account
         </Button>
       )}

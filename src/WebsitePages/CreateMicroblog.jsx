@@ -8,7 +8,6 @@ export default class CreateMicroblog extends React.Component {
     return (
       <div className="CreateMicroblog" style={otherDivStyle}>
         <NavigationBar />
-        <h1>CREATE A NEW MICROBLOG</h1>
         <Editor />
       </div>
     );

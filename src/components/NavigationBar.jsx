@@ -10,6 +10,7 @@ import {
   FormControl
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import FormCheckInput from "react-bootstrap/FormCheckInput";
 
 const navBarStyle = {
   color: "white"
@@ -77,7 +78,7 @@ export default class NavigationBar extends React.Component {
               </Form>
               <Nav className="float-right">
                 <Link to="/create-microblog" style={navBarStyle}>
-                  <Button variant="outline-light">
+                  <Button variant="outline-light" className="mr-sm-5">
                     + Create A New Microblog
                   </Button>
                 </Link>

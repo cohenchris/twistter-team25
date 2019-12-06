@@ -72,7 +72,7 @@ export default class UserTimeline extends React.Component {
                       <Button
                         size="sm"
                         variant="outline-danger"
-                        className="float-right"
+                        className="float-right mt-sm-2"
                         onClick={this.handleDelete.bind(this, post.PostId)}
                       >
                         X

@@ -15,7 +15,6 @@ export default class LoginPage extends React.Component {
         <br />
         <br />
 
-        <h1>LOGIN PAGE</h1>
         <LoginBoxes />
       </div>
     );

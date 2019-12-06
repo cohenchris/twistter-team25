@@ -94,7 +94,7 @@ export default class Editor extends React.Component {
 
   render() {
     return (
-      <Card small className="mb-3">
+      <Card small className="mb-3" style={{ background: "#353A40" }}>
         <CardBody>
           <Form className="add-new-post">
             <FormInput
@@ -110,9 +110,12 @@ export default class Editor extends React.Component {
               name="post_text_box"
               value={this.state.PostText}
               onChange={this.handleChange}
+              style={{ background: "white" }}
               required
             />
-            <p>{this.state.post_characters_remaining} characters remaining</p>
+            <p style={{ color: "white" }}>
+              {this.state.post_characters_remaining} characters remaining
+            </p>
             <FormGroup id="topicSelect">
               <FormSelect
                 placeholder="Topic"
@@ -138,7 +141,11 @@ export default class Editor extends React.Component {
           )}
           {this.state.valid_post && (
             <Link to={"/" + this.state.Topics.replace(" ", "")}>
-              <Button type="submit" variant="dark" onClick={this.submitForm}>
+              <Button
+                type="submit"
+                variant="outline-light"
+                onClick={this.submitForm}
+              >
                 Post
               </Button>
             </Link>

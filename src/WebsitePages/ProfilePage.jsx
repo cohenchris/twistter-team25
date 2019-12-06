@@ -21,7 +21,6 @@ export default class ProfilePage extends React.Component {
     return (
       <div className="ProfilePage" style={otherDivStyle}>
         <NavigationBar />
-        <h1>PROFILE PAGE</h1>
         <UserDetails id={this.state.id} />
       </div>
     );

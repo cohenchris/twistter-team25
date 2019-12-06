@@ -57,19 +57,28 @@ export default class UserDetails extends React.Component {
   render() {
     return (
       <div>
-        <Card small className="mb-4 pt-3">
+        <Card
+          small
+          text="white"
+          style={{ background: "#353A40" }}
+          className="mb-4 pt-3"
+        >
           <CardHeader className="border-bottom text-center">
-            <h2 className="mb-0">{this.state.CommonName}</h2>
-            <h5>{this.state.UserName}</h5>
+            <h2 className="mb-0" style={{ color: "white" }}>
+              {this.state.CommonName}
+            </h2>
+            <h5 style={{ color: "white" }}>{this.state.UserName}</h5>
             <br />
             {this.props.id !== localStorage.getItem("ValidatedUser") && (
-              <Button onClick={this.followUser}>+ Follow</Button>
+              <Button theme="outline-light" onClick={this.followUser}>
+                + Follow
+              </Button>
             )}
 
             <br />
             <br />
-            <p>{this.state.Followers} Followers</p>
-            <p>{this.state.Following} Following</p>
+            <p style={{ color: "white" }}>{this.state.Followers} Followers</p>
+            <p style={{ color: "white" }}>{this.state.Following} Following</p>
           </CardHeader>
           <ListGroup flush>
             <Col>
@@ -77,10 +86,10 @@ export default class UserDetails extends React.Component {
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
-                  <label htmlFor="Description">
+                  <label style={{ color: "white" }} htmlFor="Description">
                     <strong>Description</strong>
                   </label>
-                  <p>{this.state.Description}</p>
+                  <p style={{ color: "white" }}>{this.state.Description}</p>
                 </Col>
               </Row>
             </Col>
