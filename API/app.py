@@ -613,7 +613,6 @@ def post():
     try:
       title = data['postTitle']
       userId = data['userId']
-      title = data['postTitle']
       postText = data['postText']
       topics = data['topics']
     except KeyError:
