@@ -1,6 +1,7 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar";
+import logo from "../images/Logo.png";
 import { Form, Button, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
 const axios = require("axios");
@@ -9,7 +10,11 @@ export default class CreateNewAccount extends React.Component {
   render() {
     return (
       <div className="CreateNewAccount" style={otherDivStyle}>
-        <NavigationBar />
+        <img src={logo} className="App-logo" alt="logo" />
+        <br />
+        <br />
+        <br />
+
         <h1>CREATE A NEW ACCOUNT</h1>
         <NewUserForm />
       </div>
@@ -77,8 +82,8 @@ class NewUserForm extends React.Component {
 
       /* Random lowercase fields are to communicate with the api better */
       let submitData = {
-        userName: this.state.fields.UserName,
-        Password: this.state.fields.Password,
+        username: this.state.fields.UserName,
+        password: this.state.fields.Password,
         commonName: this.state.fields.CommonName,
         email: this.state.fields.Email,
         description: this.state.fields.Description
@@ -101,12 +106,14 @@ class NewUserForm extends React.Component {
         JSON.stringify(config)
       );
       console.log(createUserResponse);
+      window.alert("User Created!");
+      window.location.href = "/login";
     }
   }
 
   render() {
     return (
-      <Form onSubmit={this.submitUserRegistrationForm}>
+      <Form>
         <Form.Row>
           {/* CommonName */}
           <Col>
@@ -217,9 +224,11 @@ class NewUserForm extends React.Component {
           required
         />
         <br></br>
-        <Button type="submit" variant="dark">
+        <Button onClick={this.submitUserRegistrationForm} variant="dark">
           Create Account
         </Button>
+        <br />
+        <br />
       </Form>
     );
   }

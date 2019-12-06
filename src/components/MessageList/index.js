@@ -3,12 +3,11 @@ import Compose from "../Compose";
 import Toolbar from "../Toolbar";
 import Message from "../Message";
 import moment from "moment";
-import "../../global.js";
 import "./MessageList.css";
 
 const axios = require("axios");
 
-const MY_USER_ID = global.ValidatedUser;
+const MY_USER_ID = localStorage.getItem("ValidatedUser");
 let convoTitle = "Conversation with ...";
 let SenderId = -1;
 let ReceiverId = -1;
@@ -37,7 +36,7 @@ export default function MessageList(props) {
       }
     };
     let send = {
-      userId: global.ValidatedUser,
+      userId: parseInt(localStorage.getItem("ValidatedUser")),
       receiverId: receiverId
     };
     console.log(send);
@@ -59,11 +58,12 @@ export default function MessageList(props) {
     let tempMessages = [];
 
     while (i < messageCount) {
-      ReceiverId = messages[i].RecieverId;
+      console.log(messages[i]);
+      ReceiverId = messages[i].ReceiverId;
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.SenderId === MY_USER_ID;
+      let isMine = current.SenderId == MY_USER_ID;
       let currentMoment = moment(current.TimeStamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -121,7 +121,7 @@ export default function MessageList(props) {
 
       <div className="message-list-container">{renderMessages()}</div>
       <Compose
-        sender={global.ValidatedUser}
+        sender={localStorage.getItem("ValidatedUser")}
         receiver={receiverId}
         validConvo={receiverId !== -1}
       />

@@ -5,7 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./global.js";
 // PAGES
 import StartPage from "./WebsitePages/StartPage/StartPage";
 import CreateMicroblog from "./WebsitePages/CreateMicroblog";
@@ -27,6 +26,8 @@ import Topic_Memes from "./WebsitePages/TopicPages/Topic_Memes";
 import Topic_Music from "./WebsitePages/TopicPages/Topic_Music";
 import Topic_Gaming from "./WebsitePages/TopicPages/Topic_Gaming";
 
+document.body.style = "background: lightgrey;";
+
 export const blogDivStyle = {
   marginLeft: "200px",
   marginRight: "200px",
@@ -41,6 +42,10 @@ export const otherDivStyle = {
 
 export const blackLink = {
   color: "black"
+};
+
+export const whiteLink = {
+  color: "white"
 };
 
 export const DMPageStyle = {

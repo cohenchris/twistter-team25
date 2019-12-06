@@ -1,18 +1,20 @@
 import React from "react";
 import { Form, Button, Nav, Row } from "react-bootstrap";
-import NavigationBar from "../components/NavigationBar";
+import logo from "../images/Logo.png";
 import { Link } from "react-router-dom";
-import { otherDivStyle } from "..";
+import { otherDivStyle } from "../index.js";
 import { blackLink } from "../index.js";
-import "../global.js";
 const axios = require("axios");
 
 export default class LoginPage extends React.Component {
   render() {
     return (
       <div className="LoginPage" style={otherDivStyle}>
-        <NavigationBar />
-        <h1>LOGIN PAGE</h1>
+        <img src={logo} className="App-logo" alt="logo" />
+        <br />
+        <br />
+        <br />
+
         <LoginBoxes />
       </div>
     );
@@ -53,14 +55,15 @@ class LoginBoxes extends React.Component {
       this.state,
       JSON.stringify(config)
     );
-    console.log(response);
+    console.log(response.data);
     if (response.data == -1) {
       window.alert("Login Failed.");
     } else {
       window.alert("Login Success!");
+      window.location.href = "/home";
     }
-    global.ValidatedUser = response.data;
-    console.log("GLOBAL = " + global.ValidatedUser);
+    localStorage.setItem("ValidatedUser", response.data);
+    console.log("GLOBAL = " + localStorage.getItem("ValidatedUser"));
   }
 
   render() {
@@ -89,18 +92,9 @@ class LoginBoxes extends React.Component {
           </Form.Group>
         </Row>
         <Row>
-            {global.ValidatedUser == -1 &&
-              <Button variant="dark" onClick={this.submitLoginRequest}>
-                Submit
-              </Button>
-            }
-            {global.ValidatedUser != -1 &&
-              <Link to="/home">
-                <Button variant="dark" onClick={this.submitLoginRequest}>
-                  Submit
-                </Button>
-              </Link>
-            }
+          <Button variant="dark" onClick={this.submitLoginRequest}>
+            Submit
+          </Button>
         </Row>
         <Row>
           <Nav className="mr-auto">

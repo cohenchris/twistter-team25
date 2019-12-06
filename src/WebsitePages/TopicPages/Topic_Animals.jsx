@@ -16,7 +16,7 @@ export default class Topic_Animals extends React.Component {
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/user-add-new-user-topic",
       "http://localhost:5000/user-add-new-user-topic",
-      { userId: global.ValidatedUser, newTopic: "animals" },
+      { userId: localStorage.getItem("ValidatedUser"), newTopic: "animals" },
       JSON.stringify(config)
     );
     console.log(response);

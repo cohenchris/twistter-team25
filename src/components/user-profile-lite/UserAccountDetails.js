@@ -25,16 +25,7 @@ export default class UserAccountDetails extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      /*
-      UserName: "kbuzza",
-      Password:
-        "AgAAAL3TGAwoCfdc9WzoMWuCya/6t3+9qUHeULhpxwcy+VBSPuaySpwyCAcOgFo5FntJfQ==",
-      CommonName: "Kyle",
-      Email: "kbuzza@purdue.edu",
-      Description: "This is my description."
-      */
-    };
+    this.state = {};
     this.handleName = this.handleName.bind(this);
     this.handleFirstPassword = this.handleFirstPassword.bind(this);
     this.handleSecondPassword = this.handleSecondPassword.bind(this);
@@ -46,7 +37,7 @@ export default class UserAccountDetails extends React.Component {
   async updateUserDetails(post_data) {
     // user-update-common-name
     let newName = JSON.stringify({
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       newCommonName: post_data.newCommonName
     });
     console.log("common name submit:");
@@ -62,7 +53,7 @@ export default class UserAccountDetails extends React.Component {
 
     // user-update-description
     let newDesc = JSON.stringify({
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       newDescription: post_data.newDescription
     });
     const description_response = axios.post(
@@ -77,7 +68,7 @@ export default class UserAccountDetails extends React.Component {
     // update-password if applicable
     if (post_data.newPassword !== undefined) {
       let newPass = JSON.stringify({
-        userId: global.ValidatedUser,
+        userId: localStorage.getItem("ValidatedUser"),
         newPassword: post_data.newPassword
       });
       const password_response = axios.post(
@@ -92,8 +83,10 @@ export default class UserAccountDetails extends React.Component {
   }
 
   async componentDidMount() {
-    let data = JSON.stringify({ userId: global.ValidatedUser });
-    if (global.ValidatedUser !== -1) {
+    let data = JSON.stringify({
+      userId: localStorage.getItem("ValidatedUser")
+    });
+    if (localStorage.getItem("ValidatedUser") !== -1) {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/get-user",
         "http://localhost:5000/get-user",
@@ -151,6 +144,7 @@ export default class UserAccountDetails extends React.Component {
       //TODO: COMMUNICATE WITH API
       this.updateUserDetails(userSubmission);
       console.log(userSubmission);
+      window.alert("Updated profile information!");
     }
   }
 
@@ -172,12 +166,17 @@ export default class UserAccountDetails extends React.Component {
 
   render() {
     return (
-      <Card small className="mb-4" bg="secondary">
+      <Card small bg="dark" text="white" style={{ background: "#353A40" }}>
         <CardHeader className="border-bottom">
-          <h6 className="m-0">Account Details</h6>
+          <h6 className="m-0" style={{ color: "white" }}>
+            Account Details
+          </h6>
         </CardHeader>
         <ListGroup flush>
-          <ListGroupItem className="p-3">
+          <ListGroupItem
+            className="p-3"
+            style={{ background: "#353A40", color: "white" }}
+          >
             <Col>
               <Form>
                 <Row form>
@@ -187,7 +186,6 @@ export default class UserAccountDetails extends React.Component {
                     <FormInput
                       id="DisplayName"
                       name="DisplayName"
-                      placeholder="Display Name"
                       defaultValue={this.state.CommonName}
                       onChange={this.handleName}
                     />
@@ -201,18 +199,16 @@ export default class UserAccountDetails extends React.Component {
                       type="password"
                       id="Password"
                       name="Password"
-                      placeholder="Password"
                       onChange={this.handleFirstPassword}
                       autoComplete="current-password"
                     />
-                    <label htmlFor="PasswordConfirm">
+                    <p htmlFor="PasswordConfirm" color="black">
                       Confirm Password Change
-                    </label>
+                    </p>
                     <FormInput
                       type="password"
                       id="PasswordConfirm"
                       name="PasswordConfirm"
-                      placeholder="Password"
                       onChange={this.handleSecondPassword}
                       autoComplete="current-password"
                     />
@@ -236,7 +232,6 @@ export default class UserAccountDetails extends React.Component {
                       id="Description"
                       name="Description"
                       defaultValue={this.state.Description}
-                      placeholder="Description"
                       rows="5"
                       onChange={this.handleDescription}
                     />
@@ -244,7 +239,7 @@ export default class UserAccountDetails extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <Button theme="dark" onClick={this.submitForm}>
+                    <Button theme="outline-light" onClick={this.submitForm}>
                       Update Account
                     </Button>
                   </Col>
@@ -262,7 +257,7 @@ export default class UserAccountDetails extends React.Component {
 }
 async function deleteUser() {
   let userToDelete = JSON.stringify({
-    userId: global.ValidatedUser
+    userId: localStorage.getItem("ValidatedUser")
   });
   console.log("DELETE");
   console.log(userToDelete);
@@ -283,17 +278,21 @@ function DeleteAccountButton() {
       <Alert variant="danger" show={show}>
         <Alert.Heading>WARNING</Alert.Heading>
         <p>CONTINUING WILL PERMANENTLY DELETE YOUR ACCOUNT!</p>
+        <p>This will route you back to the login page.</p>
         <hr />
         <Link to="/login">
-          <Button onClick={deleteUser}>
-            Yes, I would like to permanently delete my account! This will route
-            you back to the login page.
+          <Button theme="danger" onClick={deleteUser}>
+            Yes, I would like to permanently delete my account!
           </Button>
         </Link>
       </Alert>
 
       {!show && (
-        <Button className="float-right" onClick={() => setShow(true)}>
+        <Button
+          theme="outline-danger"
+          className="float-right"
+          onClick={() => setShow(true)}
+        >
           Delete Account
         </Button>
       )}

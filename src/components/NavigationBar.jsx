@@ -5,9 +5,12 @@ import {
   NavDropdown,
   Button,
   Container,
-  Col
+  Col,
+  Form,
+  FormControl
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import FormCheckInput from "react-bootstrap/FormCheckInput";
 
 const navBarStyle = {
   color: "white"
@@ -15,11 +18,13 @@ const navBarStyle = {
 
 export default class NavigationBar extends React.Component {
   logOut() {
-    global.ValidatedUser = -1;
+    localStorage.setItem("ValidatedUser", -1);
   }
-  handleClick(page) {
-    /* Redirect to appropriate page here */
+
+  requestTopic() {
+    window.alert("Topic requested!");
   }
+
   render() {
     return (
       <div>
@@ -61,9 +66,19 @@ export default class NavigationBar extends React.Component {
             </Nav>
             {/* Create a New Microblog */}
             <Col>
+              <Form inline className="float-right">
+                <FormControl
+                  type="text"
+                  placeholder="Topic..."
+                  className="mr-sm-2"
+                />
+                <Button variant="outline-light" onClick={this.requestTopic}>
+                  Request Topic
+                </Button>
+              </Form>
               <Nav className="float-right">
                 <Link to="/create-microblog" style={navBarStyle}>
-                  <Button variant="outline-light">
+                  <Button variant="outline-light" className="mr-sm-5">
                     + Create A New Microblog
                   </Button>
                 </Link>

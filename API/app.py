@@ -416,10 +416,11 @@ def follow_new_user():
     try:
       userId = data['userId']
       followingId = data['followingId']
+      topics = data['topics'] = "G"
     except KeyError:
       return invalid_json_format_string
 
-    db.newFollow(userId, followingId)
+    db.updateFollow(userId, followingId)
     log("Followed new user")
   except Exception as e:
     log(str(e))
@@ -613,7 +614,6 @@ def post():
     try:
       title = data['postTitle']
       userId = data['userId']
-      title = data['postTitle']
       postText = data['postText']
       topics = data['topics']
     except KeyError:

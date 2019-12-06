@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, Badge } from "shards-react";
 import { ToggleButton, ToggleButtonGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { whiteLink } from "../index.js";
 
 const axios = require("axios");
 
@@ -42,6 +43,8 @@ export default class BlogPosts extends React.Component {
       { postId: id }
     );
     console.log(response);
+    window.location.reload();
+    window.alert("Deleted post");
   }
 
   render() {
@@ -53,18 +56,20 @@ export default class BlogPosts extends React.Component {
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-              <p>{console.log(post)}</p>
-              <Card small className="card-post card-post--1">
+              <Card small className="bg-dark text-white">
                 <div className="card-post__image">
                   <Col>
-                    <Badge pill className={`card-post__category bg-dark`}>
-                      {post.Topics}
+                    <Badge
+                      pill
+                      className={`card-post__category bg-light text-dark`}
+                    >
+                      {post.Topics.substr(0, post.Topics.length - 4)}
                     </Badge>
-                    {post.UserId == global.ValidatedUser && (
+                    {post.UserId == localStorage.getItem("ValidatedUser") && (
                       <Button
                         size="sm"
-                        variant="danger"
-                        className="float-right"
+                        variant="outline-danger"
+                        className="float-right mt-sm-2"
                         onClick={this.handleDelete.bind(this, post.PostId)}
                       >
                         X
@@ -78,6 +83,7 @@ export default class BlogPosts extends React.Component {
                           pathname: "/profile",
                           id: post.UserId
                         }}
+                        style={whiteLink}
                       >
                         {post.CommonName + " (@" + post.UserName + ")"}
                       </Link>
@@ -86,7 +92,7 @@ export default class BlogPosts extends React.Component {
                 </div>
                 <Col>
                   <div>
-                    <span className="text-muted">
+                    <span>
                       {post.Timestamp.substr(0, 10) +
                         " at " +
                         post.Timestamp.substr(11)}
@@ -104,10 +110,12 @@ export default class BlogPosts extends React.Component {
                     postId={post.PostId}
                   />
                   {post.RetweetUserName !== null && (
-                    <div>
+                    <center>
                       <br />
-                      <strong>quoted by {post.RetweetUserName}</strong>
-                    </div>
+                      <strong>
+                        ---- quoted by {post.RetweetUserName} ----
+                      </strong>
+                    </center>
                   )}
                 </CardBody>
               </Card>
@@ -132,7 +140,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/like-post",
         "http://localhost:5000/like-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     } else {
@@ -141,7 +149,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/unlike-post",
         "http://localhost:5000/unlike-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     }
@@ -153,7 +161,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/retweet-post",
         "http://localhost:5000/retweet-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     } else {
@@ -161,7 +169,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/unretweet-post",
         "http://localhost:5000/unretweet-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     }
@@ -171,10 +179,10 @@ const LikeAndQuoteButtons = props => {
     <Row>
       <Col>
         <ToggleButtonGroup type="checkbox" size="sm" onChange={handleLike}>
-          <ToggleButton variant="outline-dark" value={1}>
+          <ToggleButton variant="outline-light" value={1}>
             Like
           </ToggleButton>
-          <Button variant="dark" disabled>
+          <Button variant="light" disabled>
             {likes}
           </Button>
         </ToggleButtonGroup>
@@ -182,10 +190,10 @@ const LikeAndQuoteButtons = props => {
 
       <Col>
         <ToggleButtonGroup type="checkbox" size="sm" onChange={handleQuote}>
-          <ToggleButton variant="outline-dark" value={2}>
+          <ToggleButton variant="outline-light" value={2}>
             Quote
           </ToggleButton>
-          <Button variant="dark" disabled>
+          <Button variant="light" disabled>
             {quotes}
           </Button>
         </ToggleButtonGroup>

@@ -8,7 +8,8 @@ export default class ProfileSettings extends React.Component {
     return (
       <div className="ProfileSettings" style={otherDivStyle}>
         <NavigationBar />
-        <h1>PROFILE SETTINGS</h1>
+        <br />
+        <br />
         <UserAccountDetails />
       </div>
     );
