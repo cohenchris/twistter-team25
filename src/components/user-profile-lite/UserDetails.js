@@ -1,6 +1,8 @@
 import React from "react";
 import ProfilePosts from "../../views/ProfilePosts";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import { FormSelect } from "shards-react";
 const axios = require("axios");
 
 export default class UserDetails extends React.Component {
@@ -31,17 +33,25 @@ export default class UserDetails extends React.Component {
   }
 
   async followUser() {
+    let config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
     let userData = JSON.stringify({
       userId: localStorage.getItem("ValidatedUser"),
       followingId: this.state.UserId,
-      topics: "All,Gaming,Memes"
+      topicsSelected:
+        "All,Sports,Art,Animals,Art,Beauty,ComputerScience,Memes,Music,Gaming"
     });
     const response = await axios.post(
-      //"http://twistter-API.azurewebsites.net/follow-user",
-      "http://localhost:5000/follow-user",
-      userData
+      //"http://twistter-API.azurewebsites.net/follow-users-topics",
+      "http://localhost:5000/follow-users-topics",
+      userData,
+      config
     );
     console.log(response);
+    window.alert("Followed User!");
   }
 
   render() {
@@ -53,15 +63,7 @@ export default class UserDetails extends React.Component {
             <h5>{this.state.UserName}</h5>
             <br />
             {this.props.id !== localStorage.getItem("ValidatedUser") && (
-              <Button
-                pill
-                outline
-                size="sm"
-                className="mb-2"
-                onClick={this.followUser}
-              >
-                <i className="material-icons mr-1">person_add</i> Follow
-              </Button>
+              <Button onClick={this.followUser}>+ Follow</Button>
             )}
 
             <br />

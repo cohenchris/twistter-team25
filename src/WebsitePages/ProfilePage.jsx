@@ -3,8 +3,6 @@ import NavigationBar from "../components/NavigationBar";
 import UserDetails from "../components/user-profile-lite/UserDetails";
 import { otherDivStyle } from "..";
 
-//import { ValidatedUserContext } from "../global.js";
-
 export default class ProfilePage extends React.Component {
   constructor(props) {
     super(props);

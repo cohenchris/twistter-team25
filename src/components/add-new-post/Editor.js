@@ -8,7 +8,7 @@ import {
   FormGroup,
   FormSelect
 } from "shards-react";
-import Button from "react-bootstrap/Button";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
@@ -113,12 +113,20 @@ export default class Editor extends React.Component {
             />
             <p>{this.state.post_characters_remaining} characters remaining</p>
             <FormGroup id="topicSelect">
-              <FormSelect
-                placeholder="Topic"
-                as="select"
-                onChange={this.handleTopicSelect}
-              >
-                <option>All</option>
+              <FormSelect placeholder="Topic" as="select">
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title="Dropdown button"
+                >
+                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">
+                    Another action
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#/action-3">
+                    Something else
+                  </Dropdown.Item>
+                </DropdownButton>
+                /* onChange={this.handleTopicSelect}><option>All</option>
                 <option>Music</option>
                 <option>Computer Science</option>
                 <option>Gaming</option>
@@ -127,6 +135,7 @@ export default class Editor extends React.Component {
                 <option>Memes</option>
                 <option>Art</option>
                 <option>Sports</option>
+                */
               </FormSelect>
             </FormGroup>
           </Form>

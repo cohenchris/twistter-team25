@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Nav, Row } from "react-bootstrap";
 import logo from "../images/Logo.png";
 import { Link } from "react-router-dom";
-import { otherDivStyle } from "..";
+import { otherDivStyle } from "../index.js";
 import { blackLink } from "../index.js";
 const axios = require("axios");
 

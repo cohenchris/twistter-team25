@@ -32,8 +32,8 @@ export default class UserTimeline extends React.Component {
       userId,
       config
     );
-
     console.log(response);
+    this.setState({ PostsList: response.data });
   }
 
   async handleDelete(id) {
