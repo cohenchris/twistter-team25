@@ -21,7 +21,7 @@ export default function ConversationList() {
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/get-DMList",
       "http://localhost:5000/get-DMList",
-      { userId: global.ValidatedUser },
+      { userId: localStorage.getItem("ValidatedUser") },
       JSON.stringify(config)
     );
     var newConversations = response.data;

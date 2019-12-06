@@ -15,11 +15,9 @@ const navBarStyle = {
 
 export default class NavigationBar extends React.Component {
   logOut() {
-    global.ValidatedUser = -1;
+    localStorage.setItem("ValidatedUser", -1);
   }
-  handleClick(page) {
-    /* Redirect to appropriate page here */
-  }
+
   render() {
     return (
       <div>

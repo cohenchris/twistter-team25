@@ -19,7 +19,7 @@ export default class DmPage extends React.Component {
     }
 
     this.state = {
-      sender: global.ValidatedUser,
+      sender: localStorage.getItem("ValidatedUser"),
       receiver: receive,
       receiverId: receiveId
     };

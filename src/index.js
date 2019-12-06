@@ -5,7 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./global.js";
 // PAGES
 import StartPage from "./WebsitePages/StartPage/StartPage";
 import CreateMicroblog from "./WebsitePages/CreateMicroblog";
@@ -46,6 +45,8 @@ export const blackLink = {
 export const DMPageStyle = {
   marginTop: "15px"
 };
+
+//localStorage.setItem("ValidatedUser", 4);
 
 const routing = (
   <Router>

@@ -46,7 +46,7 @@ export default class UserAccountDetails extends React.Component {
   async updateUserDetails(post_data) {
     // user-update-common-name
     let newName = JSON.stringify({
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       newCommonName: post_data.newCommonName
     });
     console.log("common name submit:");
@@ -62,7 +62,7 @@ export default class UserAccountDetails extends React.Component {
 
     // user-update-description
     let newDesc = JSON.stringify({
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       newDescription: post_data.newDescription
     });
     const description_response = axios.post(
@@ -77,7 +77,7 @@ export default class UserAccountDetails extends React.Component {
     // update-password if applicable
     if (post_data.newPassword !== undefined) {
       let newPass = JSON.stringify({
-        userId: global.ValidatedUser,
+        userId: localStorage.getItem("ValidatedUser"),
         newPassword: post_data.newPassword
       });
       const password_response = axios.post(
@@ -92,8 +92,10 @@ export default class UserAccountDetails extends React.Component {
   }
 
   async componentDidMount() {
-    let data = JSON.stringify({ userId: global.ValidatedUser });
-    if (global.ValidatedUser !== -1) {
+    let data = JSON.stringify({
+      userId: localStorage.getItem("ValidatedUser")
+    });
+    if (localStorage.getItem("ValidatedUser") !== -1) {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/get-user",
         "http://localhost:5000/get-user",
@@ -262,7 +264,7 @@ export default class UserAccountDetails extends React.Component {
 }
 async function deleteUser() {
   let userToDelete = JSON.stringify({
-    userId: global.ValidatedUser
+    userId: localStorage.getItem("ValidatedUser")
   });
   console.log("DELETE");
   console.log(userToDelete);

@@ -3,12 +3,11 @@ import Compose from "../Compose";
 import Toolbar from "../Toolbar";
 import Message from "../Message";
 import moment from "moment";
-import "../../global.js";
 import "./MessageList.css";
 
 const axios = require("axios");
 
-const MY_USER_ID = global.ValidatedUser;
+const MY_USER_ID = localStorage.getItem("ValidatedUser");
 let convoTitle = "Conversation with ...";
 let SenderId = -1;
 let ReceiverId = -1;
@@ -37,7 +36,7 @@ export default function MessageList(props) {
       }
     };
     let send = {
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       receiverId: receiverId
     };
     console.log(send);
@@ -121,7 +120,7 @@ export default function MessageList(props) {
 
       <div className="message-list-container">{renderMessages()}</div>
       <Compose
-        sender={global.ValidatedUser}
+        sender={localStorage.getItem("ValidatedUser")}
         receiver={receiverId}
         validConvo={receiverId !== -1}
       />

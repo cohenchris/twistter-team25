@@ -6,7 +6,6 @@ import BlogPosts from "../../views/BlogPosts";
 import { Button, Container, Row, Col } from "react-bootstrap";
 const axios = require("axios");
 
-
 export default class Topic_Beauty extends React.Component {
   async handleFollow() {
     let config = {
@@ -17,7 +16,7 @@ export default class Topic_Beauty extends React.Component {
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/user-add-new-user-topic",
       "http://localhost:5000/user-add-new-user-topic",
-      { userId: global.ValidatedUser, newTopic: "beauty" },
+      { userId: localStorage.getItem("ValidatedUser"), newTopic: "beauty" },
       JSON.stringify(config)
     );
     console.log(response);
@@ -28,7 +27,7 @@ export default class Topic_Beauty extends React.Component {
     return (
       <div className="MiscTopic" style={blogDivStyle}>
         <NavigationBar />
-         <Container>
+        <Container>
           <Row>
             <Col sm={8}>
               <PageTitle

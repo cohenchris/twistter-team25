@@ -79,7 +79,7 @@ export default class BlogPosts extends React.Component {
                     <Badge pill className={`card-post__category bg-dark`}>
                       {post.Topics}
                     </Badge>
-                    {post.UserId == global.ValidatedUser && (
+                    {post.UserId == localStorage.getItem("ValidatedUser") && (
                       <Button
                         size="sm"
                         variant="danger"
@@ -149,7 +149,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/like-post",
         "http://localhost:5000/like-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     } else {
@@ -158,7 +158,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/unlike-post",
         "http://localhost:5000/unlike-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     }
@@ -170,7 +170,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/retweet-post",
         "http://localhost:5000/retweet-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     } else {
@@ -178,7 +178,7 @@ const LikeAndQuoteButtons = props => {
       const response = await axios.post(
         //"http://twistter-API.azurewebsites.net/unretweet-post",
         "http://localhost:5000/unretweet-post",
-        { userId: global.ValidatedUser, postId: props.postId }
+        { userId: localStorage.getItem("ValidatedUser"), postId: props.postId }
       );
       console.log(response);
     }

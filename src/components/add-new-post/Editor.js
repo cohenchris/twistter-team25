@@ -19,7 +19,7 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      UserId: global.ValidatedUser,
+      UserId: localStorage.getItem("ValidatedUser"),
       PostTitle: "",
       PostText: "",
       Topics: "",

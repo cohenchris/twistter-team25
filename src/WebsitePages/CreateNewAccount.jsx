@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar";
+import logo from "../images/Logo.png";
 import { Form, Button, Col } from "react-bootstrap";
 import { FormTextarea } from "shards-react";
 import { otherDivStyle } from "..";
@@ -9,7 +9,11 @@ export default class CreateNewAccount extends React.Component {
   render() {
     return (
       <div className="CreateNewAccount" style={otherDivStyle}>
-        <NavigationBar />
+        <img src={logo} className="App-logo" alt="logo" />
+        <br />
+        <br />
+        <br />
+
         <h1>CREATE A NEW ACCOUNT</h1>
         <NewUserForm />
       </div>
@@ -220,6 +224,8 @@ class NewUserForm extends React.Component {
         <Button type="submit" variant="dark">
           Create Account
         </Button>
+        <br />
+        <br />
       </Form>
     );
   }

@@ -1,6 +1,5 @@
 import React from "react";
 import ProfilePosts from "../../views/ProfilePosts";
-import "../../global.js";
 import { Card, CardHeader, ListGroup, Row, Col, Button } from "shards-react";
 const axios = require("axios");
 
@@ -33,7 +32,7 @@ export default class UserDetails extends React.Component {
 
   async followUser() {
     let userData = JSON.stringify({
-      userId: global.ValidatedUser,
+      userId: localStorage.getItem("ValidatedUser"),
       followingId: this.state.UserId
     });
     const response = await axios.post(
@@ -52,7 +51,7 @@ export default class UserDetails extends React.Component {
             <h2 className="mb-0">{this.state.CommonName}</h2>
             <h5>{this.state.UserName}</h5>
             <br />
-            {this.props.id !== global.ValidatedUser && (
+            {this.props.id !== localStorage.getItem("ValidatedUser") && (
               <Button
                 pill
                 outline
