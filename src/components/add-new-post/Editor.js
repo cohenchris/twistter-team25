@@ -117,12 +117,7 @@ export default class Editor extends React.Component {
               {this.state.post_characters_remaining} characters remaining
             </p>
             <FormGroup id="topicSelect">
-              <FormSelect
-                placeholder="Topic"
-                as="select"
-                onClick={this.handleTopicSelect}
-              >
-                <option>All</option>
+              <FormSelect as="select" onClick={this.handleTopicSelect}>
                 <option>Music</option>
                 <option>Computer Science</option>
                 <option>Gaming</option>
@@ -130,7 +125,7 @@ export default class Editor extends React.Component {
                 <option>Animals</option>
                 <option>Memes</option>
                 <option>Art</option>
-                <option>Sports</option>1
+                <option>Sports</option>
               </FormSelect>
             </FormGroup>
           </Form>

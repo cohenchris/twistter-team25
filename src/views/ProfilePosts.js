@@ -63,7 +63,7 @@ export default class BlogPosts extends React.Component {
                       pill
                       className={`card-post__category bg-light text-dark`}
                     >
-                      {post.Topics}
+                      {post.Topics.substr(0, post.Topics.length - 4)}
                     </Badge>
                     {post.UserId == localStorage.getItem("ValidatedUser") && (
                       <Button
