@@ -94,20 +94,11 @@ def getUserTimeline(userId):
     cnxn = pyodbc.connect(connectionString)
         
     cursor = cnxn.cursor()
-    cursor.execute("SELECT COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId," +
-                   "COALESCE(z.UserName, x.UserName) as UserName,COALESCE(z.CommonName, x.CommonName) as CommonName," +
-                   "x.PostTitle,x.PostText,x.Topics,x.Timestamp,x.Likes,x.Retweets,z.CommonName as RetweetUserName,x.TimelineTimestamp " +
-                   "FROM (SELECT DISTINCT TOP 10000 " +
-                   "a.PostId,b.UserId,b.UserName,b.CommonName,a.PostTitle,a.PostText,a.Topics,a.Timestamp," +
-                   "COALESCE(a.RetweetTimestamp, a.Timestamp) as TimelineTimestamp," +
-                   "(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes," +
-                   "(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets," +
-                   "a.RetweetId, a.RetweetTimestamp FROM PostTable AS a " +
-                   "LEFT JOIN UserTable AS b ON a.UserId = b.UserId	LEFT JOIN FollowerTable AS e ON a.UserId = e.FollowingId AND " +
-                   "(a.Topics LIKE CONCAT(e.Topic, ',%') OR	a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR	a.Topics LIKE e.Topic) " +
-                   "WHERE e.UserId=" + str(userId) + "ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC " +
-                   ") AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId LEFT JOIN UserTable as z ON y.UserId = z.UserId " +
-                   "ORDER BY x.TimelineTimestamp DESC")
+    cursor.execute("SELECT * FROM (SELECT TOP 10000 COALESCE(y.PostId, x.PostId) as PostId,COALESCE(z.UserId, x.UserId) as UserId,COALESCE(z.UserName, x.UserName) as UserName,COALESCE(z.CommonName, x.CommonName) as CommonName,x.PostTitle,x.PostText,x.Topics,x.Timestamp,x.Likes,x.Retweets," +
+        "CASE WHEN x.RetweetId IS NULL THEN NULL ELSE x.CommonName END AS RetweetUserName,x.TimelineTimestamp FROM (SELECT DISTINCT TOP 10000 a.PostId,b.UserId,b.UserName,b.CommonName,a.PostTitle,a.PostText,a.Topics,a.Timestamp,COALESCE(a.RetweetTimestamp, a.Timestamp) as TimelineTimestamp,(SELECT COUNT(*) FROM LikeTable AS c WHERE c.PostId = a.PostId OR c.PostId = a.RetweetId) AS Likes,(SELECT COUNT(*) FROM PostTable AS d WHERE d.RetweetId = a.PostId OR d.RetweetId = a.RetweetId) AS Retweets,a.RetweetId, a.RetweetTimestamp FROM PostTable AS a LEFT JOIN UserTable AS b ON a.UserId = b.UserId LEFT JOIN FollowerTable AS e ON a.UserId = e.FollowingId AND (a.Topics LIKE CONCAT(e.Topic, ',%') OR  a.Topics LIKE CONCAT('%,', e.Topic) OR a.Topics LIKE CONCAT('%,', e.Topic, ',%') OR   a.Topics LIKE e.Topic) " +
+        "WHERE e.UserId=" + str(userId) + " ORDER BY COALESCE(a.RetweetTimestamp, a.Timestamp) DESC ) AS x LEFT JOIN PostTable as y ON x.RetweetId = y.PostId LEFT JOIN UserTable as z ON y.UserId = z.UserId ORDER BY x.TimelineTimestamp DESC) " +
+        "as n WHERE NOT (n.UserId = " + str(userId) + " AND n.RetweetUserName IS NOT NULL AND n.RetweetUserName != n.CommonName) " +
+        "ORDER BY n.TimelineTimestamp DESC")
     
     test = [{"PostId": x[0], "UserId": x[1], "UserName": x[2], "CommonName": x[3], "PostTitle": x[4], "PostText": x[5], "Topics": x[6], "Timestamp": str(x[7]), "Likes": x[8], "Retweets": x[9], "RetweetUserName": x[10]} for x in cursor.fetchall()]
     return json.dumps(test)
@@ -159,7 +150,7 @@ def getUserPosts(userId):
        "        LEFT JOIN usertable AS b " +
        "               ON a.userid = b.userid " +
        " WHERE  a.userid = " + str(userId) +
-       "         OR a.retweetid = " + str(userId) +
+       #"         OR a.retweetid = " + str(userId) +
        " ORDER  BY COALESCE(a.retweettimestamp, a.timestamp) DESC) AS x " +
        " LEFT JOIN posttable AS y " +
        "       ON x.retweetid = y.postid " +
@@ -430,12 +421,29 @@ def unretweet(userId, postId):
 # CREATES A NEW DM MESSAGE  
 def newDM(senderId, recieverId, message):    
     cnxn = pyodbc.connect(connectionString)
-        
+
     cursor = cnxn.cursor()
-    cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
+    cursor.execute("SELECT Private FROM UserTable WHERE UserId =" + str(recieverId))
+    test = cursor.fetchone()[0]
+    if not test:
+        cursor = cnxn.cursor()
+        cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
                    " VALUES (" + str(senderId) + "," + str(recieverId) + ",'" +
                    message + "','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
-    cnxn.commit()
+        cnxn.commit()
+    else:
+        cursor = cnxn.cursor()
+        cursor.execute("SELECT * FROM FollowerTable WHERE UserId=" + str(recieverId) +
+                       "AND FollowingId=" + str(senderId))
+        
+        if cursor.fetchall() == []:
+            return
+        else:
+            cursor = cnxn.cursor()
+            cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
+                   " VALUES (" + str(senderId) + "," + str(recieverId) + ",'" +
+                   message + "','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
+            cnxn.commit()
 
 
 # DELETES DMS FOR A PARTICULAR USER
@@ -494,7 +502,7 @@ def getDMList(userId):
                    "(EXISTS (SELECT 1 FROM DMTable WHERE SenderId=" + str(userId) + " AND SenderDeleted=0) OR " +
                    "EXISTS (SELECT 1 FROM DMTable WHERE RecieverId=" + str(userId) + " AND RecieverDeleted=0)) " +
                    "ORDER BY TimeStamp DESC")
-
+    
     test = [{"UserName": x[0], "CommonName": x[1], "Message": x[2], "TimeStamp": str(x[3]), "OtherUser": x[4]} for x in cursor.fetchall()]
     return json.dumps(test)
 
