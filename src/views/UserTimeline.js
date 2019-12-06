@@ -43,6 +43,8 @@ export default class UserTimeline extends React.Component {
       { postId: id }
     );
     console.log(response);
+    window.location.reload();
+    window.alert("Deleted post");
   }
 
   render() {

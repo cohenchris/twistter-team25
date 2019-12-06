@@ -36,7 +36,7 @@ export default function MessageList(props) {
       }
     };
     let send = {
-      userId: localStorage.getItem("ValidatedUser"),
+      userId: parseInt(localStorage.getItem("ValidatedUser")),
       receiverId: receiverId
     };
     console.log(send);
@@ -58,11 +58,12 @@ export default function MessageList(props) {
     let tempMessages = [];
 
     while (i < messageCount) {
-      ReceiverId = messages[i].RecieverId;
+      console.log(messages[i]);
+      ReceiverId = messages[i].ReceiverId;
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.SenderId === MY_USER_ID;
+      let isMine = current.SenderId == MY_USER_ID;
       let currentMoment = moment(current.TimeStamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;

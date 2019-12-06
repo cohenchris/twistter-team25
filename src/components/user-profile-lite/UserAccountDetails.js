@@ -153,6 +153,7 @@ export default class UserAccountDetails extends React.Component {
       //TODO: COMMUNICATE WITH API
       this.updateUserDetails(userSubmission);
       console.log(userSubmission);
+      window.alert("Updated profile information!");
     }
   }
 
