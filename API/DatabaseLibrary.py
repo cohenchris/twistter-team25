@@ -422,14 +422,28 @@ def unretweet(userId, postId):
 def newDM(senderId, recieverId, message):    
     cnxn = pyodbc.connect(connectionString)
 
-    #cursor = cnxn.cursor()
-    #cursor.execute("SELECT Private FROM UserTable WHERE UserId =" + str(recieverId))
-        
     cursor = cnxn.cursor()
-    cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
+    cursor.execute("SELECT Private FROM UserTable WHERE UserId =" + str(recieverId))
+    test = cursor.fetchone()[0]
+    if not test:
+        cursor = cnxn.cursor()
+        cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
                    " VALUES (" + str(senderId) + "," + str(recieverId) + ",'" +
                    message + "','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
-    cnxn.commit()
+        cnxn.commit()
+    else:
+        cursor = cnxn.cursor()
+        cursor.execute("SELECT * FROM FollowerTable WHERE UserId=" + str(recieverId) +
+                       "AND FollowingId=" + str(senderId))
+        
+        if cursor.fetchall() == []:
+            return
+        else:
+            cursor = cnxn.cursor()
+            cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
+                   " VALUES (" + str(senderId) + "," + str(recieverId) + ",'" +
+                   message + "','" + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "')")
+            cnxn.commit()
 
 
 # DELETES DMS FOR A PARTICULAR USER
