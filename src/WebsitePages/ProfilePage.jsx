@@ -9,7 +9,8 @@ export default class ProfilePage extends React.Component {
     super(props);
     let currId;
     if (this.props.location.id === undefined) {
-      currId = global.ValidatedUser;
+      //currId = global.ValidatedUser;
+      currId = this.context;
     } else {
       currId = this.props.location.id;
     }

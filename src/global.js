@@ -1,5 +1,5 @@
-//import React from "react";
+import React from "react";
 
-//export const ValidatedUser = React.createContext(-1);
+export const ValidatedUserContext = React.createContext(-1);
 
-global.ValidatedUser = 4;
+//global.ValidatedUser = 4;

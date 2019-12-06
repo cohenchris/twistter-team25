@@ -47,6 +47,7 @@ export const DMPageStyle = {
   marginTop: "15px"
 };
 
+const ValidatedUserContext = React.createContext(-1);
 const routing = (
   <Router>
     <Switch>
@@ -55,7 +56,14 @@ const routing = (
       <Route path="/create-account" component={CreateNewAccount} />
       <Route path="/maintenance" component={DownForMaintenance} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/profile" component={ProfilePage} />
+      <Route
+        path="/profile"
+        render={props => (
+          <ValidatedUserContext.Provider value={4}>
+            <ProfilePage {...props} />
+          </ValidatedUserContext.Provider>
+        )}
+      />
       <Route path="/settings" component={ProfileSettings} />
       {/*<Route path="/dm" component={DmPage} />*/}
       <Route

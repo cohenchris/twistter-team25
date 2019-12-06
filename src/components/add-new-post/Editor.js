@@ -22,7 +22,7 @@ export default class Editor extends React.Component {
       UserId: global.ValidatedUser,
       PostTitle: "",
       PostText: "",
-      Topics: "",
+      Topics: "All",
       post_characters_remaining: 150,
       valid_post: true
     };
