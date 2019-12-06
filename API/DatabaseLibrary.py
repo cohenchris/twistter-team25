@@ -150,7 +150,7 @@ def getUserPosts(userId):
        "        LEFT JOIN usertable AS b " +
        "               ON a.userid = b.userid " +
        " WHERE  a.userid = " + str(userId) +
-       "         OR a.retweetid = " + str(userId) +
+       #"         OR a.retweetid = " + str(userId) +
        " ORDER  BY COALESCE(a.retweettimestamp, a.timestamp) DESC) AS x " +
        " LEFT JOIN posttable AS y " +
        "       ON x.retweetid = y.postid " +
@@ -421,6 +421,9 @@ def unretweet(userId, postId):
 # CREATES A NEW DM MESSAGE  
 def newDM(senderId, recieverId, message):    
     cnxn = pyodbc.connect(connectionString)
+
+    #cursor = cnxn.cursor()
+    #cursor.execute("SELECT Private FROM UserTable WHERE UserId =" + str(recieverId))
         
     cursor = cnxn.cursor()
     cursor.execute("INSERT INTO DMTable (SenderId, RecieverId, Message, Timestamp)" +
