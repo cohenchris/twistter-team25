@@ -42,6 +42,10 @@ export const blackLink = {
   color: "black"
 };
 
+export const whiteLink = {
+  color: "white"
+};
+
 export const DMPageStyle = {
   marginTop: "15px"
 };

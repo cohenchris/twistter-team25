@@ -5,7 +5,9 @@ import {
   NavDropdown,
   Button,
   Container,
-  Col
+  Col,
+  Form,
+  FormControl
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -16,6 +18,10 @@ const navBarStyle = {
 export default class NavigationBar extends React.Component {
   logOut() {
     localStorage.setItem("ValidatedUser", -1);
+  }
+
+  requestTopic() {
+    window.alert("Topic requested!");
   }
 
   render() {
@@ -59,6 +65,16 @@ export default class NavigationBar extends React.Component {
             </Nav>
             {/* Create a New Microblog */}
             <Col>
+              <Form inline className="float-right">
+                <FormControl
+                  type="text"
+                  placeholder="Topic..."
+                  className="mr-sm-2"
+                />
+                <Button variant="outline-light" onClick={this.requestTopic}>
+                  Request Topic
+                </Button>
+              </Form>
               <Nav className="float-right">
                 <Link to="/create-microblog" style={navBarStyle}>
                   <Button variant="outline-light">
