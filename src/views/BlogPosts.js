@@ -72,7 +72,6 @@ export default class BlogPosts extends React.Component {
         <Row>
           {PostsList.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-              <p>{console.log(post)}</p>
               <Card small className="card-post card-post--1">
                 <div className="card-post__image">
                   <Col>

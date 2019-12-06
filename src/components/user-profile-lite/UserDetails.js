@@ -33,7 +33,8 @@ export default class UserDetails extends React.Component {
   async followUser() {
     let userData = JSON.stringify({
       userId: localStorage.getItem("ValidatedUser"),
-      followingId: this.state.UserId
+      followingId: this.state.UserId,
+      topics: "All,Gaming,Memes"
     });
     const response = await axios.post(
       //"http://twistter-API.azurewebsites.net/follow-user",
